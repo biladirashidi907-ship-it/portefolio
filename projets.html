@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Projets</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            box-sizing: border-box; /* Correction importante pour la mise en page */
+        }
+
+        body{
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            min-height: 100vh; /* Assure que le body prend toute la hauteur */
+            display: flex;
+            flex-direction: column;
+        }
+        .rashidi {
+            flex-grow: 1; /* Permet au contenu de prendre l'espace disponible */
+        }
+        .nav{
+            padding: 20px;
+            position: relative;
+        }
+
+        button{
+            font-size: 25px;
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.9);
+            cursor: pointer;
+            transition: 0.2s;
+            z-index: 1000; /* Assure que le bouton est au-dessus */
+        }
+
+        button:hover{
+            transform: scale(1.1);
+        }
+
+        .menu{
+            position: absolute;
+            top: 70px;
+            left: 20px;
+            width: 170px;
+            padding: 10px 0;
+            background: rgba(194, 120, 194, 0.25);
+            border-radius: 5px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 999; /* Assure que le menu est au-dessus du reste du contenu */
+        }
+
+        #menu{
+            list-style-type: none;
+            padding: 10px;
+            animation: fadeSlide 0.3s ease;
+        }
+
+        #menu li{
+            margin: 12px 0;
+        }
+
+        #menu li a{
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+            transition: 0.2s;
+        }
+
+        #menu li a:hover{
+            padding-left: 5px;
+            color: yellow;
+        }
+
+        @keyframes fadeSlide {
+            from{
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to{
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .content {
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+            font-size: 40px;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            border-bottom: 3px solid #ffeb3b;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: #fff;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-left: 5px solid #ffeb3b;
+            padding-left: 10px;
+            font-size: 28px;
+        }
+
+        .project-section {
+            background: rgba(255, 255, 255, 0.15); 
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            color: black;
+            backdrop-filter: blur(5px);
+            display: flex;
+            gap: 20px; /* Ajout d'espace entre image et détails */
+        }
+
+        .project-section h3 {
+            font-size: 24px;
+            color: #ffeb3b;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.5);
+            padding-bottom: 5px;
+        }
+
+        .project-details p, .project-details ul {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            font-weight: 300;
+            color: #222; /* Meilleure lisibilité du texte */
+        }
+
+        .project-details ul {
+            list-style-type: none;
+            padding-left: 0; /* Suppression du padding ici */
+        }
+        .project-details ul li::before {
+            content: "•";
+            color: orangered;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        strong {
+            color: orangered;
+            font-weight: 600;
+        }
+        .role-played {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            font-style: italic;
+            color: #444;
+        }
+        .project-details li{
+            margin: 10px 0; /* Ajusté pour la clarté */
+            padding-left: 20px;
+        }
+        .project-details{
+            margin: 0; /* Ajusté */
+            flex: 1; /* Prend l'espace restant dans la section */
+        }
+        .image{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        .imag{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        .imag img{
+            width: 280px;
+            height: 180px;
+        }
+        img{
+            width: 200px; /* Taille par défaut */
+            height: auto; /* Maintient le ratio */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        /* Ajustements pour les images spécifiques du premier projet */
+        .project-section:first-child .image img:nth-child(1) { height: 230px; }
+        .project-section:first-child .image img:nth-child(2) { height: 150px; }
+        .project-section:first-child .image img:nth-child(3) { height: 150px; }
+
+        footer{
+            margin-top: 20px;
+            text-align: center;
+            padding: 15px; /* Augmenté le padding */
+            background: rgba(0,0,0,0.2);
+            color: white;
+        }
+        footer p{
+            font-size: 16px; /* Ajusté pour une meilleure proportion */
+        }
+
+        /* --- RESPONSIVE DESIGN (Media Queries) --- */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 30px;
+                margin-bottom: 30px;
+            }
+            
+            .project-section {
+                flex-direction: column; /* Passage en mode colonne */
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .image {
+                flex-direction: row; /* Les images s'affichent en ligne */
+                flex-wrap: wrap; /* Elles peuvent passer à la ligne */
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .image img {
+                width: 45%; 
+                max-width: 250px; /* Limite la taille des images */
+                height: auto !important; /* Maintient le ratio d'aspect sur mobile */
+                
+            }
+            /* Correction pour les images du premier projet */
+            .project-section:first-child .image img:nth-child(1) { max-width: 150px; height: auto; }
+            .project-section:first-child .image img:nth-child(2) { max-width: 100px; height: auto; }
+            .project-section:first-child .image img:nth-child(3) { max-width: 100px; height: auto; }
+            
+            .project-details {
+                margin: 0;
+            }
+
+            .project-details h3 {
+                font-size: 20px;
+            }
+
+            .project-details li {
+                margin: 10px 0;
+            }
+            
+            footer p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="rashidi">
+        <div class="nav">
+            <button onclick="document.getElementById('menu').hidden ^= 1">☰</button>
+            <div class="menu">
+                <ul id="menu" hidden>
+                    <li><a href="accueil.html">Accueil</a></li>
+                    <li><a href="" style="color: blue;">Mes Projets</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="article.html">Articles</a></li>
+                    <li><a href="apropos.html">A propos</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content">
+            <h1>Mes Projets Personnels</h1>
+            
+            <div class="project-section">
+                <div class="image">
+                    <img src="codecours.png" alt="Image du projet Quiz - code" style="height: 230px;">
+                    <img src="Capture d’écran 2025-10-13 201732.png" alt="Image du projet Quiz - capture d'écran 1" style="height: 150px;">
+                    <img src="stratégie.jpg" alt="Image du projet Quiz - stratégie" style="height: 150px;">
+                </div>
+                
+                <div class="project-details">
+                    <h3>1. Quiz – Plateforme de questions pour L1 LMD IG</h3>
+                    <p><strong>Date estimée :</strong> Septembre 2025</p>
+                    <p><strong>Objectif du projet :</strong> Développer une application web permettant aux étudiants en L1 LMD IG/ISP Bukavu de réviser les cours à travers des questions-réponses interactives.</p>
+                    <p><strong>Public Cible :</strong> Étudiants en L1 LMD IG/ISP Bukavu, en collaboration avec l'équipe de stratégie de la réussite.</p>
+                    <p><strong>Technologies Utilisées :</strong> <strong>Front-end :</strong> HTML5, CSS3, JavaScript. <strong>Outils :</strong> VS Code, GitHub.</p>
+                    <p><strong>Fonctionnalités Clés :</strong></p>
+                    <ul>
+                        <li>Affichage de questions par cours.</li>
+                        <li>Correction automatique et instantanée.</li>
+                        <li>Statistiques de résultats pour le suivi de la progression.</li>
+                        <li>Interface responsive mobile/PC.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="project-section">
+                <div class="image">
+                    <img src="Screenshot_20250910-213120~2.png" alt="Image du Site Personnel" style="height: 250px;">
+                </div>
+                <div class="project-details">
+                    <h3>2. Site Personnel / Portfolio</h3>
+                    <p><strong>Objectif du projet :</strong> Mettre en valeur mon profil, mes compétences et présenter l'ensemble de mes projets, comme cette page que vous êtes en train de consulter.</p>
+                    <p><strong>Technologies Utilisées :</strong> HTML, CSS, JavaScript .</p>
+                    <p>Ce projet est fondamental pour toute présence professionnelle en ligne. Il sert de vitrine à votre savoir-faire.</p>
+                </div>
+            </div>
+
+            <div class="project-section">
+                <div class="imag">
+                    <img src="markup_1000006944.png" alt="Image de StockSmart">
+                </div>
+                <div class="project-details">
+                    <h3>3. StockSmart – Application Web de Gestion de Stock</h3>
+                    <p><strong>Description :</strong> StockSmart est une solution web conçue pour les petits commerçants, visant à remplacer la gestion manuelle (cahiers) par une plateforme numérique simple et efficace pour la gestion des produits, des mouvements de stock et des ventes.</p>
+                    <p><strong>Objectifs :</strong></p>
+                    <ul>
+                        <li>Suivi précis des entrées et sorties de stock.</li>
+                        <li>Automatisation des alertes de rupture de stock.</li>
+                        <li>Simplification de la gestion des produits et des fournisseurs.</li>
+                        <li>Génération de rapports consultables ou exportables.</li>
+                    </ul>
+                    <p><strong>Technologies Utilisées :</strong> 
+                        <strong>Frontend :</strong> HTML, CSS, JavaScript (Bootstrap). 
+                        <strong>Backend :</strong> PHP . 
+                        <strong>Base de données :</strong> MySQL 
+                        <strong>Hébergement :</strong> Localhost .
+                    </p>
+                    <p><strong>Fonctionnalités Principales :</strong></p>
+                    <ul>
+                        <li>Tableau de bord centralisé avec statistiques clés.</li>
+                        <li>CRUD (Ajout, modification, suppression) des produits.</li>
+                        <li>Recherche rapide et filtrage de produits.</li>
+                        <li>Gestion dédiée des fournisseurs et catégories.</li>
+                        <li>Exportation de rapports PDF / Excel.</li>
+                    </ul>
+                    <p class="role-played">
+                        <strong>Rôle Joué :</strong> Développement complet du projet (frontend + backend), création de la base de données et de l'interface utilisateur, tests, déploiement et formation du client à l’usage.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; BRLev1 - New Tech - Innovation  @Projets</p> 
+    </footer>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio & Contact | BRLev1</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- 1. Styles de Base & Globaux --- */
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            box-sizing: border-box; /* Essentiel pour la responsivité */
+        }
+
+        body{
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: black;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Conteneur principal (PC) - Centre le contenu et définit la largeur maximale */
+        .rashidi {
+            flex-grow: 1; 
+            max-width: 1000px; /* Largeur confortable pour PC/Tablette */
+            margin: 0 auto;
+            width: 100%; 
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin: 40px 0 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            border-bottom: 3px solid #ffeb3b;
+            padding-bottom: 10px;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+        }
+        h2 {
+            font-size: 28px;
+            color: #ffeb3b;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        /* --- 2. Navigation & Menu --- */
+        .nav{
+            padding: 20px 0; /* Ajusté pour l'alignement avec .rashidi */
+            position: relative;
+        }
+        button{
+            font-size: 25px;
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.9);
+            cursor: pointer;
+            transition: 0.2s;
+            z-index: 1000;
+        }
+        .menu{
+            position: absolute;
+            top: 70px;
+            left: 20px;
+            width: 170px;
+            padding: 10px 0;
+            background: rgba(194, 120, 194, 0.25);
+            border-radius: 5px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+        #menu{
+            list-style-type: none;
+            padding: 10px;
+            animation: fadeSlide 0.3s ease;
+        }
+        #menu li a{
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+            transition: 0.2s;
+        }
+        #menu li a:hover{
+            padding-left: 5px;
+            color: yellow;
+        }
+        @keyframes fadeSlide {
+            from{ transform: translateY(-10px); opacity: 0; }
+            to{ transform: translateY(0); opacity: 1; }
+        }
+        
+        .portfolio-overview, .contact-section {
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        .portfolio-overview img {
+            width: 100%;
+            max-width: 400px; 
+            height: auto;
+            border-radius: 8px;
+            margin: 15px auto;
+            display: block;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .contact-form {
+            padding: 30px 0; 
+            text-align: left;
+        }
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+        .contact-form button[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            background-color: #ffeb3b;
+            color: #333;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .social-cv-section {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .social-links a {
+            font-size: 35px; 
+            margin: 0 18px;
+            color: blue;
+            transition: transform 0.2s, color 0.2s;
+            display: inline-block;
+        }
+        .cv-download a {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: orangered;
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 18px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        footer{
+            margin-top: auto; 
+            text-align: center;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+            color: white;
+        }
+        .project-placeholder{
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .rashidi {
+                padding: 0 15px; 
+            }
+            h1 {
+                font-size: 32px;
+                margin-top: 30px;
+                color: white;
+            }
+            h2 {
+                font-size: 24px;
+            }
+
+            .portfolio-overview, .contact-section {
+                padding: 25px 15px;
+                margin-bottom: 30px;
+            }
+            .contact-form button[type="submit"], 
+            .cv-download a {
+                padding: 14px; 
+                font-size: 17px;
+            }
+            
+            .social-links a {
+                font-size: 30px; 
+                margin: 0 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+             h1 {
+                font-size: 28px;
+            }
+            .menu {
+                left: 15px;
+            }
+            .contact-info p {
+                font-size: 15px;
+            }
+            .social-links a {
+                font-size: 24px;
+                margin: 0 8px;
+            }
+            .cv-download a {
+                padding: 12px 20px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="rashidi">
+        <div class="nav">
+            <button onclick="document.getElementById('menu').hidden ^= 1">☰</button>
+            <div class="menu">
+                <ul id="menu" hidden>
+                    <li><a href="accueil.html">Accueil</a></li>
+                    <li><a href="projets.html" >Mes Projets</a></li>
+                    <li><a href="" style="color: blue;">Contact</a></li>
+                    <li><a href="article.html">Articles</a></li>
+                    <li><a href="apropos.html">A propos</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <h1>Contact</h1>
+        
+        <section class="portfolio-overview">
+            <h2>Mes Dernières Réalisations</h2>
+            <p style="color: rgba(255, 255, 255, 0.8);">
+                Découvrez un aperçu des projets clés. Pour plus de détails, visitez la page <a href="projets.html" style="color: #ffeb3b; text-decoration: none; font-weight: 600;">Mes Projets</a>.
+            </p>
+            
+            <img src="Screenshot_20250910-213120~2.png" alt="Aperçu du projet principal">
+            
+            <div class="project-placeholder">
+                BILADI RASHIDI LEVIEUX
+            </div>
+        </section>
+
+        <section class="contact-section">
+            
+            <h2>Entrons en Contact</h2>
+            
+            <div class="contact-info">
+                <p>Je suis toujours ouvert aux nouvelles opportunités et aux collaborations passionnantes.</p>
+                <p>N'hésitez pas à me contacter directement :</p>
+                <p><strong>Email :</strong> biladirashidi907@gmail.com</p>
+                <p><strong>Téléphone :</strong> +243 977 126 962</p>
+                <p><strong>Autre :</strong> +243 834 372 474</p>
+            </div>
+
+            <div class="contact-form">
+                <p style="color: #fff; margin-bottom: 20px; text-align: center; font-style: italic;">Ou remplissez ce formulaire rapide :</p>
+                <form action="" method="POST">
+                    <label for="name">Nom Complet</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Adresse E-mail</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="subject">Sujet</label>
+                    <input type="text" id="subject" name="subject" required>
+
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+
+                    <button type="submit">Envoyer le Message</button>
+                </form>
+            </div>
+            
+            <div class="social-cv-section">
+                
+                <h2 style="font-size: 24px; color: #ffeb3b;">Restons Connectés</h2>
+
+                <div class="social-links">
+                    <a href="VOTRE_LIEN_LINKEDIN" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="VOTRE_LIEN_GITHUB" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://x.com/BRashLevieux34" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
+                    <a href="biladrashidi907@gmail.com" title="E-mail"><i class="fas fa-envelope"></i></a>
+                    <a href="VOTRE_LIEN_WHATSAPP" target="_blank" title="Contact WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+                <div class="cv-download">
+                    <p style="margin-bottom: 15px; font-size: 18px;">Téléchargez mon CV complet pour plus de détails :</p>
+                    <a href="BILADI RASHIDI LEVIEUX.pdf" download="CV_BRLe1_Developpeur.pdf">
+                        <i class="fas fa-download"></i> Télécharger Mon CV
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <p>&copy; BRLev1 - New Tech - Innovation  @Contact</p>
+    </footer>
+    <script>
+        document.querySelector('.nav button').onclick = function() {
+            const menu = document.getElementById('menu');
+            menu.hidden = !menu.hidden;
+        };
+    </script>
+</body>
+</html>

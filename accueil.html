@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rashidi</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body{
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+        }
+        .nav{
+            padding: 20px;
+            position: relative;
+        }
+
+        button{
+            font-size: 25px;
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.9);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover{
+            transform: scale(1.1);
+        }
+
+        .menu{
+            position: absolute;
+            top: 70px;
+            left: 20px;
+            width: 170px;
+            padding: 10px 0;
+            background:  rgba(194, 120, 194, 0.25);
+            border-radius: 5px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        #menu{
+            list-style-type: none;
+            padding: 10px;
+            animation: fadeSlide 0.3s ease;
+        }
+
+        #menu li{
+            margin: 12px 0;
+        }
+
+        #menu li a{
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+            transition: 0.2s;
+        }
+
+        #menu li a:hover{
+            padding-left: 5px;
+            color: yellow;
+        }
+
+        @keyframes fadeSlide {
+            from{
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to{
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .container{
+            margin-top: 80px;
+            padding-left: 20%;
+        }
+
+        h2{
+            font-size: 80px;
+            font-weight: bold;
+            animation: fadeIn 0.8s ease;
+        }
+
+        p{
+            font-size: 60px;
+            margin-top: 10px;
+            animation: fadeIn 1s ease;
+        }
+
+        i{
+            font-size: 40px;
+            opacity: 0.9;
+            animation: fadeIn 1.2s ease;
+        }
+        .btn{
+            margin-top: 20px;
+            display: inline-block;
+            padding: 12px 20px;
+            background: orange;
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            transition: 0.2s;
+        }
+
+        .btn:hover{
+            transform: scale(1.05);
+            background: orangered;
+        }
+
+        @keyframes fadeIn {
+            from{
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to{
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        footer{
+            margin-top: 100px;
+            text-align: center;
+            padding: 10px;
+            background: rgba(0,0,0,0.2);
+            color: white;
+            margin-top: 174px;
+        }
+        footer p{
+            font-size: 20px;
+        }
+        .leviucher{
+            display: flex;
+            gap: 18%;
+        }
+        .lev{
+            margin: 20px 20px;
+        }
+        img{
+            width: 350px;
+            border-radius: 100%;
+            border: dotted blueviolet;
+        }
+        @media (max-width: 600px) {
+            .leviucher{
+                flex-direction: column;
+            }
+            img{
+                width: 250px;
+                margin: 15px 20px;
+            }
+            .container{
+            margin: 0 -20px;
+            padding-left: 20%;
+           }
+           .lev{
+            margin: 15px 50px;
+           }
+           h2{
+            font-size: 60px;
+           }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="rashidi">
+        <div class="nav">
+            <button onclick="menu.hidden ^= 1">☰</button>
+            <div class="menu">
+                <ul id="menu" hidden>
+                    <li><a href="" style="color: orangered;">Accueil</a></li>
+                    <li><a href="projets.html">Mes Projets</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="article.html">Articles</a></li>
+                    <li><a href="apropos.html">A propos</a></li>
+                </ul>
+            </div>
+        </div>
+    <div class="leviucher">
+        <div class="container">
+            <h2>BRLev1</h2>
+            <p>New Tech</p>
+            <i>Innovation</i><br>
+            <a href="BILADI RASHIDI LEVIEUX.pdf" download="CV_BRLe1_Developpeur.pdf" class="btn">Télécharger</a>
+        </div>
+    <div class="lev">
+        <img src="980ce2fa006947f887dfe15eea8ab20e.jpeg" alt="">
+    </div>
+</div>
+    </div>
+
+    <footer>
+        <p>&copy; BRLev1 - New Tech - Innovation</p>
+    </footer>
+</body>
+</html>
