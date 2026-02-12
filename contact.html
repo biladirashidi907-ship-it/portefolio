@@ -310,31 +310,49 @@
         <p>&copy; BRLev1 - New Tech - Innovation  @Contact</p>
     </footer>
     <script>
-        document.querySelector('.nav button').onclick = function() {
-            const menu = document.getElementById('menu');
-            menu.hidden = !menu.hidden;
+    // Gestion du menu
+    document.querySelector('.nav button').onclick = function() {
+        const menu = document.getElementById('menu');
+        menu.hidden = !menu.hidden;
+    };
+
+    // Fonction pour récupérer les données du formulaire
+    function getFormData() {
+        return {
+            nom: document.getElementById("nom").value,
+            email: document.getElementById("email").value,
+            sujet: document.getElementById("sujet").value,
+            message: document.getElementById("message").value
         };
+    }
 
-        function rashidi(){
-    const cacher=document.getElementById("cacher")
-    cacher.classList.toggle("afficher")
-}
-function envoyerWhatsApp() {
-    var nom = document.getElementById("nom").value;
-    var email = document.getElementById("email").value;
-    var sujet = document.getElementById("sujet").value;
-    var message = document.getElementById("message").value;
+    // ENVOI WHATSAPP
+    function envoyerWhatsApp() {
+        const data = getFormData();
+        
+        if(!data.nom || !data.message) { alert("Veuillez remplir le nom et le message"); return; }
 
-    var numeroTel = "243977126962"; // Mettez votre numéro ici, sans le "+"
+        const numeroTel = "243977126962"; 
+        const texte = `*Nouveau contact Portfolio*\n\n*Nom:* ${data.nom}\n*Email:* ${data.email}\n*Sujet:* ${data.sujet}\n*Message:* ${data.message}`;
+        
+        const url = `https://wa.me/${numeroTel}?text=${encodeURIComponent(texte)}`;
+        window.open(url, '_blank');
+    }
 
-    var texteMessage = "Bonjour, je suis " + nom + " (" + email + ").\n\n";
-    texteMessage += "Sujet : " + sujet + "\n";
-    texteMessage += "Message : " + message;
+    // ENVOI EMAIL (Ouvre le logiciel de messagerie de l'utilisateur)
+    function envoyerEmail() {
+        const data = getFormData();
+        
+        if(!data.nom || !data.email) { alert("Veuillez remplir le nom et l'email"); return; }
 
-    var url = "https://wa.me/" + numeroTel + "?text=" + encodeURIComponent(texteMessage);
+        const emailDest = "biladirashidi907@gmail.com";
+        const corpsEmail = `Nom: ${data.nom}\nEmail de l'expéditeur: ${data.email}\n\nMessage:\n${data.message}`;
+        
+        const mailtoLink = `mailto:${emailDest}?subject=${encodeURIComponent(data.sujet)}&body=${encodeURIComponent(corpsEmail)}`;
+        
+        window.location.href = mailtoLink;
+    }
+</script>
 
-    window.open(url, '_blank');
-}
-    </script>
 </body>
 </html>
