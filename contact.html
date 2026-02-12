@@ -295,15 +295,7 @@
             </div>
         </div>
     </div>
-
-    <footer class="text-center py-3 mt-5" style="background-color: #f8f9fa;">
-        <p class="mb-0">&copy; 2025 Les Stratèges. Tous droits réservés.</p>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="script.js"></script>
-</body>
-</html>
-                </div>
+          </div>
                 <div class="cv-download">
                     <p style="margin-bottom: 15px; font-size: 18px;">Téléchargez mon CV complet pour plus de détails :</p>
                     <a href="BILADI RASHIDI LEVIEUX.pdf" download="CV_BRLe1_Developpeur.pdf">
@@ -321,6 +313,27 @@
             const menu = document.getElementById('menu');
             menu.hidden = !menu.hidden;
         };
+
+        function rashidi(){
+    const cacher=document.getElementById("cacher")
+    cacher.classList.toggle("afficher")
+}
+function envoyerWhatsApp() {
+    var nom = document.getElementById("nom").value;
+    var email = document.getElementById("email").value;
+    var sujet = document.getElementById("sujet").value;
+    var message = document.getElementById("message").value;
+
+    var numeroTel = "243977126962"; // Mettez votre numéro ici, sans le "+"
+
+    var texteMessage = "Bonjour, je suis " + nom + " (" + email + ").\n\n";
+    texteMessage += "Sujet : " + sujet + "\n";
+    texteMessage += "Message : " + message;
+
+    var url = "https://wa.me/" + numeroTel + "?text=" + encodeURIComponent(texteMessage);
+
+    window.open(url, '_blank');
+}
     </script>
 </body>
 </html>
