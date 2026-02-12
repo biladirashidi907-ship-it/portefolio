@@ -269,33 +269,40 @@
 
             <div class="contact-form">
                 <p style="color: #fff; margin-bottom: 20px; text-align: center; font-style: italic;">Ou remplissez ce formulaire rapide :</p>
-                <form action="" method="POST">
-                    <label for="name">Nom Complet</label>
-                    <input type="text" id="name" name="name" required>
-
-                    <label for="email">Adresse E-mail</label>
-                    <input type="email" id="email" name="email" required>
-
-                    <label for="subject">Sujet</label>
-                    <input type="text" id="subject" name="subject" required>
-
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" required></textarea>
-
-                    <button type="submit">Envoyer le Message</button>
+              <div class="row justify-content-center mt-4">
+            <div class="col-md-8">
+                <form action="traitement_du_formulaire.php" method="POST">
+                    <div class="mb-3">
+                        <label for="nom" class="form-label">Nom complet</label>
+                        <input type="text" class="form-control" id="nom" name="nom" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Adresse e-mail</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sujet" class="form-label">Sujet</label>
+                        <input type="text" class="form-control" id="sujet" name="sujet" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Votre message</label>
+                        <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="button" onclick="envoyerWhatsApp()" class="btn btn-primary btn-lg">Envoyer via email</button>
+                    </div>
                 </form>
             </div>
-            
-            <div class="social-cv-section">
-                
-                <h2 style="font-size: 24px; color: #ffeb3b;">Restons Connectés</h2>
+        </div>
+    </div>
 
-                <div class="social-links">
-                    <a href="VOTRE_LIEN_LINKEDIN" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="VOTRE_LIEN_GITHUB" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://x.com/BRashLevieux34" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
-                    <a href="biladrashidi907@gmail.com" title="E-mail"><i class="fas fa-envelope"></i></a>
-                    <a href="VOTRE_LIEN_WHATSAPP" target="_blank" title="Contact WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <footer class="text-center py-3 mt-5" style="background-color: #f8f9fa;">
+        <p class="mb-0">&copy; 2025 Les Stratèges. Tous droits réservés.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>
                 </div>
                 <div class="cv-download">
                     <p style="margin-bottom: 15px; font-size: 18px;">Téléchargez mon CV complet pour plus de détails :</p>
