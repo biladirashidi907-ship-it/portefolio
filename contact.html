@@ -288,9 +288,10 @@
                         <label for="message" class="form-label">Votre message</label>
                         <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
                     </div>
-                    <div class="d-grid gap-2">
-                        <button type="button" onclick="envoyerWhatsApp()" class="btn btn-primary btn-lg">Envoyer via email</button>
-                    </div>
+                    <div class="d-grid gap-2" style="display: flex; gap: 10px; margin-top: 15px;">
+    <button type="button" onclick="envoyerEmail()" style="background-color: #007bff; color: white; flex: 1; font-size: 16px;">Envoyer par Email</button>
+    <button type="button" onclick="envoyerWhatsApp()" style="background-color: #25D366; color: white; flex: 1; font-size: 16px;">Envoyer par WhatsApp</button>
+</div>
                 </form>
             </div>
         </div>
