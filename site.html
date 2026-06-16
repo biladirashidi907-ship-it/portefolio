@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Agence web à Lubumbashi - Création de sites modernes, e-commerce, design et SEO. Devis sur mesure.">
+    <title>Agence Web Lubumbashi | Création de sites modernes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --surface: rgba(255, 255, 255, 0.8);
+            --border: rgba(0, 0, 0, 0.08);
+            --shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            --text: #0f172a;
+            --text-soft: #475569;
+            --accent: #7c3aed;
+            --accent2: #0ea5e9;
+            --gradient: linear-gradient(135deg, #7c3aed, #3b82f6);
+            --glass: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --radius: 8px;
+            --font: 'Inter', system-ui, sans-serif;
+            --display: 'Space Grotesk', sans-serif;
+            --transition: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            --gold: #fbbf24;
+            --green: #10b981;
+            --red: #ef4444;
+            --whatsapp: #25D366;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* NAVIGATION */
+        .navbar {
+            position: fixed; top: 15px; left: 50%; transform: translateX(-50%);
+            z-index: 1000; width: 95%; max-width: 1200px;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: 12px;
+            padding: 12px 25px; display: flex; align-items: center; justify-content: space-between;
+            box-shadow: var(--shadow); transition: all 0.3s;
+        }
+        .nav-logo { font-weight: 800; font-size: 1.4rem; background: coral; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-soft); font-weight: 600; font-size: 0.9rem; transition: 0.2s; }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-btns { display: flex; gap: 10px; align-items: center; }
+        .hamburger {
+            display: none; background: none; border: none; font-size: 1.5rem;
+            cursor: pointer; color: var(--text); padding: 5px; transition: 0.2s;
+        }
+        .hamburger:hover { color: var(--accent); }
+
+        /* SIDEBAR */
+        .sidebar-overlay {
+            position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(4px); z-index: 1100; opacity: 0; pointer-events: none; transition: opacity 0.4s;
+        }
+        .sidebar-overlay.active { opacity: 1; pointer-events: auto; }
+        .sidebar {
+            position: fixed; top: 0; left: 0; height: 100%; width: 300px;
+            background: #fff; z-index: 1200; transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 2px 0 30px rgba(0,0,0,0.1);
+            padding: 30px; display: flex; flex-direction: column; gap: 25px;
+        }
+        .sidebar.active { transform: translateX(0); }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; }
+        .sidebar-close { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--text-soft); }
+        .sidebar-close:hover { color: var(--accent); }
+        .sidebar-links { list-style: none; display: flex; flex-direction: column; gap: 15px; }
+        .sidebar-links a { text-decoration: none; color: var(--text); font-weight: 600; font-size: 1rem; transition: 0.2s; }
+        .sidebar-links a:hover { color: var(--accent); }
+
+        /* BOUTONS */
+        .btn {
+            padding: 10px 22px; border-radius: var(--radius); border: none;
+            font-weight: 700; cursor: pointer; transition: var(--transition);
+            text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem;
+        }
+        .btn-primary { background: var(--text); color: #fff; }
+        .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+        .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
+        .btn-outline:hover { background: #fff; border-color: var(--accent); color: var(--accent); }
+        .btn-whatsapp { background: var(--whatsapp); color: #fff; }
+        .btn-whatsapp:hover { background: #1ebe5a; transform: translateY(-2px); }
+
+        /* SECTIONS */
+        .section-page { min-height: 80vh; display: flex; align-items: center; padding: 100px 5%; }
+        .container { max-width: 1200px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .hero-visual img { width: 100%; border-radius: var(--radius); box-shadow: var(--shadow); }
+
+        .glass-card {
+            background: var(--glass); backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: var(--radius);
+            padding: 40px; box-shadow: var(--shadow);
+        }
+        .glass-card h2 { font-size: 2.8rem; margin-bottom: 15px; letter-spacing: -1px; line-height: 1.1; }
+
+        /* SLIDER SERVICES */
+        .slider-section { padding: 80px 0; background: #fff; }
+        .slider-track {
+            display: flex; gap: 20px; overflow-x: auto; padding: 20px 5%;
+            scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+        }
+        .slider-track::-webkit-scrollbar { display: none; }
+        .slider-card {
+            scroll-snap-align: start; width: 280px; background: #f5f7fb;
+            border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border);
+            transition: 0.3s; flex-shrink: 0; cursor: pointer;
+        }
+        .slider-card:hover { transform: scale(1.02); border-color: var(--accent); }
+        .slider-card img { width: 100%; height: 180px; object-fit: cover; }
+        .slider-card-body { padding: 20px; }
+        .slider-card-body h4 { margin-bottom: 5px; font-size: 1rem; }
+        .slider-card-body p { font-size: 0.85rem; color: var(--text-soft); }
+
+        /* BANNIÈRE PROMO */
+        .pro-banner {
+            background: var(--text); color: #fff; padding: 30px;
+            width: 100%;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px;
+        }
+        .pro-content { max-width: 600px; }
+        .pro-content h2 { font-size: 2rem; margin-bottom: 15px; color: #fff; }
+        .pro-content p { color: #94a3b8; margin-bottom: 25px; }
+
+        /* TARIFS - 5 OFFRES */
+        .pricing-section { padding: 80px 5%; background: #f9fafb; }
+        .pricing-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .plan-card {
+            background: #fff; border-radius: var(--radius); padding: 30px 20px;
+            text-align: center; border: 2px solid var(--border); transition: 0.3s;
+        }
+        .plan-card:hover { transform: translateY(-10px); box-shadow: var(--shadow); }
+        .plan-card.featured { border-color: var(--accent); background: #faf8ff; }
+        .plan-card .price { font-size: 2.2rem; font-weight: 800; color: var(--accent); margin: 15px 0; }
+        .plan-card .price small { font-size: 0.9rem; font-weight: 400; color: var(--text-soft); }
+        .plan-card ul { list-style: none; margin: 15px 0; }
+        .plan-card li { padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+        .plan-card .badge { display: inline-block; background: var(--accent); color: #fff; padding: 3px 10px; border-radius: 20px; font-size: 0.65rem; text-transform: uppercase; margin-bottom: 8px; }
+
+        /* PORTFOLIO */
+        .portfolio-section { padding: 80px 5%; background: #fff; }
+        .portfolio-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .portfolio-item {
+            border-radius: var(--radius); overflow: hidden; position: relative;
+            border: 1px solid var(--border); transition: 0.3s; cursor: pointer;
+        }
+        .portfolio-item:hover { transform: scale(1.02); box-shadow: var(--shadow); }
+        .portfolio-item img { width: 100%; height: 250px; object-fit: cover; }
+        .portfolio-item .overlay {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: #fff; padding: 20px; transform: translateY(100%);
+            transition: 0.3s;
+        }
+        .portfolio-item:hover .overlay { transform: translateY(0); }
+
+        /* TÉMOIGNAGES */
+        .testimonials-section { padding: 80px 5%; background: #f9fafb; }
+        .testimonials-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .testimonial-card {
+            background: #fff; border-radius: var(--radius); padding: 30px;
+            box-shadow: var(--shadow); border: 1px solid var(--border); transition: 0.3s;
+            display: flex; gap: 15px; align-items: flex-start;
+        }
+        .testimonial-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+        .testimonial-content { flex: 1; }
+        .testimonial-text { font-style: italic; color: var(--text-soft); margin-bottom: 10px; }
+        .testimonial-author { font-weight: 700; color: var(--text); }
+
+        /* FAQ */
+        .faq-section { padding: 80px 5%; max-width: 900px; margin: 0 auto; }
+        .faq-section h2 { font-family: var(--display); font-size: 2.5rem; margin-bottom: 40px; text-align: center; }
+        .faq-item { border-bottom: 1px solid var(--border); padding: 20px 0; }
+        .faq-question {
+            width: 100%; background: none; border: none; font-size: 1.2rem; font-weight: 600;
+            color: var(--text); text-align: left; cursor: pointer; padding: 10px 0;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; color: var(--text-soft); }
+        .faq-answer.open { max-height: 300px; }
+
+        /* FOOTER */
+        footer { background: var(--text); padding: 80px 5% 40px; border-top: 3px solid #ffb347; }
+        .footer-grid {
+            max-width: 1200px; margin: 0 auto; display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px;
+        }
+        .footer-brand p { margin-top: 15px; color: whitesmoke; max-width: 300px; }
+        .footer-col h4 { margin-bottom: 20px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 10px; }
+        .footer-col a { text-decoration: none; color: rgb(245, 245, 245); font-size: 0.9rem; transition: 0.2s; }
+        .footer-col a:hover { color: var(--accent); }
+        .footer-social { display: flex; gap: 15px; margin-top: 20px; }
+        .footer-social a { width: 35px; height: 35px; border-radius: 50%; background: #f5f7fb; display: flex; align-items: center; justify-content: center; color: var(--text); transition: 0.3s; }
+        .footer-social a:hover { background: var(--accent); color: #fff; }
+        .footer-bottom { border-top: 1px solid var(--border); padding-top: 30px; text-align: center; color: var(--text-soft); font-size: 0.8rem; }
+
+        /* MODALES */
+        .modal {
+            position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(8px); z-index: 2000; display: none;
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: #fff; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto;
+            padding: 40px; border-radius: var(--radius); position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: var(--text-soft); z-index: 10; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 8px; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border-radius: var(--radius); border: 1px solid var(--border); outline: none; transition: 0.3s; font-family: var(--font); }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1); }
+
+        /* WHATSAPP FLOATING */
+        .whatsapp-float {
+            position: fixed; bottom: 30px; left: 30px; z-index: 999;
+            width: 60px; height: 60px; background: var(--whatsapp);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            transition: 0.3s; cursor: pointer; text-decoration: none;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 8px 35px rgba(37, 211, 102, 0.6); }
+        .whatsapp-float i { font-size: 2rem; color: #fff; }
+
+        /* BOUTON RETOUR HAUT */
+        .back-to-top {
+            position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px;
+            background: var(--accent); color: #fff; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            opacity: 0; transform: translateY(20px); transition: all 0.3s; pointer-events: none; z-index: 999;
+        }
+        .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .back-to-top:hover { background: var(--accent2); }
+
+        /* GARANTIE BADGE */
+        .guarantee-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: #d1fae5; color: #065f46; padding: 8px 16px;
+            border-radius: 30px; font-size: 0.8rem; font-weight: 700;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; text-align: center; }
+            .nav-links, .nav-btns { display: none; }
+            .hamburger { display: block; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .pricing-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .glass-card h2 { font-size: 2rem; }
+            .pricing-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <span class="nav-logo">ESTRA CREATOR WEB</span>
+        <ul class="nav-links">
+            <li><a href="#hero">Accueil</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Réalisations</a></li>
+            <li><a href="#pricing">Tarifs</a></li>
+            <li><a href="#testimonials">Avis</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#" onclick="toggleContactModal(); return false;">Contact</a></li>
+        </ul>
+        <div class="nav-btns">
+            <a href="#" onclick="toggleContactModal(); return false;" class="btn btn-primary">Devis gratuit</a>
+        </div>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    </nav>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="nav-logo">ESTRA CREATOR WEB</span>
+            <button class="sidebar-close" id="sidebarClose">&times;</button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="#hero">Accueil</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Réalisations</a></li>
+            <li><a href="#pricing">Tarifs</a></li>
+            <li><a href="#testimonials">Avis</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#" onclick="toggleContactModal(); return false;">Contact</a></li>
+            <hr>
+            <li><a href="#" onclick="toggleContactModal(); return false;"><i class="fas fa-phone"></i> +243 977 126 962</a></li>
+            <li><a href="#" onclick="window.open('https://wa.me/243977126962','_blank');"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
+            <li><a href="#"><i class="fas fa-envelope"></i> biladirashidi907@gmail.com</a></li>
+            <li><a href="#"><i class="fas fa-map-marker-alt"></i> Lubumbashi, RDC</a></li>
+        </ul>
+    </aside>
+
+    <!-- WHATSAPP FLOATING -->
+    <a href="https://wa.me/243977126962" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- HERO -->
+    <section class="section-page" id="hero">
+        <div class="container">
+            <div class="glass-card">
+                <h2>Création de sites web modernes à Lubumbashi</h2>
+                <p>Vitrines, e-commerce, applications sur mesure — Nous donnons vie à vos idées avec design et performance.</p>
+                <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                    <a href="#pricing" class="btn btn-primary">Voir nos offres</a>
+                    <a href="#" onclick="toggleContactModal(); return false;" class="btn btn-outline">Demander un devis</a>
+                </div>
+                <div style="margin-top:20px; display:flex; gap:20px; flex-wrap:wrap; font-size:0.9rem; color:var(--text-soft);">
+                    <span><i class="fas fa-check-circle" style="color:var(--green);"></i> 50+ sites livrés</span>
+                    <span><i class="fas fa-check-circle" style="color:var(--green);"></i> 4.9/5 satisfaction</span>
+                    <span><i class="fas fa-check-circle" style="color:var(--green);"></i> Support 24/7</span>
+                    <span><i class="fas fa-check-circle" style="color:var(--green);"></i> Paiement 3x sans frais</span>
+                </div>
+                <div style="margin-top:15px;">
+                    <span class="guarantee-badge"><i class="fas fa-shield-alt"></i> Garantie satisfait ou remboursé 30 jours</span>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop" alt="Création de sites web à Lubumbashi" loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES (SLIDER) - 5 TYPES DE SITES -->
+    <section id="services" class="slider-section">
+        <div style="padding: 0 5%; margin-bottom: 30px;">
+            <h2 style="font-family:var(--display);">🚀 Nos services web</h2>
+            <p style="color:var(--text-soft);">5 types de sites pour répondre à tous vos besoins.</p>
+        </div>
+        <div class="slider-track" id="sliderTrack">
+            <!-- 1. Site Vitrine -->
+            <div class="slider-card">
+                <div class="slider-card-body">
+                    <h4>🏢 Site Vitrine</h4>
+                    <p>Présence en ligne professionnelle, design unique, responsive. Idéal pour PME, commerçants, professions libérales.</p>
+                    <p style="font-weight:700; color:var(--accent);">À partir de 150 $</p>
+                </div>
+            </div>
+            <!-- 2. E-commerce -->
+            <div class="slider-card">
+                <div class="slider-card-body">
+                    <h4>🛒 Boutique en ligne</h4>
+                    <p>Vendez vos produits avec paiement Mobile Money, gestion de stock et livraison intégrée.</p>
+                    <p style="font-weight:700; color:var(--accent);">À partir de 300 $</p>
+                </div>
+            </div>
+            <!-- 3. Site Institutionnel -->
+            <div class="slider-card">
+                <div class="slider-card-body">
+                    <h4>🏛️ Site Institutionnel</h4>
+                    <p>Pour les grandes entreprises, ONG et institutions. Présentation des services, équipe, rapports, actualités.</p>
+                    <p style="font-weight:700; color:var(--accent);">À partir de 600 $</p>
+                </div>
+            </div>
+            <!-- 4. App sur mesure -->
+            <div class="slider-card">
+                <div class="slider-card-body">
+                    <h4>📱 App Web sur mesure</h4>
+                    <p>Solutions SaaS, outils métier, dashboards, API, gestion d'utilisateurs. Développement full-stack.</p>
+                    <p style="font-weight:700; color:var(--accent);">À partir de 1 500 $</p>
+                </div>
+            </div>
+            <!-- 5. Landing Page -->
+            <div class="slider-card">
+                <div class="slider-card-body">
+                    <h4>🎯 Landing Page</h4>
+                    <p>Page unique pour vos campagnes marketing, inscriptions, promotions ou lancements de produits.</p>
+                    <p style="font-weight:700; color:var(--accent);">À partir de 50 $</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BANNIÈRE PROMO -->
+    <section class="pro-banner" id="pro">
+        <div class="pro-content">
+            <span style="color:var(--gold); font-weight:800; font-size:0.7rem; text-transform:uppercase;">Offre spéciale</span>
+            <h2>Site vitrine + Hébergement 1 an</h2>
+            <p>Profitez de notre pack découverte : site vitrine 5 pages, hébergement sécurisé, nom de domaine offert, et support 3 mois. Le tout pour <strong style="color:var(--gold);">500 $</strong> seulement !</p>
+            <a href="#" onclick="toggleContactModal(); return false;" class="btn btn-primary" style="background:var(--accent2);">Profiter de l'offre</a>
+        </div>
+        <div style="background:rgba(255,255,255,0.1); padding:30px; border-radius:var(--radius); text-align:center; border:1px solid rgba(255,255,255,0.2);">
+            <i class="fas fa-rocket" style="font-size:3rem; color:var(--gold); margin-bottom:15px;"></i>
+            <h3 style="color:#fff;">-20%</h3>
+            <p style="font-size:0.8rem;">pour tout projet signé avant le 30 juin</p>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section class="portfolio-section" id="portfolio">
+        <h2 style="font-family:var(--display); font-size:2.5rem; margin-bottom:40px; text-align:center;">🏆 Nos réalisations</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&fit=crop" alt="Site vitrine minier">
+                <div class="overlay"><h4>Site vitrine - Société minière</h4><p>Design institutionnel, multilingue</p></div>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&fit=crop" alt="E-commerce">
+                <div class="overlay"><h4>Boutique en ligne - Mode</h4><p>Paiement Mobile Money + livraison</p></div>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&fit=crop" alt="Dashboard">
+                <div class="overlay"><h4>Tableau de bord - Logistique</h4><p>Suivi en temps réel, API</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TARIFS - 5 OFFRES -->
+    <section class="pricing-section" id="pricing">
+        <h2 style="font-family:var(--display); font-size:2.5rem; margin-bottom:40px; text-align:center;">💰 Nos formules</h2>
+        <div class="pricing-grid">
+            <!-- Offre 1 : Landing Page -->
+            <div class="plan-card">
+                <div class="badge" style="background:#94a3b8;">Express</div>
+                <h3>Landing Page</h3>
+                <div class="price">50 $</div>
+                <ul>
+                    <li>1 page unique</li>
+                    <li>Design responsive</li>
+                    <li>Formulaire d'inscription</li>
+                    <li>Mise en ligne</li>
+                    <li>1 mois de support</li>
+                </ul>
+                <a href="#" onclick="toggleContactModal(); return false;" class="btn btn-outline" style="width:100%; justify-content:center;">Choisir</a>
+            </div>
+            <!-- Offre 2 : Site Vitrine -->
+            <div class="plan-card">
+                <div class="badge" style="background:#94a3b8;">Démarrage</div>
+                <h3>Site Vitrine</h3>
+                <div class="price">150 $</div>
+                <ul>
+                    <li>5 pages</li>
+                    <li>Responsive</li>
+                    <li>Formulaire de contact</li>
+                    <li>Mise en ligne</li>
+                    <li>1 mois de support</li>
+                </ul>
+                <a href="#" onclick="toggleContactModal(); return false;" class="btn btn-outline" style="width:100%; justify-content:center;">Choisir</a>
+            </div>
+            <!-- Offre 3 : E-commerce -->
+            <div class="plan-card featured">
+                <div class="badge" style="background:var(--accent);">Populaire</div>
+                <h3>E-commerce</h3>
+                <div class="price">400 $</div>
+                <ul>
+                    <li>Boutique en ligne</li>
+                    <li>Paiement Mobile Money</li>
+                    <li>Gestion de stock</li>
+                    <li>SEO basique</li>
+                    <li>3 mois de support</li>
+                </ul>
+                <a href="#" onclick="toggleContactModal(); return false;" class="btn btn-primary" style="width:100%; justify-content:center;">Choisir</a>
+            </div>
+            <!-- Offre 4 : Institutionnel -->
+            <div class="plan-card">
+                <div class="badge" style="background:var(--gold);">Pro</div>
+                <h3>Institutionnel</h3>
+                <div class="price">700 $</div>
+                <ul>
+                    <li>15 pages</li>
+                    <li>Blog & actualités</li>
+                    <li>Multi-langues</li>
+                    <li>SEO avancé</li>
+                    <li>6 mois de support</li>
+                </ul>
+                <a href="#" onclick="toggleContactModal(); return false;" class="btn btn-outline" style="width:100%; justify-content:center; border-color:var(--gold); color:var(--gold);">Choisir</a>
+            </div>
+            <!-- Offre 5 : App sur mesure -->
+            <div class="plan-card">
+                <div class="badge" style="background:var(--red);">Premium</div>
+                <h3>App sur mesure</h3>
+                <div class="price">1 000 $</div>
+                <ul>
+                    <li>SaaS / API</li>
+                    <li>Dashboards</li>
+                    <li>Base de données</li>
+                    <li>Authentification</li>
+                    <li>12 mois de support</li>
+                </ul>
+                <a href="#" onclick="toggleContactModal(); return false;" class="btn btn-outline" style="width:100%; justify-content:center; border-color:var(--red); color:var(--red);">Choisir</a>
+            </div>
+        </div>
+        <p style="text-align:center; margin-top:40px; color:var(--text-soft);">💡 Paiement en 3 fois sans frais possible. <a href="#" onclick="toggleContactModal(); return false;" style="color:var(--accent);">Contactez-nous</a> pour un devis personnalisé.</p>
+    </section>
+
+    <!-- TÉMOIGNAGES -->
+    <section class="testimonials-section" id="testimonials">
+        <h2 style="font-family:var(--display); font-size:2.5rem; margin-bottom:40px; text-align:center;">⭐ Ce que nos clients disent</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <img src="https://i.pravatar.cc/150?img=1" alt="Client" class="testimonial-avatar">
+                <div class="testimonial-content">
+                    <p class="testimonial-text">“Notre site vitrine a été livré en 2 semaines ! Design moderne et excellent suivi. Je recommande.”</p>
+                    <p class="testimonial-author">— Jean K., Gérant d'hôtel</p>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <img src="https://i.pravatar.cc/150?img=2" alt="Client" class="testimonial-avatar">
+                <div class="testimonial-content">
+                    <p class="testimonial-text">“Grâce à la boutique en ligne, mes ventes ont augmenté de 40% en 3 mois. Paiement Mobile Money très pratique.”</p>
+                    <p class="testimonial-author">— Marie M., Commerçante</p>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <img src="https://i.pravatar.cc/150?img=5" alt="Client" class="testimonial-avatar">
+                <div class="testimonial-content">
+                    <p class="testimonial-text">“L'équipe a su comprendre mes besoins et me proposer une solution sur mesure. Un vrai professionnalisme.”</p>
+                    <p class="testimonial-author">— Alain T., Entrepreneur</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" id="faq">
+        <h2>❓ Questions fréquentes</h2>
+        <div class="faq-item">
+            <button class="faq-question">Combien coûte la création d'un site web ? <i class="fas fa-chevron-down"></i></button>
+            <div class="faq-answer"><p>Nos prix commencent à 50 $ pour une landing page, 150 $ pour un site vitrine, 300 $ pour une boutique en ligne, 600 $ pour un site institutionnel et 1 000 $ pour une application sur mesure. Contactez-nous pour un devis personnalisé.</p></div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">Quels moyens de paiement acceptez-vous ? <i class="fas fa-chevron-down"></i></button>
+            <div class="faq-answer"><p>Nous acceptons le paiement en espèces, via Mobile Money (Orange Money, M-Pesa, Airtel Money) et virement bancaire en USD ou FC. Paiement en 3 fois sans frais possible.</p></div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">Proposez-vous l'hébergement ? <i class="fas fa-chevron-down"></i></button>
+            <div class="faq-answer"><p>Oui, nous proposons un hébergement sécurisé à partir de 20 $/mois avec sauvegardes automatiques, certificat SSL et assistance 24/7.</p></div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">Quel est le délai de livraison ? <i class="fas fa-chevron-down"></i></button>
+            <div class="faq-answer"><p>Comptez 1 à 2 semaines pour une landing page, 2 à 3 semaines pour un site vitrine, 3 à 6 semaines pour une boutique en ligne ou site institutionnel, selon la complexité.</p></div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">Proposez-vous une garantie ? <i class="fas fa-chevron-down"></i></button>
+            <div class="faq-answer"><p>Oui ! Nous offrons une garantie "satisfait ou remboursé" de 30 jours et 3 mois de support gratuit après la livraison.</p></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <span class="nav-logo">ESTRA CREATOR WEB</span>
+                <p>Création de sites web modernes à Lubumbashi. Design, performance et confiance.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#services">Landing Page</a></li>
+                    <li><a href="#services">Site Vitrine</a></li>
+                    <li><a href="#services">E-commerce</a></li>
+                    <li><a href="#services">Site Institutionnel</a></li>
+                    <li><a href="#services">App sur mesure</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="#"><i class="fas fa-phone"></i> +243 977 126 962</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> biladirashidi907@gmail.com</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Lubumbashi, RDC</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Liens</h4>
+                <ul>
+                    <li><a href="#" onclick="toggleContactModal(); return false;">Devis gratuit</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#">Mentions légales</a></li>
+                    <li><a href="#">Confidentialité</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 Estra Creator Web - Lubumbashi. Tous droits réservés.
+        </div>
+    </footer>
+
+    <!-- BOUTON RETOUR HAUT -->
+    <div class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></div>
+
+    <!-- MODALE CONTACT / DEVIS -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModals()">&times;</span>
+            <h3 style="margin-bottom:20px; font-family:var(--display);">📩 Demander un devis gratuit</h3>
+            <p style="color:var(--text-soft); margin-bottom:20px;">Remplissez ce formulaire et nous vous répondons sous 24h.</p>
+            <form onsubmit="handleContactSubmit(event)">
+                <div class="form-group">
+                    <label>VOTRE NOM</label>
+                    <input type="text" id="contactName" placeholder="Ex: Rashidi Levieux" required>
+                </div>
+                <div class="form-group">
+                    <label>EMAIL</label>
+                    <input type="email" id="contactEmail" placeholder="biladirashidi907@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label>TÉLÉPHONE</label>
+                    <input type="tel" id="contactPhone" placeholder="+243 977 126 962" required>
+                </div>
+                <div class="form-group">
+                    <label>TYPE DE PROJET</label>
+                    <select id="contactProject" required>
+                        <option value="">-- Choisissez --</option>
+                        <option value="landing">Landing Page (50 $)</option>
+                        <option value="vitrine">Site Vitrine (150 $)</option>
+                        <option value="ecommerce">Boutique en ligne (300 $)</option>
+                        <option value="institutionnel">Site Institutionnel (600 $)</option>
+                        <option value="sur-mesure">App sur mesure (1 000 $)</option>
+                        <option value="autre">Autre projet</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>BUDGET PRÉVISIONNEL (USD)</label>
+                    <select id="contactBudget">
+                        <option value="">-- Indiquez votre budget --</option>
+                        <option value="100-400">100 - 400 $</option>
+                        <option value="400-900">400 - 900 $</option>
+                        <option value="900-1500">900 - 1 500 $</option>
+                        <option value="1500+">1 500 $ et plus</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>MESSAGE</label>
+                    <textarea id="contactMessage" placeholder="Décrivez votre projet..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%; padding:14px;">Envoyer la demande</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ---------- SIDEBAR ----------
+        const hamburger = document.getElementById('hamburgerBtn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const sidebarClose = document.getElementById('sidebarClose');
+
+        function openSidebar() { sidebar.classList.add('active'); overlay.classList.add('active'); }
+        function closeSidebar() { sidebar.classList.remove('active'); overlay.classList.remove('active'); }
+        hamburger.addEventListener('click', openSidebar);
+        sidebarClose.addEventListener('click', closeSidebar);
+        overlay.addEventListener('click', closeSidebar);
+        document.querySelectorAll('.sidebar-links a').forEach(link => link.addEventListener('click', closeSidebar));
+
+        // ---------- MODALES ----------
+        function toggleContactModal() {
+            document.getElementById('contactModal').classList.toggle('active');
+        }
+        function closeModals() {
+            document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+        }
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) closeModals();
+        });
+
+        // ---------- CONTACT ----------
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('contactName').value.trim();
+            const email = document.getElementById('contactEmail').value.trim();
+            const phone = document.getElementById('contactPhone').value.trim();
+            const project = document.getElementById('contactProject').value;
+            const budget = document.getElementById('contactBudget').value || "Non précisé";
+            const message = document.getElementById('contactMessage').value.trim();
+            if (name && email && phone && project && message) {
+                alert(`✅ Merci ${name} !\n\nVotre demande de devis a été envoyée.\n📞 Nous vous répondrons sous 24h au ${phone} ou par email.\n💼 Projet : ${project}\n💰 Budget : ${budget}\n\nÀ très bientôt !`);
+                document.getElementById('contactModal').classList.remove('active');
+                e.target.reset();
+            }
+        }
+
+        // ---------- FAQ ACCORDION ----------
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const answer = btn.nextElementSibling;
+                const isOpen = answer.classList.contains('open');
+                document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+                if (!isOpen) answer.classList.add('open');
+            });
+        });
+
+        // ---------- BOUTON RETOUR HAUT ----------
+        const backBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backBtn.classList.toggle('visible', window.scrollY > 500);
+        });
+        backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // ---------- SLIDER DRAG ----------
+        const track = document.getElementById('sliderTrack');
+        let isDown = false, startX, scrollLeftPos;
+        track.addEventListener('mousedown', (e) => {
+            isDown = true; startX = e.pageX - track.offsetLeft; scrollLeftPos = track.scrollLeft;
+        });
+        track.addEventListener('mouseleave', () => isDown = false);
+        track.addEventListener('mouseup', () => isDown = false);
+        track.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - track.offsetLeft;
+            track.scrollLeft = scrollLeftPos - (x - startX) * 2;
+        });
+        track.addEventListener('touchstart', (e) => {
+            isDown = true; startX = e.touches[0].pageX - track.offsetLeft; scrollLeftPos = track.scrollLeft;
+        });
+        track.addEventListener('touchend', () => isDown = false);
+        track.addEventListener('touchmove', (e) => {
+            if (!isDown) return;
+            const x = e.touches[0].pageX - track.offsetLeft;
+            track.scrollLeft = scrollLeftPos - (x - startX) * 2;
+        });
+    </script>
+</body>
+</html>
