@@ -4142,7 +4142,6 @@
     <div id="toastMsg" class="toast-custom"></div>
 
 <script>
-
 let activeCommentPostId = null;
 let replyTargetCommentId = null;
 let replyTargetAuthor = '';
@@ -4150,22 +4149,8 @@ let pickerOpen = false;
 
 // --- Gestion du double-clic sur l'icône Commenter ---
 function handleCommentClick(postId) {
-    const post = findPostById(postId);
-    if (!post) return;
-    
-    // Si c'est un événement ou un cours, on ouvre directement le sheet
-    if (post.isEvent || post.isCourse) {
-        openPostCommentsSheet(postId);
-        return;
-    }
-    
-    // Pour les posts standards : alternance quick reply / sheet
-    if (!post.showQuickReply) {
-        post.showQuickReply = true;
-        refreshSinglePostCard(postId);
-    } else {
-        openPostCommentsSheet(postId);
-    }
+    console.log('handleCommentClick', postId);
+    openPostCommentsSheet(postId);
 }
 
 // Fermer le champ rapide
@@ -4178,6 +4163,7 @@ function closeQuickReply(postId) {
 
 // Helper pour retrouver un post (posts, events, courses)
 function findPostById(postId) {
+    console.log('findPostById', postId);
     let found = posts.find(p => p.id === postId);
     if (found) return found;
     found = eventsList.find(e => e.id === postId);
@@ -4185,7 +4171,6 @@ function findPostById(postId) {
     const allCourses = JSON.parse(localStorage.getItem('estra_courses_v4') || '[]');
     const course = allCourses.find(c => c.id === postId);
     if (course) {
-        // Construire un objet post temporaire
         return {
             id: course.id,
             author: course.author || 'Inconnu',
@@ -4198,6 +4183,7 @@ function findPostById(postId) {
             timestamp: course.timestamp || Date.now()
         };
     }
+    console.warn('findPostById: post non trouvé', postId);
     return null;
 }
 
@@ -4221,30 +4207,35 @@ function openPostCommentsSheet(postId) {
     const post = findPostById(postId);
     if (!post) return;
     
-    // Mettre à jour l'avatar du formulaire
+    // Mise à jour de l'avatar du formulaire (si l'élément existe)
     const avatar = document.getElementById('sheetAvatar');
     if (avatar) {
         avatar.src = currentUser.avatar || 'https://ui-avatars.com/api/?name=You&background=38bdf8&color=fff';
     }
     
-    // Rendre les commentaires avec votes et réponses
+    // Rendre les commentaires
     const listEl = document.getElementById('postSheetCommentList');
     if (listEl) {
         listEl.innerHTML = renderCommentsWithVotes(post.comments || [], 0, postId);
     }
     
-    // Réinitialiser le champ et annuler toute réponse en cours
-    document.getElementById('postSheetInput').value = '';
+    // Réinitialiser le champ input (si présent) et annuler la réponse
+    const inputEl = document.getElementById('postSheetInput');
+    if (inputEl) {
+        inputEl.value = '';
+    }
     cancelReply();
     
+    // Affichage de l'overlay et du sheet
     const overlay = document.getElementById('postCommentsOverlay');
     const sheet = document.getElementById('postCommentsSheet');
     if (overlay) overlay.classList.add('active');
     if (sheet) sheet.classList.add('active');
     
-    // Focus sur le champ après un court délai
+    // Focus sur le champ après un court délai (sécurisé)
     setTimeout(() => {
-        document.getElementById('postSheetInput').focus();
+        const input = document.getElementById('postSheetInput');
+        if (input) input.focus();
     }, 400);
 }
 
@@ -4264,10 +4255,16 @@ function submitPostSheetComment() {
     const input = document.getElementById('postSheetInput');
     if (!input || !activeCommentPostId) return;
     const text = input.value.trim();
-    if (!text) return;
+    if (!text) {
+        showToast('❌ Écrivez un commentaire', true);
+        return;
+    }
     
     const post = findPostById(activeCommentPostId);
-    if (!post) return;
+    if (!post) {
+        showToast('❌ Publication introuvable', true);
+        return;
+    }
     
     const profile = JSON.parse(localStorage.getItem('estra_profile') || '{}');
     const newComment = {
@@ -4296,7 +4293,7 @@ function submitPostSheetComment() {
         post.comments.push(newComment);
     }
     
-    // Si c'est un cours, mettre à jour le tableau courses_v4
+    // Sauvegarde pour les cours
     if (post.isCourse && post.courseData) {
         const allCourses = JSON.parse(localStorage.getItem('estra_courses_v4') || '[]');
         const courseIndex = allCourses.findIndex(c => c.id === activeCommentPostId);
@@ -4308,6 +4305,7 @@ function submitPostSheetComment() {
     
     saveAllData();
     
+    // Mise à jour du sheet
     const listEl = document.getElementById('postSheetCommentList');
     if (listEl) {
         listEl.innerHTML = renderCommentsWithVotes(post.comments || [], 0, activeCommentPostId);
@@ -4316,23 +4314,23 @@ function submitPostSheetComment() {
     input.value = '';
     cancelReply();
     
+    // Mise à jour du compteur et de la section inline si présente
     const countEl = document.getElementById('comment-count-' + activeCommentPostId);
     if (countEl) {
         countEl.innerHTML = `<i class="fas fa-comment"></i> ${post.comments.length}`;
     }
-    const commentsSection = document.getElementById('comments-list-' + activeCommentPostId);
-    if (commentsSection) {
-        commentsSection.innerHTML = renderComments(post.comments, 0, activeCommentPostId);
+    const inlineList = document.getElementById('comments-list-' + activeCommentPostId);
+    if (inlineList) {
+        inlineList.innerHTML = renderComments(post.comments, 0, activeCommentPostId);
     }
-    if (post.showQuickReply) {
-        refreshSinglePostCard(activeCommentPostId);
-    }
+    
     showToast('💬 Commentaire ajouté');
 }
+
 // ===== RECHERCHE RÉCURSIVE D'UN COMMENTAIRE =====
 function findCommentById(comments, id) {
     for (let c of comments) {
-        if (c.id === id) return c;
+        if (c.id == id) return c;            // comparaison souple (string/number)
         if (c.replies) {
             const found = findCommentById(c.replies, id);
             if (found) return found;
@@ -4341,41 +4339,91 @@ function findCommentById(comments, id) {
     return null;
 }
 
-// ===== GESTION DES VOTES =====
-function voteComment(commentId, direction) {
+// ===== GESTION DES VOTES (optimisée : mise à jour partielle du DOM) =====
+function voteComment(commentId, direction, buttonElement = null) {
     const post = findPostById(activeCommentPostId);
     if (!post) return;
     const comment = findCommentById(post.comments, commentId);
     if (!comment) return;
-    
-    if (comment.userVote === direction) {
+
+    // Normalisation des types numériques
+    comment.upvotes = parseInt(comment.upvotes) || 0;
+    comment.downvotes = parseInt(comment.downvotes) || 0;
+    comment.userVote = parseInt(comment.userVote) || 0;
+
+    const previousVote = comment.userVote;
+
+    // Annulation du même vote
+    if (previousVote === direction) {
         comment.userVote = 0;
-        direction === 1 ? comment.upvotes-- : comment.downvotes--;
+        if (direction === 1) comment.upvotes--;
+        else comment.downvotes--;
     } else {
-        if (comment.userVote === 1) comment.upvotes--;
-        else if (comment.userVote === -1) comment.downvotes--;
+        // Retirer l'ancien vote
+        if (previousVote === 1) comment.upvotes--;
+        else if (previousVote === -1) comment.downvotes--;
+
+        // Appliquer le nouveau vote
         comment.userVote = direction;
-        direction === 1 ? comment.upvotes++ : comment.downvotes--;
+        if (direction === 1) comment.upvotes++;
+        else comment.downvotes++;          // <--- CORRECTION : incrémentation au lieu de décrémentation
+    }
+
+    // Sauvegarde
+    if (post.isCourse && post.courseData) {
+        const allCourses = JSON.parse(localStorage.getItem('estra_courses_v4') || '[]');
+        const idx = allCourses.findIndex(c => c.id === activeCommentPostId);
+        if (idx !== -1) {
+            allCourses[idx].comments = post.comments;
+            localStorage.setItem('estra_courses_v4', JSON.stringify(allCourses));
+        }
     }
     saveAllData();
-    
-    const listEl = document.getElementById('postSheetCommentList');
-    if (listEl) {
-        listEl.innerHTML = renderCommentsWithVotes(post.comments || [], null, 0, activeCommentPostId);
+
+    // Mise à jour ciblée du DOM si le bouton est fourni (évite de recharger tout le HTML)
+    if (buttonElement) {
+        const actionBar = buttonElement.closest('.comment-actions-bar');
+        if (actionBar) {
+            const upBtn = actionBar.querySelector('.fa-thumbs-up')?.parentNode;
+            const downBtn = actionBar.querySelector('.fa-thumbs-down')?.parentNode;
+            const upSpan = actionBar.querySelector('.up-count');
+            const downSpan = actionBar.querySelector('.down-count');
+
+            if (upBtn) {
+                upBtn.classList.toggle('voted', comment.userVote === 1);
+                if (upSpan) upSpan.textContent = comment.upvotes;
+            }
+            if (downBtn) {
+                downBtn.classList.toggle('voted', comment.userVote === -1);
+                if (downSpan) downSpan.textContent = comment.downvotes;
+            }
+        }
+    } else {
+        // Fallback : recharger toute la liste du sheet
+        const listEl = document.getElementById('postSheetCommentList');
+        if (listEl) {
+            listEl.innerHTML = renderCommentsWithVotes(post.comments || [], 0, activeCommentPostId);
+        }
     }
-    const commentsList = document.getElementById('comments-list-' + activeCommentPostId);
-    if (commentsList) {
-        commentsList.innerHTML = renderComments(post.comments, null, 0, activeCommentPostId, true);
+
+    // Mise à jour de la liste inline (si elle existe)
+    const inlineList = document.getElementById('comments-list-' + activeCommentPostId);
+    if (inlineList) {
+        inlineList.innerHTML = renderComments(post.comments, 0, activeCommentPostId, true);
     }
 }
-// Vote sur un commentaire dans un post spécifique
+
+// Vote sur un commentaire dans un post spécifique (pour la vue inline)
 function voteCommentInPost(postId, commentId, direction) {
     const post = findPostById(postId);
     if (!post) return;
     const comment = findCommentById(post.comments, commentId);
     if (!comment) return;
-    
-    // Gestion du vote
+
+    comment.upvotes = parseInt(comment.upvotes) || 0;
+    comment.downvotes = parseInt(comment.downvotes) || 0;
+    comment.userVote = parseInt(comment.userVote) || 0;
+
     if (comment.userVote === direction) {
         comment.userVote = 0;
         direction === 1 ? comment.upvotes-- : comment.downvotes--;
@@ -4383,37 +4431,36 @@ function voteCommentInPost(postId, commentId, direction) {
         if (comment.userVote === 1) comment.upvotes--;
         else if (comment.userVote === -1) comment.downvotes--;
         comment.userVote = direction;
-        direction === 1 ? comment.upvotes++ : comment.downvotes++;
+        direction === 1 ? comment.upvotes++ : comment.downvotes++;   // <-- CORRECTION
     }
+
     saveAllData();
-    
-    // Mise à jour de la section commentaires
+
     const commentsList = document.getElementById('comments-list-' + postId);
     if (commentsList) {
-        commentsList.innerHTML = renderComments(post.comments, null, 0, postId, true);
+        commentsList.innerHTML = renderComments(post.comments, 0, postId, true);
     }
-    // Mise à jour du sheet s'il est ouvert pour ce post
+    // Mise à jour du sheet si ouvert pour ce post
     if (activeCommentPostId === postId) {
         const sheetList = document.getElementById('postSheetCommentList');
         if (sheetList) {
-            sheetList.innerHTML = renderCommentsWithVotes(post.comments || [], null, 0, postId);
+            sheetList.innerHTML = renderCommentsWithVotes(post.comments || [], 0, postId);
         }
     }
 }
 
 // Cibler un commentaire pour y répondre (ouvre le bottom sheet si nécessaire)
 function setReplyTargetInPost(postId, commentId, authorName) {
-    // Si le bottom sheet est déjà ouvert pour ce post, on cible le commentaire
     if (activeCommentPostId === postId) {
         setReplyTarget(commentId, authorName);
     } else {
-        // Sinon, on ouvre le sheet et on cible après ouverture
         openPostCommentsSheet(postId);
         setTimeout(() => {
             setReplyTarget(commentId, authorName);
         }, 400);
     }
 }
+
 // ===== RÉPONDRE À UN COMMENTAIRE =====
 function setReplyTarget(commentId, authorName) {
     replyTargetCommentId = commentId;
@@ -4431,11 +4478,32 @@ function cancelReply() {
 
 // ===== RENDU DES COMMENTAIRES AVEC VOTES ET RÉPONSES =====
 function renderCommentsWithVotes(comments, depth = 0, postId = null) {
-    if (!comments || !comments.length) return '';
+    // --- État vide centré (uniquement pour le niveau racine) ---
+    if (!comments || !comments.length) {
+        if (depth === 0) {
+            return `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px 20px; text-align: center;">
+                    <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         style="color: var(--text-secondary, #94a3b8); margin-bottom: 16px;">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                    <p style="color: var(--text-secondary); font-size: 1rem; margin: 0 0 16px 0;">
+                        Aucun commentaire pour le moment
+                    </p>
+                    <button onclick="document.getElementById('postSheetInput').focus()"
+                            style="background: var(--estra-cyan); color: #fff; border: none; padding: 8px 24px; border-radius: 24px; cursor: pointer; font-weight: 500;">
+                        Soyez le premier à commenter
+                    </button>
+                </div>`;
+        }
+        return ''; // pas de bloc vide pour les fils de discussion
+    }
+    
     let html = '';
-    const stickerList = ['🌟', '💬', '📢', '💡', '🎓', '📚', '💻', '🔔', '🏆', '🚀', '🎯', '📌', '✍️', '👏', '🤝', '🧠'];
+    const stickerList = ['🌟','💬','📢','💡','🎓','📚','💻','🔔','🏆','🚀','🎯','📌','✍️','👏','🤝','🧠'];
     const profile = JSON.parse(localStorage.getItem('estra_profile') || '{}');
-    const currentUserName = profile.fullName || currentUser?.name || '';
+    const currentUserName = profile.fullName || window.currentUser?.name || '';
     const currentUsername = profile.username || localStorage.getItem('estra_current_username') || '';
     
     comments.forEach(c => {
@@ -4445,11 +4513,17 @@ function renderCommentsWithVotes(comments, depth = 0, postId = null) {
             r.author === currentUserName || r.authorUsername === currentUsername
         );
         const replyBadge = hasReplied ?
-            `<span style="font-size:0.65rem;background:rgba(56,189,248,0.2);color:var(--estra-cyan);padding:2px 8px;border-radius:12px;margin-left:6px;">Vous avez répondu</span>` : '';
+            `<span class="replied-badge">Vous avez répondu</span>` :
+            '';
         
         const commentAuthor = c.authorUsername || c.author;
-        const userBadges = getUserBadges(commentAuthor);
-        const badgesHtml = renderUserBadges(userBadges);
+        const userBadges = (typeof getUserBadges === 'function') ? getUserBadges(commentAuthor) : [];
+        const badgesHtml = (typeof renderUserBadges === 'function') ? renderUserBadges(userBadges) : '';
+        
+        // Sécurisation des compteurs numériques
+        const upvotes = parseInt(c.upvotes) || 0;
+        const downvotes = parseInt(c.downvotes) || 0;
+        const userVote = parseInt(c.userVote) || 0; // 1, -1 ou 0
         
         html += `
             <div class="sheet-comment-node" style="margin-left: ${indent}px; border-left: ${depth > 0 ? '2px solid var(--estra-border)' : 'none'}; padding-left: ${depth > 0 ? '12px' : '0'};">
@@ -4459,17 +4533,17 @@ function renderCommentsWithVotes(comments, depth = 0, postId = null) {
                         <div class="comment-meta">
                             <strong>${c.author}</strong>
                             ${replyBadge} ${badgesHtml}
-                            <span class="academic-badge" style="font-size:0.65rem;background:var(--badge-bg);padding:2px 8px;border-radius:12px;color:var(--text-secondary);">${c.role || ''}</span>
+                            <span class="academic-badge">${c.role || ''}</span>
                         </div>
                         <div class="comment-body ${isSticker ? 'sticker-only' : ''}">${c.text}</div>
                     </div>
                     <div class="comment-actions-bar">
                         <span>${formatTime(c.time)}</span>
-                        <button class="vote-btn ${c.userVote === 1 ? 'voted' : ''}" onclick="voteComment('${c.id}', 1)">
-                            <i class="fas fa-thumbs-up"></i> ${c.upvotes || 0}
+                        <button class="vote-btn ${userVote === 1 ? 'voted' : ''}" onclick="voteComment('${c.id}', 1, this)">
+                            <i class="fas fa-thumbs-up"></i> <span class="up-count">${upvotes}</span>
                         </button>
-                        <button class="vote-btn ${c.userVote === -1 ? 'voted' : ''}" onclick="voteComment('${c.id}', -1)">
-                            <i class="fas fa-thumbs-down"></i> ${c.downvotes || 0}
+                        <button class="vote-btn ${userVote === -1 ? 'voted' : ''}" onclick="voteComment('${c.id}', -1, this)">
+                            <i class="fas fa-thumbs-down"></i> <span class="down-count">${downvotes}</span>
                         </button>
                         <button onclick="setReplyTarget('${c.id}', '${c.author}')">
                             <i class="fas fa-reply"></i> Répondre
@@ -4482,6 +4556,7 @@ function renderCommentsWithVotes(comments, depth = 0, postId = null) {
     });
     return html;
 }
+
 // ===== GESTION DU PICKER EMOJI / STICKER =====
 const emojiList = ['😀','😂','🤣','😍','😭','😡','👍','👎','❤️','🔥','🎉','💯','😎','🤔','😱','🥺','😴','🤗','🙏','✨'];
 const stickerList = ['🌟','💬','📢','💡','🎓','📚','💻','🔔','🏆','🚀','🎯','📌','✍️','👏','🤝','🧠'];
@@ -4494,7 +4569,7 @@ function initPicker() {
         emojiGrid.addEventListener('click', (e) => {
             if (e.target.classList.contains('emoji-item')) {
                 insertAtCursor(document.getElementById('postSheetInput'), e.target.textContent);
-                togglePicker(); // Ferme le picker
+                togglePicker();
                 document.getElementById('postSheetInput').focus();
             }
         });
@@ -4504,7 +4579,7 @@ function initPicker() {
         stickerGrid.addEventListener('click', (e) => {
             if (e.target.classList.contains('sticker-item')) {
                 const stickerText = e.target.textContent;
-                togglePicker(); // Ferme le picker
+                togglePicker();
                 // Soumettre le sticker comme commentaire
                 submitStickerComment(stickerText);
             }
@@ -4546,9 +4621,7 @@ function insertAtCursor(input, text) {
 
 function submitStickerComment(stickerText) {
     if (!activeCommentPostId) return;
-    const post = findPostById(activeCommentPostId);
-    if (!post) return;
-    // Simuler la saisie d'un commentaire sticker
+    // Place le sticker dans l'input et soumet normalement
     const input = document.getElementById('postSheetInput');
     if (input) {
         input.value = stickerText;
@@ -4558,7 +4631,6 @@ function submitStickerComment(stickerText) {
 
 // Initialiser le picker au chargement
 document.addEventListener('DOMContentLoaded', initPicker);
-
 const PROMOTION_SLOTS = [
     { start: 8, end: 8.5, type: 'boost' },
     { start: 8.5, end: 9, type: 'sponsored' },
@@ -6379,15 +6451,13 @@ window.renderPostCard = function(post) {
     let isEvent = post.isEvent;
     let isCourse = post.isCourse && post.courseData;
 
-    // Récupération des badges de l'auteur (liste d'IDs)
+    // Récupération des badges de l'auteur
     const userBadges = getUserBadges(post.author);
 
-    // Liste des badges avec libellé (ceux qui remplaceront la date)
     const labeledIds = ['sponsor', 'premium', 'mentor', 'teacher', 'recruiter'];
     const labeledBadges = [];
     const iconOnlyIds = [];
 
-    // Séparation des badges en deux catégories
     if (userBadges && userBadges.length > 0) {
         userBadges.forEach(id => {
             if (labeledIds.includes(id)) {
@@ -6398,13 +6468,11 @@ window.renderPostCard = function(post) {
         });
     }
 
-    // Icônes seules (affichées après le nom) – on utilise la fonction existante renderUserBadges
     const iconOnlyHtml = renderUserBadges(iconOnlyIds);
 
-    // Génération du HTML pour les badges avec libellé SANS fond ni bordure
     let labeledHtml = '';
     if (labeledBadges.length > 0) {
-        const allBadges = getAllBadges(); // source unique (identique au profil)
+        const allBadges = getAllBadges();
         labeledHtml = `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;">` +
             labeledBadges.map(id => {
                 const badge = allBadges.find(b => b.id === id);
@@ -6416,12 +6484,11 @@ window.renderPostCard = function(post) {
             `</div>`;
     }
 
-    // Ligne auteur
+    // Avatar
     headerAvatar = `<img src="${escapeHtml(post.authorAvatar)}" class="post-avatar" alt="${escapeHtml(post.author)}" onclick="viewProfile('${escapeHtml(post.author)}')">`;
     let authorLine = `<span class="post-author-name" onclick="viewProfile('${escapeHtml(post.author)}')">${escapeHtml(post.author)}</span>`;
     authorLine += iconOnlyHtml;
 
-    // Badge système (événement, cours) inline après les icônes
     const postType = isEvent ? 'event' : isCourse ? 'course' : 'normal';
     const isPremiumCourse = isCourse && post.courseData.price && post.courseData.price > 0;
     const mainBadge = getMainBadge(userBadges, postType, isCourse, isPremiumCourse);
@@ -6431,7 +6498,6 @@ window.renderPostCard = function(post) {
 
     headerTitle = `<div style="display:flex; align-items:center; flex-wrap:wrap; gap:4px;">${authorLine}</div>`;
 
-    // Sous-titre : badges avec libellé OU date
     if (labeledHtml) {
         headerSubtitle = labeledHtml;
     } else {
@@ -6440,7 +6506,7 @@ window.renderPostCard = function(post) {
 
     let mediaHTML = renderPostMedia(post);
 
-    // --- Contenu ---
+    // --- Contenu (inchangé) ---
     if (isEvent && post.eventData) {
         const eventDateObj = new Date(post.eventData.date);
         const day = eventDateObj.getDate() || '??';
@@ -6549,6 +6615,9 @@ window.renderPostCard = function(post) {
 
     const menuBtnHtml = `<button class="post-menu-btn" onclick="event.stopPropagation();openPostMenu(event, ${post.id}, ${!isMyPost})">···</button>`;
 
+    const commentCount = (post.comments || []).length;
+    const commentDisplay = commentCount > 0 ? `💬 ${commentCount}` : '💬';
+
     return `
     <div class="post-card" id="post-${post.id}">
         <div class="post-header">
@@ -6571,17 +6640,10 @@ window.renderPostCard = function(post) {
         <div class="post-stats">
             <span id="view-count-${post.id}"><i class="fas fa-eye"></i> ${post.views || 0}</span>
             <span>❤️ ${post.likes||0}</span>
-            <span id="comment-count-${post.id}">💬 ${(post.comments||[]).length}</span>
+            <span id="comment-count-${post.id}" style="cursor:pointer;" onclick="event.stopPropagation();openPostCommentsSheet(${post.id})">${commentDisplay}</span>
         </div>
         <div class="post-actions">
             ${actionButtons(post.id, typeParam, post)}
-        </div>
-        <div class="comments-section" id="comments-section-${post.id}">
-            <div id="comments-list-${post.id}">${renderComments(post.comments, 0, post.id)}</div>
-            <div class="comment-input-area">
-                <input type="text" id="commentInput-${post.id}" class="comment-input" placeholder="${t('write_comment')}">
-                <button class="comment-submit" onclick="addComment(${post.id}, '${typeParam}')">${t('send_comment')}</button>
-            </div>
         </div>
     </div>
     <hr class="post-separator">`;
@@ -6680,13 +6742,18 @@ function actionButtons(postId, type, post) {
  */
 function renderComments(comments, depth = 0, postId = null) {
     if (!comments || !comments.length) return '';
+    
+    // 🔥 Filtrer les commentaires racines (ceux qui n'ont pas de parentId)
+    const rootComments = comments.filter(c => !c.parentId);
+    if (!rootComments.length) return '';
+    
     let html = '';
     const stickerList = ['🌟', '💬', '📢', '💡', '🎓', '📚', '💻', '🔔', '🏆', '🚀', '🎯', '📌', '✍️', '👏', '🤝', '🧠'];
     const profile = JSON.parse(localStorage.getItem('estra_profile') || '{}');
     const currentUserName = profile.fullName || currentUser?.name || '';
     const currentUsername = profile.username || localStorage.getItem('estra_current_username') || '';
     
-    comments.forEach(c => {
+    rootComments.forEach(c => {
         const indent = depth * 20;
         const isSticker = stickerList.includes(c.text.trim());
         const hasReplied = c.replies && c.replies.some(r =>
@@ -7082,10 +7149,17 @@ function toggleLike(pid, type) {
 }
 
 function addComment(pid, type, parentId = null) {
+    console.log('addComment', pid, type, parentId);
     const input = document.getElementById('commentInput-' + pid);
-    if (!input) return;
+    if (!input) {
+        console.error('input introuvable');
+        return;
+    }
     const text = input.value.trim();
-    if (!text) return;
+    if (!text) {
+        showToast('❌ Écrivez un commentaire', true);
+        return;
+    }
     
     const post = findPostById(pid);
     if (!post) {
@@ -7108,19 +7182,9 @@ function addComment(pid, type, parentId = null) {
         replies: []
     };
     
-    if (parentId) {
-        const parentComment = findCommentById(post.comments, parentId);
-        if (parentComment) {
-            parentComment.replies = parentComment.replies || [];
-            parentComment.replies.push(newComment);
-        } else {
-            post.comments.push(newComment);
-        }
-    } else {
-        post.comments.push(newComment);
-    }
+    post.comments.push(newComment);
     
-    // Si c'est un cours, mettre à jour le tableau courses_v4
+    // Sauvegarde pour les cours
     if (post.isCourse && post.courseData) {
         const allCourses = JSON.parse(localStorage.getItem('estra_courses_v4') || '[]');
         const courseIndex = allCourses.findIndex(c => c.id === pid);
@@ -7133,7 +7197,7 @@ function addComment(pid, type, parentId = null) {
     saveAllData();
     showToast(t('toast_comment_added'));
     
-    // Mise à jour de l'affichage
+    // Mise à jour ciblée
     const commentsList = document.getElementById('comments-list-' + pid);
     if (commentsList) {
         commentsList.innerHTML = renderComments(post.comments, 0, pid);
@@ -7146,6 +7210,7 @@ function addComment(pid, type, parentId = null) {
     if (countEl) {
         countEl.innerHTML = `<i class="fas fa-comment"></i> ${post.comments.length}`;
     }
+    console.log('Commentaire ajouté avec succès');
 }
 // ============================================================
 // openPostMenu CORRIGÉE (reconnaît les cours et gère les droits)
@@ -9126,7 +9191,10 @@ function submitReply(postId, commentId) {
     const input = document.getElementById('reply-text-' + commentId);
     if (!input) return;
     const text = input.value.trim();
-    if (!text) return;
+    if (!text) {
+        showToast('❌ Écrivez une réponse', true);
+        return;
+    }
     
     const post = findPostById(postId);
     if (!post) {
@@ -9153,10 +9221,11 @@ function submitReply(postId, commentId) {
         parentComment.replies = parentComment.replies || [];
         parentComment.replies.push(newReply);
     } else {
+        // Commentaire parent introuvable, ajout au niveau racine
         post.comments.push(newReply);
     }
     
-    // Si c'est un cours, mettre à jour le tableau courses_v4
+    // Sauvegarde spécifique pour les cours
     if (post.isCourse && post.courseData) {
         const allCourses = JSON.parse(localStorage.getItem('estra_courses_v4') || '[]');
         const courseIndex = allCourses.findIndex(c => c.id === postId);
@@ -9168,18 +9237,32 @@ function submitReply(postId, commentId) {
     
     saveAllData();
     
-    const commentsList = document.getElementById('comments-list-' + postId);
-    if (commentsList) {
-        commentsList.innerHTML = renderComments(post.comments, 0, postId);
-    }
-    const countEl = document.getElementById('comment-count-' + postId);
-    if (countEl) {
-        countEl.innerHTML = `<i class="fas fa-comment"></i> ${post.comments.length}`;
-    }
-    
-    input.value = '';
+    // Mise à jour ciblée de l'interface (sans recharger toute la liste)
     const container = document.getElementById('reply-input-' + commentId);
     if (container) container.style.display = 'none';
+    input.value = '';
+    
+    // Si le sheet de commentaires est ouvert pour ce post, on le rafraîchit
+    if (activeCommentPostId === postId) {
+        const sheetList = document.getElementById('postSheetCommentList');
+        if (sheetList) {
+            sheetList.innerHTML = renderCommentsWithVotes(post.comments || [], 0, postId);
+            sheetList.scrollTop = sheetList.scrollHeight;
+        }
+    }
+    
+    // Mise à jour de la liste inline si elle existe encore (legacy)
+    const commentsList = document.getElementById('comments-list-' + postId);
+    if (commentsList) {
+        commentsList.innerHTML = renderComments(post.comments, 0, postId, true);
+    }
+    
+    // Mise à jour du compteur de commentaires
+    const countEl = document.getElementById('comment-count-' + postId);
+    if (countEl) {
+        countEl.innerHTML = `💬 ${post.comments.length}`;
+    }
+    
     showToast('💬 Réponse ajoutée');
 }
 // Expositions globales
