@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="ESTRA LINK">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="ESTRA LINK — Choisissez votre profil pour personnaliser votre expérience éducative.">
+    <title>ESTRA LINK — Type de compte</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================================
+           DESIGN TOKENS
+           ============================================================ */
+        :root {
+            color-scheme: light;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-alt: #f1f5f9;
+            --surface-soft: #f8fafc;
+            --text: #0f172a;
+            --text-2: #334155;
+            --text-muted: #475569;
+            --text-soft: #64748b;
+            --border: #e2e8f0;
+            --border-strong: #cbd5e1;
+            --primary: #0284c7;
+            --primary-hover: #0ea5e9;
+            --primary-active: #0369a1;
+            --primary-soft: #eff6ff;
+            --primary-border: #bfdbfe;
+            --primary-ring: rgba(56, 189, 248, 0.18);
+            --accent: #c2410c;
+            --accent-soft: #fff7ed;
+            --accent-border: #fed7aa;
+            --error: #b91c1c;
+            --error-soft: rgba(185, 28, 28, 0.12);
+            --success: #047857;
+            --warning: #b45309;
+            --info-bg: #eff6ff;
+            --info-border: #bfdbfe;
+            --info-text: #1e40af;
+            --info-icon: #0284c7;
+            --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08);
+            --shadow-md: 0 2px 10px rgba(15, 23, 42, 0.05);
+            --shadow-lg: 0 30px 80px -30px rgba(15, 23, 42, 0.22);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                color-scheme: dark;
+                --bg: #0b1220;
+                --surface: #0f172a;
+                --surface-alt: #111b2e;
+                --surface-soft: #0b1424;
+                --text: #f1f5f9;
+                --text-2: #cbd5e1;
+                --text-muted: #94a3b8;
+                --text-soft: #64748b;
+                --border: #1e293b;
+                --border-strong: #334155;
+                --primary: #38bdf8;
+                --primary-hover: #0ea5e9;
+                --primary-active: #0284c7;
+                --primary-soft: rgba(56, 189, 248, 0.15);
+                --primary-border: rgba(56, 189, 248, 0.35);
+                --primary-ring: rgba(56, 189, 248, 0.22);
+                --accent: #fb923c;
+                --accent-soft: rgba(251, 146, 60, 0.12);
+                --accent-border: rgba(251, 146, 60, 0.35);
+                --error: #f87171;
+                --error-soft: rgba(248, 113, 113, 0.18);
+                --success: #34d399;
+                --warning: #fbbf24;
+                --info-bg: rgba(56, 189, 248, 0.12);
+                --info-border: rgba(56, 189, 248, 0.35);
+                --info-text: #bae6fd;
+                --info-icon: #38bdf8;
+                --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+                --shadow-md: 0 2px 10px rgba(0, 0, 0, 0.5);
+                --shadow-lg: 0 30px 80px -30px rgba(0, 0, 0, 0.7);
+            }
+        }
+
+        /* ============================================================
+           RESET / BASE
+           ============================================================ */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: 16px;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding:
+                max(24px, env(safe-area-inset-top))
+                max(20px, env(safe-area-inset-right))
+                max(24px, env(safe-area-inset-bottom))
+                max(20px, env(safe-area-inset-left));
+            -webkit-overflow-scrolling: touch;
+        }
+
+        :where(button, a, input, [tabindex]):focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+            border-radius: 2px;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            background: var(--primary);
+            color: #fff;
+            padding: 10px 16px;
+            z-index: 100000;
+            font-weight: 600;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .skip-link:focus { left: 8px; top: 8px; }
+
+        /* ============================================================
+           LAYOUT — mobile : empilé, form centré
+           ============================================================ */
+        .account-container {
+            width: 100%;
+            max-width: 520px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .brand-panel { display: none; }
+
+        .form-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* ============================================================
+           HEADER
+           ============================================================ */
+        .account-header { text-align: center; }
+
+        .account-title {
+            font-size: clamp(1.4rem, 1.2rem + 1vw, 2rem);
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .account-subtitle {
+            color: var(--text-muted);
+            font-size: clamp(0.85rem, 0.8rem + 0.2vw, 1rem);
+            line-height: 1.55;
+        }
+
+        /* ============================================================
+           STEP NAVIGATION
+           ============================================================ */
+        .step-navigation {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 16px;
+            min-height: 36px;
+        }
+
+        .nav-arrow {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1.5px solid var(--border);
+            background: var(--surface);
+            color: var(--text-soft);
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            appearance: none;
+            transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+            flex-shrink: 0;
+            padding: 0;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .nav-arrow:hover:not(:disabled) {
+            background: var(--primary-soft);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .nav-arrow:active:not(:disabled) {
+            background: var(--primary-soft);
+        }
+
+        .nav-arrow:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: var(--surface-soft);
+            color: var(--text-soft);
+            border-color: var(--border);
+        }
+
+        .progress-dots {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .progress-dots span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--border-strong);
+            display: inline-block;
+            transition: background-color 0.2s, width 0.2s;
+        }
+
+        .progress-dots span.done {
+            background: var(--success);
+            width: 22px;
+            border-radius: 3px;
+        }
+
+        .progress-dots span.active {
+            background: var(--primary);
+            width: 22px;
+            border-radius: 3px;
+        }
+
+        /* ============================================================
+           ACCOUNT CARDS
+           ============================================================ */
+        .account-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .account-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 16px;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            cursor: pointer;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s, background-color 0.2s;
+            position: relative;
+            text-align: left;
+            width: 100%;
+            font-family: inherit;
+            appearance: none;
+        }
+
+        .account-card:hover {
+            border-color: var(--border-strong);
+            transform: translateY(-1px);
+        }
+
+        .account-card.selected {
+            border-color: var(--primary);
+            background: var(--primary-soft);
+            box-shadow: 0 0 0 3px var(--primary-ring);
+        }
+
+        .account-card-icon {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--surface-alt);
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .account-card.selected .account-card-icon {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .account-card-body {
+            flex: 1 1 0%;
+            min-width: 0;
+        }
+
+        .account-card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .account-card-desc {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .account-card-check {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--border-strong);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            background: var(--surface);
+        }
+
+        .account-card-check i {
+            color: transparent;
+            font-size: 0.65rem;
+            transition: color 0.2s;
+        }
+
+        .account-card.selected .account-card-check {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .account-card.selected .account-card-check i { color: #ffffff; }
+
+        /* ============================================================
+           INFO BADGE
+           ============================================================ */
+        .info-badge {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 14px;
+            background: var(--info-bg);
+            border: 1px solid var(--info-border);
+            font-size: 0.8rem;
+            color: var(--info-text);
+            line-height: 1.5;
+        }
+
+        .info-badge i {
+            color: var(--info-icon);
+            font-size: 0.9rem;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        /* ============================================================
+           BUTTON CONTINUE
+           ============================================================ */
+        .btn-continue {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            background: var(--primary);
+            color: #ffffff;
+            font-size: 0.98rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background-color 0.2s, opacity 0.2s;
+            letter-spacing: 0.3px;
+            min-height: 52px;
+            appearance: none;
+        }
+
+        .btn-continue:hover:not(:disabled) { background: var(--primary-hover); }
+        .btn-continue:active:not(:disabled) { background: var(--primary-active); }
+
+        .btn-continue:disabled {
+            background: var(--border);
+            color: var(--text-soft);
+            cursor: not-allowed;
+        }
+
+        .btn-continue .spinner {
+            display: none;
+            width: 16px; height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            order: -1;
+        }
+
+        .btn-continue.loading .spinner { display: block; }
+        .btn-continue.loading .arrow { display: none; }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        .account-footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-soft);
+            line-height: 1.6;
+        }
+
+        .account-footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin: 0 4px;
+            padding: 4px 2px;
+            display: inline-block;
+        }
+        .account-footer a:hover { color: var(--primary); }
+        .account-footer p { margin-top: 8px; font-size: 0.7rem; opacity: 0.85; }
+
+        /* ============================================================
+           NOTIFICATION BANNER
+           ============================================================ */
+        .notification-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding:
+                max(14px, env(safe-area-inset-top))
+                max(18px, env(safe-area-inset-right))
+                14px
+                max(18px, env(safe-area-inset-left));
+            background: #1e293b;
+            color: #ffffff;
+            font-size: 0.88rem;
+            font-weight: 600;
+            z-index: 10000;
+            transform: translateY(-120%);
+            transition: transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            pointer-events: none;
+        }
+
+        .notification-banner.show {
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .notification-banner.error   { background: #b91c1c; }
+        .notification-banner.success { background: #047857; }
+        .notification-banner.info    { background: #0284c7; }
+        .notification-banner.warning { background: #b45309; }
+
+        .notification-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .notification-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: #ffffff;
+            stroke-width: 2.5;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            display: block;
+        }
+
+        .notification-text {
+            flex: 1 1 0%;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .notification-action {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+            min-height: 32px;
+            transition: background-color 0.2s;
+        }
+
+        .notification-action:hover  { background: rgba(255, 255, 255, 0.32); }
+        .notification-action:active { background: rgba(255, 255, 255, 0.45); }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.85);
+            cursor: pointer;
+            padding: 6px;
+            flex-shrink: 0;
+            appearance: none;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 32px;
+            min-height: 32px;
+            border-radius: 4px;
+        }
+
+        .notification-close svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .notification-close:hover { color: #ffffff; }
+
+        .notification-banner[data-hide-close="true"] .notification-close { display: none; }
+
+        .notification-banner.persistent .notification-icon svg {
+            animation: notifPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes notifPulse {
+            0%, 100% { opacity: 1; }
+            50%      { opacity: 0.5; }
+        }
+
+        /* ============================================================
+           DESKTOP — SPLIT-SCREEN STICKY (≥ 1100px)
+           ============================================================ */
+        @media (min-width: 1100px) {
+            body {
+                padding: 0;
+                align-items: stretch;
+                justify-content: flex-start;
+                display: block;
+            }
+
+            .account-container {
+                display: grid;
+                grid-template-columns: 440px 1fr;
+                min-height: 100vh;
+                min-height: 100dvh;
+                max-width: none;
+                margin: 0;
+                gap: 0;
+                box-shadow: none;
+                background: var(--surface);
+                border-radius: 0;
+                overflow: visible;
+                animation: none;
+            }
+
+            .brand-panel {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 48px 44px;
+                background: linear-gradient(140deg, #0284c7 0%, #075985 55%, #c2410c 130%);
+                color: #ffffff;
+                position: sticky;
+                top: 0;
+                height: 100vh;
+                height: 100dvh;
+                overflow-y: auto;
+                overflow-x: hidden;
+                align-self: start;
+                border-radius: 0;
+            }
+
+            .brand-panel::before,
+            .brand-panel::after {
+                content: '';
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.07);
+                pointer-events: none;
+            }
+            .brand-panel::before { width: 340px; height: 340px; top: -140px; right: -110px; }
+            .brand-panel::after  { width: 220px; height: 220px; bottom: -90px; left: -70px; }
+
+            .brand-content {
+                position: relative;
+                z-index: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .brand-logo {
+                font-weight: 800;
+                font-size: 1.15rem;
+                letter-spacing: 4px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .brand-logo i { font-size: 1.3rem; color: #fed7aa; }
+
+            .brand-headline {
+                font-size: clamp(1.7rem, 2.2vw, 2.4rem);
+                font-weight: 800;
+                line-height: 1.18;
+                letter-spacing: -0.5px;
+            }
+
+            .brand-sub {
+                font-size: 0.98rem;
+                opacity: 0.88;
+                line-height: 1.6;
+                max-width: 36ch;
+            }
+
+            .brand-features {
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                margin-top: 8px;
+                font-size: 0.92rem;
+            }
+
+            .brand-features li {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .brand-features i {
+                width: 34px;
+                height: 34px;
+                display: inline-grid;
+                place-items: center;
+                background: rgba(255, 255, 255, 0.14);
+                border-radius: 50%;
+                flex-shrink: 0;
+                font-size: 0.9rem;
+                color: #fed7aa;
+            }
+
+            .form-panel {
+    padding: max(48px, env(safe-area-inset-top)) max(48px, env(safe-area-inset-right)) max(48px, env(safe-area-inset-bottom)) max(48px, env(safe-area-inset-left));
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    gap: 22px;
+}
+
+            .form-panel > * {
+                width: 100%;
+                max-width: 480px;
+            }
+
+            .account-header { text-align: center; }
+
+            .step-navigation {
+                justify-content: flex-start;
+                margin-top: 20px;
+            }
+
+            .nav-arrow { right: 0; }
+
+            .account-footer {
+                margin-top: 0;
+                padding-top: 12px;
+            }
+        }
+
+        /* ============================================================
+           LARGE DESKTOP (≥ 1440px)
+           ============================================================ */
+        @media (min-width: 1440px) {
+            .account-container { grid-template-columns: 480px 1fr; }
+            .brand-panel { padding: 64px 56px; }
+            .form-panel  { padding: max(6vh, 56px) max(56px, env(safe-area-inset-right)) max(6vh, 56px) max(56px, env(safe-area-inset-left)); }
+            .form-panel > * { max-width: 500px; }
+        }
+
+        /* ============================================================
+           ULTRA-WIDE (≥ 1920px)
+           ============================================================ */
+        @media (min-width: 1920px) {
+            html { font-size: 17px; }
+            .account-container { grid-template-columns: 540px 1fr; }
+            .form-panel  { padding: max(8vh, 64px) max(72px, env(safe-area-inset-right)) max(8vh, 64px) max(72px, env(safe-area-inset-left)); }
+            .form-panel > * { max-width: 520px; }
+            .brand-panel { padding: 72px 72px; }
+            .account-card { padding: 22px 20px; }
+            .account-card-icon { width: 58px; height: 58px; font-size: 1.7rem; }
+            .btn-continue { min-height: 56px; }
+            .notification-banner {
+                max-width: 560px;
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%) translateY(-120%);
+                top: 16px;
+                border-radius: 6px;
+                padding: 16px 20px;
+            }
+            .notification-banner.show { transform: translateX(-50%) translateY(0); }
+        }
+
+        @media (min-width: 2560px) {
+            html { font-size: 18px; }
+            .account-container { grid-template-columns: 620px 1fr; }
+            .brand-headline { font-size: 2.8rem; }
+        }
+
+        /* ============================================================
+           BREAKPOINTS MOBILES
+           ============================================================ */
+        @media (max-width: 480px) {
+            body { padding: 20px 14px; }
+            .account-card { padding: 14px 12px; gap: 12px; }
+            .account-card-icon { width: 44px; height: 44px; font-size: 1.25rem; }
+            .account-card-title { font-size: 0.92rem; }
+            .account-card-desc { font-size: 0.72rem; }
+            .nav-arrow { width: 32px; height: 32px; font-size: 0.75rem; }
+            .step-navigation { min-height: 32px; }
+            .notification-banner { padding: 12px 14px; font-size: 0.82rem; }
+            .notification-icon { width: 22px; height: 22px; }
+            .notification-icon svg { width: 18px; height: 18px; }
+        }
+
+        /* Notification centrée sur tablette */
+        @media (min-width: 768px) and (max-width: 1099px) {
+            .notification-banner {
+                max-width: 520px;
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%) translateY(-120%);
+                top: 16px;
+                border-radius: 6px;
+            }
+            .notification-banner.show {
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        /* ============================================================
+           MOTION
+           ============================================================ */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .account-card:hover { transform: none; }
+            .notification-banner.persistent .notification-icon svg { animation: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#accountCards" class="skip-link">Aller au choix du profil</a>
+
+    <!-- NOTIFICATION BANNER -->
+    <div class="notification-banner" id="notificationBanner" role="status" aria-live="polite" aria-atomic="true">
+        <div class="notification-icon" id="notificationIcon" aria-hidden="true"></div>
+        <div class="notification-text" id="notificationText"></div>
+        <button type="button" class="notification-action" id="notificationAction" hidden></button>
+        <button type="button" class="notification-close" id="notificationClose" onclick="hideNotification()" aria-label="Fermer la notification">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+
+    <div class="account-container">
+        <aside class="brand-panel" aria-hidden="true">
+            <div class="brand-content">
+                <div class="brand-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>ESTRA LINK</span>
+                </div>
+                <h2 class="brand-headline">Quel est votre<br>profil sur ESTRA LINK ?</h2>
+                <p class="brand-sub">
+                    Personnalisez votre expérience selon votre parcours :
+                    élève, étudiant ou enseignant.
+                </p>
+                <ul class="brand-features">
+                    <li><i class="fas fa-user-graduate" aria-hidden="true"></i> Contenu adapté à votre niveau</li>
+                    <li><i class="fas fa-users" aria-hidden="true"></i> Communautés de votre filière</li>
+                    <li><i class="fas fa-tachometer-alt" aria-hidden="true"></i> Tableau de bord personnalisé</li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="form-panel">
+            <div class="account-header">
+                <h1 class="account-title">Quel est votre profil ?</h1>
+                <p class="account-subtitle">Choisissez votre type de compte pour personnaliser votre expérience sur ESTRA LINK.</p>
+
+                <div class="step-navigation">
+                    <div class="progress-dots" role="img" aria-label="Étape 1 sur 3">
+                        <span class="active"></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <button type="button" class="nav-arrow" id="nextBtn" onclick="goToNext()" aria-label="Étape suivante" title="Étape suivante">
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="account-cards" id="accountCards" role="group" aria-label="Choisissez votre type de compte">
+                <button type="button" class="account-card" data-type="eleve"
+                        onclick="selectAccountType('eleve', this)" aria-pressed="false">
+                    <div class="account-card-icon"><i class="fas fa-book-open" aria-hidden="true"></i></div>
+                    <div class="account-card-body">
+                        <div class="account-card-title">Élève</div>
+                        <div class="account-card-desc">Niveau primaire et secondaire</div>
+                    </div>
+                    <div class="account-card-check" aria-hidden="true"><i class="fas fa-check"></i></div>
+                </button>
+
+                <button type="button" class="account-card" data-type="etudiant"
+                        onclick="selectAccountType('etudiant', this)" aria-pressed="false">
+                    <div class="account-card-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
+                    <div class="account-card-body">
+                        <div class="account-card-title">Étudiant</div>
+                        <div class="account-card-desc">Université et enseignement supérieur</div>
+                    </div>
+                    <div class="account-card-check" aria-hidden="true"><i class="fas fa-check"></i></div>
+                </button>
+
+                <button type="button" class="account-card" data-type="enseignant"
+                        onclick="selectAccountType('enseignant', this)" aria-pressed="false">
+                    <div class="account-card-icon"><i class="fas fa-chalkboard-teacher" aria-hidden="true"></i></div>
+                    <div class="account-card-body">
+                        <div class="account-card-title">Enseignant</div>
+                        <div class="account-card-desc">Professeur, formateur, encadreur</div>
+                    </div>
+                    <div class="account-card-check" aria-hidden="true"><i class="fas fa-check"></i></div>
+                </button>
+            </div>
+
+            <div class="info-badge">
+                <i class="fas fa-info-circle" aria-hidden="true"></i>
+                <span>Vous pourrez toujours modifier votre type de compte plus tard dans les paramètres de votre profil.</span>
+            </div>
+
+            <button type="button" class="btn-continue" id="continueBtn" onclick="continueToApp()" disabled>
+                <span class="spinner" aria-hidden="true"></span>
+                <span id="continueBtnText">Continuer</span>
+                <i class="fas fa-arrow-right arrow" aria-hidden="true"></i>
+            </button>
+
+            <div class="account-footer">
+                <a href="terms.html">Conditions</a> ·
+                <a href="privacy.html">Confidentialité</a> ·
+                <a href="help.html">Aide</a>
+                <p>© 2026 ESTRA LINK</p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // ============================================================
+        // NOTIFICATION SYSTEM
+        // ============================================================
+        const notifBanner  = document.getElementById('notificationBanner');
+        const notifIcon    = document.getElementById('notificationIcon');
+        const notifText    = document.getElementById('notificationText');
+        const notifAction  = document.getElementById('notificationAction');
+
+        let notifTimer = null;
+        let isPersistentNotif = false;
+
+        const SVG_ICONS = {
+            success: '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>',
+            error:   '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>',
+            info:    '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
+            warning: '<svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>'
+        };
+
+        function showNotification(msg, type, opts) {
+            opts = opts || {};
+            type = type || 'info';
+            isPersistentNotif = opts.persistent === true;
+
+            notifText.textContent = '';
+
+            let cls = 'notification-banner show ';
+            if (type === 'success')      cls += 'success';
+            else if (type === 'error')   cls += 'error';
+            else if (type === 'warning') cls += 'warning';
+            else                         cls += 'info';
+            if (isPersistentNotif) cls += ' persistent';
+            notifBanner.className = cls;
+
+            notifBanner.setAttribute('data-hide-close', opts.hideClose === true ? 'true' : 'false');
+
+            if (notifAction) {
+                if (opts.action && opts.action.label && typeof opts.action.onClick === 'function') {
+                    notifAction.hidden = false;
+                    notifAction.textContent = opts.action.label;
+                    const clone = notifAction.cloneNode(true);
+                    notifAction.parentNode.replaceChild(clone, notifAction);
+                    clone.addEventListener('click', opts.action.onClick);
+                } else {
+                    notifAction.hidden = true;
+                }
+            }
+
+            requestAnimationFrame(function () {
+                notifIcon.innerHTML = SVG_ICONS[type] || SVG_ICONS.info;
+                notifText.textContent = msg;
+            });
+
+            if (notifTimer) clearTimeout(notifTimer);
+            if (!isPersistentNotif) {
+                notifTimer = setTimeout(function () {
+                    notifBanner.classList.remove('show');
+                }, opts.duration || 3800);
+            }
+        }
+
+        function hideNotification() {
+            notifBanner.classList.remove('show');
+            if (notifTimer) clearTimeout(notifTimer);
+            isPersistentNotif = false;
+            notifBanner.setAttribute('data-hide-close', 'false');
+            if (notifAction) notifAction.hidden = true;
+        }
+
+        function showToast(msg, type, opts) { showNotification(msg, type, opts); }
+
+        function enableOfflineDetection(opts) {
+            opts = opts || {};
+
+            const offlineMsg = opts.offlineMessage || 'Pas de connexion Internet. Vérifiez votre réseau.';
+            const onlineMsg  = opts.onlineMessage  || 'Connexion rétablie';
+            const showFlash  = opts.showOnlineFlash !== false;
+            const canDismiss = opts.canDismiss === true;
+
+            function onOffline() {
+                showNotification(offlineMsg, 'warning', {
+                    persistent: true,
+                    hideClose: !canDismiss,
+                    action: typeof opts.onRetry === 'function' ? {
+                        label: 'Réessayer',
+                        onClick: function () {
+                            if (navigator.onLine) {
+                                hideNotification();
+                            } else if (navigator.vibrate) {
+                                navigator.vibrate([30, 50, 30]);
+                            }
+                            if (typeof opts.onRetry === 'function') opts.onRetry();
+                        }
+                    } : null
+                });
+                if (typeof opts.onOffline === 'function') opts.onOffline();
+            }
+
+            function onOnline() {
+                if (showFlash) {
+                    showNotification(onlineMsg, 'success', { duration: 2200 });
+                } else {
+                    hideNotification();
+                }
+                if (typeof opts.onOnline === 'function') opts.onOnline();
+            }
+
+            window.addEventListener('offline', onOffline);
+            window.addEventListener('online', onOnline);
+
+            if (!navigator.onLine) onOffline();
+
+            return function cleanup() {
+                window.removeEventListener('offline', onOffline);
+                window.removeEventListener('online', onOnline);
+            };
+        }
+
+        // ============================================================
+        // ÉTAT
+        // ============================================================
+        let selectedType = null;
+
+        // ============================================================
+        // FLÈCHE SUIVANT
+        // ============================================================
+        window.goToNext = function () {
+            if (!selectedType) {
+                showNotification('Veuillez d\'abord choisir votre profil', 'warning');
+                if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
+                return;
+            }
+            if (navigator.vibrate) navigator.vibrate(20);
+            continueToApp();
+        };
+
+        // ============================================================
+        // SÉLECTION
+        // ============================================================
+        window.selectAccountType = function (type, card) {
+            document.querySelectorAll('.account-card').forEach(function (c) {
+                c.classList.remove('selected');
+                c.setAttribute('aria-pressed', 'false');
+            });
+
+            card.classList.add('selected');
+            card.setAttribute('aria-pressed', 'true');
+
+            selectedType = type;
+
+            const btn = document.getElementById('continueBtn');
+            btn.disabled = false;
+
+            if (navigator.vibrate) navigator.vibrate(30);
+        };
+
+        // ============================================================
+        // CONTINUER
+        // ============================================================
+        window.continueToApp = function () {
+            if (!selectedType) {
+                showNotification('Veuillez choisir un type de compte', 'warning');
+                return;
+            }
+
+            const btn = document.getElementById('continueBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            btn.disabled = true;
+            nextBtn.disabled = true;
+            btn.classList.add('loading');
+            document.getElementById('continueBtnText').textContent = 'Enregistrement...';
+
+            try {
+                let profile = {};
+                try { profile = JSON.parse(localStorage.getItem('estra_profile') || '{}'); }
+                catch (e) { profile = {}; }
+
+                profile.accountType = selectedType;
+                profile.accountTypeLabel = {
+                    eleve: 'Élève',
+                    etudiant: 'Étudiant',
+                    enseignant: 'Enseignant'
+                }[selectedType];
+                profile.profileCompleted = true;
+                profile.profileCompletedAt = Date.now();
+                localStorage.setItem('estra_profile', JSON.stringify(profile));
+
+                try {
+                    const session = JSON.parse(localStorage.getItem('estra_session') || '{}');
+                    if (session.user) {
+                        session.user.accountType = selectedType;
+                        localStorage.setItem('estra_session', JSON.stringify(session));
+                    }
+                } catch (e) { /* ignore */ }
+
+                setTimeout(function () {
+                    showNotification('Profil enregistré avec succès', 'success');
+
+                    let destination = 'student-setup.html';
+                    if (selectedType === 'enseignant')      destination = 'teacher-setup.html';
+                    else if (selectedType === 'etudiant')   destination = 'student-setup.html';
+                    else if (selectedType === 'eleve')      destination = 'eleve-setup.html';
+
+                    setTimeout(function () { window.location.href = destination; }, 700);
+                }, 900);
+            } catch (err) {
+                showNotification(err.message || 'Une erreur est survenue', 'error');
+                btn.disabled = false;
+                nextBtn.disabled = false;
+                btn.classList.remove('loading');
+                document.getElementById('continueBtnText').textContent = 'Continuer';
+            }
+        };
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        window.addEventListener('load', function () {
+            enableOfflineDetection({
+                canDismiss: true,
+                onRetry: function () {
+                    // Rien à recharger ici — le toast disparaît automatiquement si online.
+                }
+            });
+
+            const session = localStorage.getItem('estra_session') || sessionStorage.getItem('estra_session');
+            if (session) {
+                try {
+                    const data = JSON.parse(session);
+                    if (!data.expiresAt || data.expiresAt <= Date.now()) {
+                        localStorage.removeItem('estra_session');
+                        sessionStorage.removeItem('estra_session');
+                    }
+                } catch (e) {
+                    localStorage.removeItem('estra_session');
+                    sessionStorage.removeItem('estra_session');
+                }
+            }
+
+            let profile = {};
+            try {
+                profile = JSON.parse(localStorage.getItem('estra_profile') || '{}');
+            } catch (e) { profile = {}; }
+
+            if (profile.accountType) {
+                const card = document.querySelector('.account-card[data-type="' + profile.accountType + '"]');
+                if (card) selectAccountType(profile.accountType, card);
+            }
+
+            if (profile.prenom) {
+                const subtitle = document.querySelector('.account-subtitle');
+                if (subtitle) {
+                    subtitle.textContent = 'Bonjour ' + profile.prenom + ' ! Choisissez votre type de compte pour personnaliser votre expérience.';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
