@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ESTRA LINK">
+<meta name="format-detection" content="telephone=no">
+<meta name="description" content="ESTRA LINK — Centre d'aide. FAQ, guides, dépannage et contact du support.">
+<title>ESTRA LINK — Centre d'aide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════════════════════════ */
+:root{color-scheme:light;--bg:#f8fafc;--surface:#fff;--surface-alt:#f1f5f9;--surface-soft:#f8fafc;--text:#0f172a;--text-2:#334155;--text-muted:#475569;--text-soft:#64748b;--border:#e2e8f0;--border-strong:#cbd5e1;--primary:#0284c7;--primary-hover:#0ea5e9;--primary-active:#0369a1;--primary-soft:rgba(56,189,248,0.15);--accent:#c2410c;--accent-soft:#fff7ed;--accent-border:#fed7aa;--error:#b91c1c;--error-soft:rgba(185,28,28,0.12);--success:#047857;--success-soft:rgba(4,120,87,0.12);--warning:#b45309;--warning-soft:rgba(180,83,9,0.12);--info-bg:rgba(56,189,248,0.12);--info-border:rgba(56,189,248,0.35);--shadow-sm:0 1px 3px rgba(15,23,42,0.08);--shadow-md:0 2px 10px rgba(15,23,42,0.05);--shadow-lg:0 30px 80px -30px rgba(15,23,42,0.22)}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0b1220;--surface:#0f172a;--surface-alt:#111b2e;--surface-soft:#0b1424;--text:#f1f5f9;--text-2:#cbd5e1;--text-muted:#94a3b8;--text-soft:#64748b;--border:#1e293b;--border-strong:#334155;--primary:#38bdf8;--primary-hover:#0ea5e9;--primary-active:#0284c7;--primary-soft:rgba(56,189,248,0.15);--accent:#fb923c;--accent-soft:rgba(251,146,60,0.12);--accent-border:rgba(251,146,60,0.35);--error:#f87171;--error-soft:rgba(248,113,113,0.18);--success:#34d399;--success-soft:rgba(52,211,153,0.12);--warning:#fbbf24;--warning-soft:rgba(251,191,36,0.15);--info-bg:rgba(56,189,248,0.12);--info-border:rgba(56,189,248,0.35);--shadow-sm:0 1px 3px rgba(0,0,0,0.4);--shadow-md:0 2px 10px rgba(0,0,0,0.5);--shadow-lg:0 30px 80px -30px rgba(0,0,0,0.7)}}
+
+/* ═══════════════════════════════════════════════════════════
+   RESET / BASE
+   ═══════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;width:100%;min-height:100%}
+body{width:100%;min-height:100vh;min-height:100dvh;background:var(--bg);color:var(--text);font-family:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-size:16px;line-height:1.6;display:flex;flex-direction:column;align-items:stretch}
+:where(button,a,input,[tabindex],summary):focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:2px}
+.skip-link{position:absolute;left:-9999px;top:0;background:var(--primary);color:#fff;padding:10px 16px;z-index:100000;font-weight:600;border-radius:4px;text-decoration:none}
+.skip-link:focus{left:8px;top:8px}
+
+/* ═══════════════════════════════════════════════════════════
+   NOTIFICATION BANNER
+   ═══════════════════════════════════════════════════════════ */
+.notification-banner{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;gap:12px;padding:max(14px,env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) 14px max(18px,env(safe-area-inset-left));background:#1e293b;color:#fff;font-size:0.88rem;font-weight:600;z-index:10000;transform:translateY(-120%);transition:transform 0.35s cubic-bezier(0.34,1.2,0.64,1);box-shadow:0 4px 20px rgba(0,0,0,0.18);border-bottom:1px solid rgba(255,255,255,0.08);pointer-events:none}
+.notification-banner.show{transform:translateY(0);pointer-events:auto}
+.notification-banner.error{background:#b91c1c}.notification-banner.success{background:#047857}.notification-banner.info{background:#0284c7}.notification-banner.warning{background:#b45309}
+.notification-icon{display:flex;align-items:center;justify-content:center;width:24px;height:24px;flex-shrink:0}
+.notification-icon svg{width:20px;height:20px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;display:block}
+.notification-text{flex:1 1 0%;line-height:1.4;word-wrap:break-word}
+.notification-action{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);color:#fff;padding:6px 12px;border-radius:4px;font-family:inherit;font-size:0.78rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;min-height:32px;appearance:none;transition:background-color 0.2s}
+.notification-action:hover{background:rgba(255,255,255,0.32)}
+.notification-close{background:none;border:none;color:rgba(255,255,255,0.85);cursor:pointer;padding:6px;flex-shrink:0;appearance:none;display:flex;align-items:center;justify-content:center;min-width:32px;min-height:32px;border-radius:4px}
+.notification-close svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.notification-close:hover{color:#fff}
+.notification-banner[data-hide-close="true"] .notification-close{display:none}
+.notification-banner.persistent .notification-icon svg{animation:notifPulse 2s ease-in-out infinite}
+@keyframes notifPulse{0%,100%{opacity:1}50%{opacity:0.5}}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYOUT SPLIT-SCREEN
+   ═══════════════════════════════════════════════════════════ */
+.help-container{display:flex;flex-direction:column;width:100%;min-height:100vh;min-height:100dvh}
+
+/* ═══════════════════════════════════════════════════════════
+   BRAND PANEL — MOBILE (compact hero)
+   ═══════════════════════════════════════════════════════════ */
+.brand-panel{
+  padding:max(32px,calc(env(safe-area-inset-top) + 24px)) 20px 40px;
+  background:linear-gradient(140deg,#0284c7 0%,#0d9488 55%,#065f46 130%);
+  color:#fff;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.brand-panel::before,.brand-panel::after{content:'';position:absolute;border-radius:50%;background:rgba(255,255,255,0.07);pointer-events:none}
+.brand-panel::before{width:300px;height:300px;top:-120px;right:-100px}
+.brand-panel::after{width:200px;height:200px;bottom:-80px;left:-60px}
+
+.back-link{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.85);text-decoration:none;font-size:0.85rem;font-weight:600;padding:6px 12px;border-radius:4px;transition:background-color 0.2s;position:relative;z-index:2;margin-bottom:16px}
+.back-link:hover{background:rgba(255,255,255,0.15);color:#fff}
+
+.brand-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;max-width:520px}
+.brand-logo{display:flex;align-items:center;justify-content:center;gap:10px;font-weight:800;font-size:1rem;letter-spacing:3px}
+.brand-logo i{font-size:1.2rem;color:#fed7aa}
+.brand-headline{font-size:clamp(1.4rem,1.2rem+1.2vw,1.8rem);font-weight:800;line-height:1.18;letter-spacing:-0.3px}
+.brand-sub{font-size:0.9rem;line-height:1.55;opacity:0.9;max-width:42ch;margin:0 auto}
+.brand-features{display:none;list-style:none;flex-direction:column;gap:14px;margin-top:8px;font-size:0.9rem}
+.brand-features li{display:flex;align-items:center;gap:12px}
+.brand-features i{width:32px;height:32px;display:inline-grid;place-items:center;background:rgba(255,255,255,0.14);border-radius:50%;flex-shrink:0;font-size:0.88rem;color:#fed7aa}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTENT PANEL
+   ═══════════════════════════════════════════════════════════ */
+.content-panel{width:100%;padding:24px 16px 40px;flex:1}
+.content-inner{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTEXT BANNERS
+   ═══════════════════════════════════════════════════════════ */
+.context-banner{display:flex;align-items:center;gap:14px;padding:16px 18px;background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--primary);box-shadow:var(--shadow-sm)}
+.context-banner.guest{border-left-color:var(--primary);background:var(--info-bg)}
+.context-banner.auth{border-left-color:var(--success);background:var(--success-soft)}
+.context-banner>i{font-size:1.4rem;color:var(--primary);flex-shrink:0}
+.context-banner.auth>i{color:var(--success)}
+.context-banner-content{flex:1;min-width:0}
+.context-banner h2{font-size:0.95rem;font-weight:700;margin-bottom:2px;color:var(--text)}
+.context-banner p{font-size:0.8rem;color:var(--text-muted);line-height:1.5}
+.context-banner a{color:var(--primary);font-weight:600;text-decoration:none}
+.context-banner a:hover{text-decoration:underline}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTIONS
+   ═══════════════════════════════════════════════════════════ */
+.section{margin-bottom:8px}
+.section-title{font-size:1.3rem;font-weight:800;margin-bottom:10px;color:var(--text);display:flex;align-items:center;gap:10px}
+.section-title i{color:var(--primary);font-size:1.05rem}
+.section-subtitle{font-size:0.85rem;color:var(--text-muted);margin-bottom:14px;line-height:1.5}
+
+/* ═══════════════════════════════════════════════════════════
+   SEARCH
+   ═══════════════════════════════════════════════════════════ */
+.search-wrapper{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;box-shadow:var(--shadow-sm);transition:border-color 0.2s}
+.search-wrapper:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.search-wrapper>i{font-size:1rem;color:var(--text-soft);flex-shrink:0}
+.search-wrapper input{flex:1;border:none;background:transparent;font-family:inherit;font-size:0.95rem;color:var(--text);outline:none;min-width:0;min-height:32px}
+.search-wrapper input::placeholder{color:var(--text-soft)}
+.search-clear{background:none;border:none;color:var(--text-soft);cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;min-width:28px;min-height:28px;border-radius:4px;flex-shrink:0;appearance:none}
+.search-clear:hover{color:var(--error);background:var(--error-soft)}
+.search-clear svg{width:14px;height:14px;stroke:currentColor;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.search-suggestions{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:12px;font-size:0.78rem}
+.search-suggestions span{color:var(--text-soft);font-weight:600}
+.suggestion-chip{background:var(--surface-alt);border:1px solid var(--border);color:var(--text-muted);padding:4px 10px;border-radius:14px;font-family:inherit;font-size:0.74rem;font-weight:600;cursor:pointer;transition:all 0.2s;appearance:none}
+.suggestion-chip:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-soft)}
+
+/* ═══════════════════════════════════════════════════════════
+   QUICK ACCESS
+   ═══════════════════════════════════════════════════════════ */
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.quick-card{padding:16px;background:var(--surface);border:1px solid var(--border);text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px;cursor:pointer;transition:border-color 0.2s,transform 0.15s;text-align:left;font-family:inherit;appearance:none}
+.quick-card:hover{border-color:var(--primary);transform:translateY(-2px);background:var(--surface-soft)}
+.quick-icon{width:36px;height:36px;border-radius:8px;background:var(--primary-soft);color:var(--primary);display:inline-flex;align-items:center;justify-content:center;font-size:0.95rem;margin-bottom:4px}
+.quick-card strong{font-size:0.85rem;color:var(--text);line-height:1.2}
+.quick-card small{font-size:0.72rem;color:var(--text-muted);line-height:1.4}
+
+/* ═══════════════════════════════════════════════════════════
+   FAQ FILTERS
+   ═══════════════════════════════════════════════════════════ */
+.faq-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.filter-btn{padding:7px 14px;background:var(--surface);border:1.5px solid var(--border);border-radius:16px;font-family:inherit;font-size:0.78rem;font-weight:700;color:var(--text-muted);cursor:pointer;transition:all 0.2s;appearance:none;min-height:34px}
+.filter-btn:hover{border-color:var(--primary);color:var(--primary)}
+.filter-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
+.filter-btn.active:hover{background:var(--primary-hover);border-color:var(--primary-hover);color:#fff}
+
+/* ═══════════════════════════════════════════════════════════
+   FAQ ITEMS
+   ═══════════════════════════════════════════════════════════ */
+.faq-item{background:var(--surface);border:1px solid var(--border);margin-bottom:8px;overflow:hidden}
+.faq-item[open]{border-color:var(--primary)}
+.faq-item summary{padding:14px 16px;cursor:pointer;font-weight:700;font-size:0.88rem;color:var(--text);display:flex;align-items:center;justify-content:space-between;gap:12px;list-style:none;min-height:48px;transition:background-color 0.2s;line-height:1.35}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary:hover{background:var(--surface-soft)}
+.faq-item summary::after{content:'\f078';font-family:'Font Awesome 6 Free';font-weight:900;font-size:0.7rem;color:var(--text-soft);transition:transform 0.2s;flex-shrink:0}
+.faq-item[open] summary::after{transform:rotate(180deg);color:var(--primary)}
+.faq-item[open] summary{background:var(--surface-soft)}
+.faq-cat-badge{display:inline-block;font-size:0.62rem;font-weight:800;padding:2px 7px;border-radius:3px;background:var(--primary-soft);color:var(--primary);text-transform:uppercase;letter-spacing:0.3px;margin-right:6px;vertical-align:middle}
+.faq-body{padding:0 16px 14px;font-size:0.84rem;color:var(--text-muted);line-height:1.65}
+.faq-body p{margin-bottom:8px}
+.faq-body p:last-child{margin-bottom:0}
+.faq-body a{color:var(--primary);text-decoration:none;font-weight:600}
+.faq-body a:hover{text-decoration:underline}
+.faq-body ul{list-style:disc;padding-left:20px;margin:6px 0 8px}
+.faq-body li{margin-bottom:3px}
+.no-results{padding:36px 20px;text-align:center;background:var(--surface);border:1px dashed var(--border-strong);color:var(--text-muted);font-size:0.88rem}
+.no-results i{font-size:1.8rem;color:var(--text-soft);margin-bottom:10px;display:block}
+.no-results strong{color:var(--text);display:block;margin-bottom:4px}
+
+/* ═══════════════════════════════════════════════════════════
+   GUIDES
+   ═══════════════════════════════════════════════════════════ */
+.guides-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.guide-card{padding:18px;background:var(--surface);border:1px solid var(--border);text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px;transition:border-color 0.2s,transform 0.15s}
+.guide-card:hover{border-color:var(--primary);transform:translateY(-2px)}
+.guide-meta{display:flex;align-items:center;gap:8px;font-size:0.68rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px}
+.guide-level{padding:2px 7px;border-radius:3px;background:var(--primary-soft);color:var(--primary)}
+.guide-level.inter{background:var(--warning-soft);color:var(--warning)}
+.guide-level.adv{background:var(--error-soft);color:var(--error)}
+.guide-card h3{font-size:0.92rem;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:4px}
+.guide-card p{font-size:0.78rem;color:var(--text-muted);line-height:1.45;margin:0;flex:1}
+.guide-card>i.guide-arrow{color:var(--primary);font-size:0.8rem;margin-top:6px;align-self:flex-end}
+
+/* ═══════════════════════════════════════════════════════════
+   TROUBLESHOOT
+   ═══════════════════════════════════════════════════════════ */
+.troubleshoot-list{display:flex;flex-direction:column;gap:8px}
+.troubleshoot-item{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--warning);padding:14px 16px;display:flex;align-items:flex-start;gap:12px}
+.troubleshoot-item>i{color:var(--warning);font-size:1.05rem;flex-shrink:0;margin-top:2px}
+.troubleshoot-content{flex:1;min-width:0}
+.troubleshoot-content strong{display:block;font-size:0.88rem;color:var(--text);margin-bottom:4px}
+.troubleshoot-content p{font-size:0.8rem;color:var(--text-muted);line-height:1.5;margin:0}
+.troubleshoot-content code{background:var(--surface-alt);padding:1px 5px;border-radius:3px;font-family:'SF Mono','Consolas',monospace;font-size:0.76rem;color:var(--text-2)}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTACT / REPORT / LEGAL
+   ═══════════════════════════════════════════════════════════ */
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.contact-card{padding:16px;background:var(--surface);border:1px solid var(--border);text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px;transition:border-color 0.2s,transform 0.15s}
+.contact-card:hover{border-color:var(--primary);transform:translateY(-2px)}
+.contact-card>i{font-size:1.15rem;color:var(--primary);margin-bottom:2px}
+.contact-card strong{font-size:0.85rem;color:var(--text)}
+.contact-card small{font-size:0.74rem;color:var(--text-muted);line-height:1.4;word-break:break-all}
+.contact-card .contact-eta{font-size:0.68rem;font-weight:700;color:var(--success);margin-top:4px;display:inline-flex;align-items:center;gap:4px}
+.contact-card .contact-eta i{font-size:0.62rem;color:var(--success);margin:0}
+
+.report-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.report-card{padding:16px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--error);text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px;transition:border-color 0.2s,transform 0.15s}
+.report-card:hover{transform:translateY(-2px);border-color:var(--error);border-left-color:var(--error)}
+.report-card>i{font-size:1.05rem;color:var(--error);margin-bottom:2px}
+.report-card strong{font-size:0.85rem;color:var(--text)}
+.report-card small{font-size:0.74rem;color:var(--text-muted);line-height:1.4}
+
+.legal-links{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+.legal-link{padding:14px 16px;background:var(--surface);border:1px solid var(--border);text-decoration:none;color:var(--text);display:flex;align-items:center;gap:10px;font-size:0.84rem;font-weight:600;transition:border-color 0.2s,background-color 0.2s}
+.legal-link:hover{border-color:var(--primary);background:var(--surface-soft)}
+.legal-link>i{color:var(--primary);font-size:0.95rem;flex-shrink:0;width:20px;text-align:center}
+
+/* ═══════════════════════════════════════════════════════════
+   CTA
+   ═══════════════════════════════════════════════════════════ */
+.cta-section{padding:24px 20px;background:linear-gradient(135deg,var(--surface-alt),var(--surface-soft));border:1px solid var(--border);text-align:center}
+.cta-section h2{font-size:1.1rem;font-weight:800;margin-bottom:8px;color:var(--text)}
+.cta-section p{font-size:0.85rem;color:var(--text-muted);margin-bottom:16px}
+.cta-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;font-family:inherit;font-size:0.88rem;font-weight:700;cursor:pointer;text-decoration:none;border:none;transition:background-color 0.2s,border-color 0.2s;min-height:44px;border-radius:4px}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-hover)}
+.btn-secondary{background:var(--surface);color:var(--text);border:1.5px solid var(--border)}
+.btn-secondary:hover{background:var(--surface-alt);border-color:var(--border-strong)}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER (références croisées + social)
+   ═══════════════════════════════════════════════════════════ */
+.page-footer{text-align:center;font-size:0.75rem;color:var(--text-soft);line-height:1.6;padding-top:24px;border-top:1px solid var(--border);margin-top:16px}
+.footer-links{display:flex;justify-content:center;flex-wrap:wrap;align-items:center;gap:4px 8px;margin-bottom:12px}
+.footer-links a{color:var(--text-muted);text-decoration:none;padding:4px 2px;font-size:0.76rem;transition:color 0.2s}
+.footer-links a:hover{color:var(--primary)}
+.social-links{display:flex;justify-content:center;align-items:center;gap:8px;margin:12px 0}
+.social-link{width:34px;height:34px;border-radius:50%;background:var(--surface-alt);color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center;text-decoration:none;transition:background-color 0.2s,color 0.2s,transform 0.15s;font-size:0.82rem}
+.social-link:hover{background:var(--primary);color:#fff;transform:translateY(-1px)}
+.social-link:active{transform:translateY(0)}
+.page-footer p{margin-top:6px;font-size:0.7rem;opacity:0.85}
+
+/* ═══════════════════════════════════════════════════════════
+   BACK TO TOP
+   ═══════════════════════════════════════════════════════════ */
+.back-to-top{position:fixed;bottom:max(20px,env(safe-area-inset-bottom));right:max(16px,env(safe-area-inset-right));width:42px;height:42px;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(2,132,199,0.4);opacity:0;visibility:hidden;transform:translateY(12px);transition:all 0.3s;z-index:900;font-size:0.9rem;appearance:none}
+.back-to-top.visible{opacity:1;visibility:visible;transform:translateY(0)}
+.back-to-top:hover{background:var(--primary-hover)}
+
+/* ═══════════════════════════════════════════════════════════
+   REVEAL
+   ═══════════════════════════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity 0.5s ease,transform 0.5s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ═══════════════════════════════════════════════════════════
+   BREAKPOINTS
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── DESKTOP ≥ 1100px : SPLIT-SCREEN ──────────── */
+@media (min-width: 1100px) {
+  body { overflow-x: hidden; }
+  .help-container {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    min-height: 100vh;
+    align-items: stretch;
+  }
+  .brand-panel {
+    padding: 48px 44px;
+    text-align: left;
+    align-items: flex-start;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    align-self: start;
+    border-radius: 0;
+    box-shadow: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .brand-panel .back-link { align-self: flex-start; margin-bottom: 24px; }
+  .brand-content {
+    align-items: flex-start;
+    max-width: 100%;
+    flex: 1;
+    justify-content: center;
+    gap: 24px;
+  }
+  .brand-logo { justify-content: flex-start; font-size: 1.1rem; letter-spacing: 3.5px; }
+  .brand-logo i { font-size: 1.3rem; }
+  .brand-headline { font-size: clamp(1.7rem, 1.4rem + 0.8vw, 2.4rem); line-height: 1.15; }
+  .brand-sub { font-size: 0.95rem; max-width: 36ch; margin: 0; }
+  .brand-features { display: flex; list-style: none; }
+  .brand-features i { width: 36px; height: 36px; font-size: 0.92rem; }
+  .content-panel {
+    padding: 40px 40px 40px;
+    background: var(--bg);
+    min-width: 0;
+  }
+  .content-inner { max-width: 720px; margin: 0 auto; }
+  .section-title { font-size: 1.35rem; }
+}
+
+/* ── TABLETTE LARGE (769 – 1099) ──────────────── */
+@media (min-width: 769px) and (max-width: 1099px) {
+  .content-inner { max-width: 780px; }
+  .quick-grid { grid-template-columns: repeat(3, 1fr); }
+  .guides-grid { grid-template-columns: repeat(2, 1fr); }
+  .contact-grid { grid-template-columns: repeat(2, 1fr); }
+  .report-grid { grid-template-columns: repeat(2, 1fr); }
+  .legal-links { grid-template-columns: repeat(2, 1fr); }
+  .content-panel { padding-left: 24px; padding-right: 24px; }
+}
+
+/* ── MOBILE (≤ 480) ───────────────────────────── */
+@media (max-width: 480px) {
+  .content-panel { padding-left: 14px; padding-right: 14px; }
+  .notification-banner { padding: 12px 14px; font-size: 0.82rem; }
+  .notification-icon { width: 22px; height: 22px; }
+  .notification-icon svg { width: 18px; height: 18px; }
+  .section-title { font-size: 1.15rem; }
+  .section-subtitle { font-size: 0.82rem; }
+
+  .search-wrapper { padding: 10px 12px; }
+  .search-wrapper input { font-size: 0.88rem; }
+
+  .search-suggestions {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-left: -14px; margin-right: -14px;
+    padding-left: 14px; padding-right: 14px;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .search-suggestions::-webkit-scrollbar { display: none; }
+  .search-suggestions > span,
+  .suggestion-chip { flex-shrink: 0; }
+  .suggestion-chip { min-height: 32px; padding: 6px 12px; }
+
+  .faq-filter {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-left: -14px; margin-right: -14px;
+    padding-left: 14px; padding-right: 14px;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+  }
+  .faq-filter::-webkit-scrollbar { height: 4px; }
+  .faq-filter::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+  .filter-btn { flex-shrink: 0; scroll-snap-align: start; min-height: 38px; }
+
+  .quick-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .quick-card { padding: 12px; }
+  .quick-card strong { font-size: 0.82rem; }
+  .quick-card small { font-size: 0.7rem; }
+  .guides-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .report-grid { grid-template-columns: 1fr; }
+  .legal-links { grid-template-columns: 1fr; }
+
+  .faq-item summary { font-size: 0.84rem; padding: 12px 14px; }
+  .faq-body { font-size: 0.82rem; padding: 0 14px 12px; line-height: 1.6; }
+
+  .quick-card strong, .quick-card small,
+  .contact-card strong, .contact-card small,
+  .report-card strong, .report-card small,
+  .guide-card h3, .guide-card p,
+  .troubleshoot-content strong, .troubleshoot-content p {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+  .troubleshoot-content code {
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+  .contact-card small { word-break: break-word; }
+
+  .search-clear { min-width: 36px; min-height: 36px; }
+  .back-to-top { bottom: max(16px,env(safe-area-inset-bottom)); right: max(12px,env(safe-area-inset-right)); width: 40px; height: 40px; }
+  .social-link { width: 32px; height: 32px; font-size: 0.78rem; }
+}
+
+/* ── PETIT MOBILE (≤ 360) ─────────────────────── */
+@media (max-width: 360px) {
+  .brand-panel { padding: 24px 12px 32px; }
+  .brand-headline { font-size: 1.25rem; }
+  .brand-sub { font-size: 0.82rem; }
+  .content-panel { padding-left: 12px; padding-right: 12px; }
+  .quick-grid { grid-template-columns: 1fr; }
+  .quick-card { padding: 12px; }
+  .section-title { font-size: 1.05rem; }
+  .section-title i { font-size: 0.95rem; }
+  .search-wrapper { padding: 9px 11px; }
+  .search-wrapper input { font-size: 0.82rem; }
+  .filter-btn { font-size: 0.72rem; padding: 6px 10px; }
+  .faq-item summary { font-size: 0.82rem; padding: 12px; gap: 8px; }
+  .faq-cat-badge { font-size: 0.56rem; padding: 2px 5px; margin-right: 4px; }
+  .guide-card h3 { font-size: 0.86rem; }
+  .guide-card p { font-size: 0.74rem; }
+  .contact-card small, .report-card small { font-size: 0.7rem; }
+  .cta-buttons { flex-direction: column; }
+  .cta-buttons .btn { width: 100%; }
+  .social-links { gap: 6px; }
+  .social-link { width: 30px; height: 30px; font-size: 0.72rem; }
+}
+
+/* ── NOTIFICATION CENTER (≥ 768) ─────────────── */
+@media (min-width: 768px) and (max-width: 1919px) {
+  .notification-banner {
+    max-width: 520px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%) translateY(-120%);
+    top: 16px;
+    border-radius: 6px;
+  }
+  .notification-banner.show { transform: translateX(-50%) translateY(0); }
+}
+@media (min-width: 1920px) {
+  .notification-banner {
+    max-width: 560px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%) translateY(-120%);
+    top: 16px;
+    border-radius: 6px;
+    padding: 16px 20px;
+  }
+  .notification-banner.show { transform: translateX(-50%) translateY(0); }
+}
+
+/* ── TRÈS GRAND ÉCRAN ─────────────────────────── */
+@media (min-width: 1440px) {
+  .help-container { grid-template-columns: 480px 1fr; }
+  .brand-panel { padding: 64px 56px; }
+  .content-panel { padding: 56px 56px; }
+  .content-inner { max-width: 780px; }
+}
+
+/* ── MOBILE PAYSAGE ───────────────────────────── */
+@media (max-height: 500px) and (orientation: landscape) and (max-width: 1099px) {
+  .brand-panel { padding: 20px 16px 24px; }
+  .brand-headline { font-size: 1.3rem; }
+  .brand-sub { font-size: 0.82rem; }
+  .brand-logo { font-size: 0.9rem; }
+  .back-link { margin-bottom: 8px; }
+}
+
+/* ── PRÉFÉRENCES MOUVEMENT ────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important}
+  .notification-banner.persistent .notification-icon svg{animation:none !important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Aller au contenu</a>
+
+<div class="notification-banner" id="notificationBanner" role="status" aria-live="polite" aria-atomic="true">
+  <div class="notification-icon" id="notificationIcon" aria-hidden="true"></div>
+  <div class="notification-text" id="notificationText"></div>
+  <button type="button" class="notification-action" id="notificationAction" hidden></button>
+  <button type="button" class="notification-close" id="notificationClose" onclick="hideNotification()" aria-label="Fermer la notification">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+</div>
+
+<div class="help-container">
+  <!-- ═══════════════════════════════════════════════════════
+       BRAND PANEL (sticky sidebar desktop / compact hero mobile)
+       ═══════════════════════════════════════════════════════ -->
+  <aside class="brand-panel" aria-hidden="true">
+    <a href="#" class="back-link" id="backLink"><i class="fas fa-arrow-left" aria-hidden="true"></i> Retour</a>
+
+    <div class="brand-content">
+      <div class="brand-logo">
+        <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+        <span>ESTRA LINK</span>
+      </div>
+
+      <h2 class="brand-headline">Besoin d'aide ?<br>Nous sommes là.</h2>
+
+      <p class="brand-sub">
+        Consultez la FAQ, les guides, ou contactez notre équipe support.
+        Réponse sous 24 à 48h pour la plupart des demandes.
+      </p>
+
+      <ul class="brand-features">
+        <li><i class="fas fa-bolt" aria-hidden="true"></i> Réponses instantanées</li>
+        <li><i class="fas fa-headset" aria-hidden="true"></i> Support 24-48h</li>
+        <li><i class="fas fa-book-open" aria-hidden="true"></i> Guides détaillés</li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════════════
+       CONTENT PANEL (tous les blocs préservés)
+       ═══════════════════════════════════════════════════════ -->
+  <main class="content-panel" id="main">
+    <div class="content-inner">
+
+      <!-- VUE VISITEUR -->
+      <div id="viewGuest">
+        <div class="context-banner guest">
+          <i class="fas fa-circle-info" aria-hidden="true"></i>
+          <div class="context-banner-content">
+            <h2>Vous n'êtes pas encore membre</h2>
+            <p>Vous pouvez consulter toute l'aide librement. Pour profiter du support personnalisé et de vos données, <a href="signup.html">créez un compte</a>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- VUE CONNECTÉ -->
+      <div id="viewAuth" hidden>
+        <div class="context-banner auth">
+          <i class="fas fa-headset" aria-hidden="true"></i>
+          <div class="context-banner-content">
+            <h2>Bonjour <span id="helpUserName">…</span></h2>
+            <p>Besoin d'aide supplémentaire ? Notre équipe support vous répond sous 24 à 48 h. Priorité pour les <a href="mailto:support@estra-link.com">comptes bloqués</a>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECHERCHE -->
+      <section class="reveal">
+        <div class="search-wrapper">
+          <i class="fas fa-search" aria-hidden="true"></i>
+          <input type="search" id="faqSearch" placeholder="Rechercher dans l'aide (mot de passe, cours, données...)" aria-label="Rechercher dans l'aide" autocomplete="off">
+          <button type="button" class="search-clear" id="searchClear" aria-label="Effacer la recherche" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="search-suggestions">
+          <span>Populaire :</span>
+          <button type="button" class="suggestion-chip" data-search="mot de passe">mot de passe</button>
+          <button type="button" class="suggestion-chip" data-search="supprimer">supprimer mon compte</button>
+          <button type="button" class="suggestion-chip" data-search="notification">notifications</button>
+          <button type="button" class="suggestion-chip" data-search="mineur">mineurs</button>
+          <button type="button" class="suggestion-chip" data-search="binôme">binômes</button>
+        </div>
+      </section>
+
+      <!-- ACCÈS RAPIDE -->
+      <section class="section reveal">
+        <h2 class="section-title"><i class="fas fa-bolt" aria-hidden="true"></i> Accès rapide</h2>
+        <div class="quick-grid">
+          <button type="button" class="quick-card" data-jump="demarrage">
+            <div class="quick-icon"><i class="fas fa-rocket" aria-hidden="true"></i></div>
+            <strong>Démarrage</strong>
+            <small>Inscription, connexion, profil</small>
+          </button>
+          <button type="button" class="quick-card" data-jump="compte">
+            <div class="quick-icon"><i class="fas fa-user-shield" aria-hidden="true"></i></div>
+            <strong>Compte &amp; sécurité</strong>
+            <small>Mot de passe, 2FA, piratage</small>
+          </button>
+          <button type="button" class="quick-card" data-jump="cours">
+            <div class="quick-icon"><i class="fas fa-book-open" aria-hidden="true"></i></div>
+            <strong>Cours &amp; apprentissage</strong>
+            <small>Accès, certificats, progression</small>
+          </button>
+          <button type="button" class="quick-card" data-jump="messages">
+            <div class="quick-icon"><i class="fas fa-comments" aria-hidden="true"></i></div>
+            <strong>Messages &amp; binômes</strong>
+            <small>Chat, suggestions, blocage</small>
+          </button>
+          <button type="button" class="quick-card" data-jump="notifications">
+            <div class="quick-icon"><i class="fas fa-bell" aria-hidden="true"></i></div>
+            <strong>Notifications</strong>
+            <small>Push, email, préférences</small>
+          </button>
+          <button type="button" class="quick-card" data-jump="privacy">
+            <div class="quick-icon"><i class="fas fa-user-lock" aria-hidden="true"></i></div>
+            <strong>Confidentialité</strong>
+            <small>Export, consentements, visibilité</small>
+          </button>
+          <button type="button" class="quick-card" data-jump="signalement">
+            <div class="quick-icon"><i class="fas fa-flag" aria-hidden="true"></i></div>
+            <strong>Signalement</strong>
+            <small>Contenu, abus, contestation</small>
+          </button>
+          <button type="button" class="quick-card" data-jump="parents">
+            <div class="quick-icon"><i class="fas fa-child-reaching" aria-hidden="true"></i></div>
+            <strong>Parents &amp; mineurs</strong>
+            <small>Inscription, supervision, retrait</small>
+          </button>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="section reveal">
+        <h2 class="section-title"><i class="fas fa-circle-question" aria-hidden="true"></i> Questions fréquentes</h2>
+        <p class="section-subtitle">Utilisez la barre de recherche ou les filtres pour trouver votre réponse.</p>
+
+        <div class="faq-filter" role="tablist">
+          <button type="button" class="filter-btn active" data-cat="all" role="tab">Tout</button>
+          <button type="button" class="filter-btn" data-cat="demarrage" role="tab">Démarrage</button>
+          <button type="button" class="filter-btn" data-cat="compte" role="tab">Compte</button>
+          <button type="button" class="filter-btn" data-cat="cours" role="tab">Cours</button>
+          <button type="button" class="filter-btn" data-cat="messages" role="tab">Messages</button>
+          <button type="button" class="filter-btn" data-cat="notifications" role="tab">Notifications</button>
+          <button type="button" class="filter-btn" data-cat="privacy" role="tab">Confidentialité</button>
+          <button type="button" class="filter-btn" data-cat="signalement" role="tab">Signalement</button>
+          <button type="button" class="filter-btn" data-cat="parents" role="tab">Parents</button>
+        </div>
+
+        <div id="faqList">
+
+          <!-- DÉMARRAGE -->
+          <details class="faq-item" data-cat="demarrage">
+            <summary><span><span class="faq-cat-badge">Démarrage</span>Comment créer un compte sur ESTRA LINK ?</span></summary>
+            <div class="faq-body">
+              <p>Cliquez sur <strong>« Créer un compte »</strong> sur la page d'accueil, puis remplissez le formulaire : nom, post-nom, prénom, numéro de téléphone (ou email), mot de passe, et type de compte (élève / étudiant / enseignant).</p>
+              <p>Si vous avez moins de 15 ans, le nom et le téléphone d'un parent ou tuteur sont obligatoires.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" data-cat="demarrage">
+            <summary><span><span class="faq-cat-badge">Démarrage</span>J'ai oublié mon mot de passe, que faire ?</span></summary>
+            <div class="faq-body">
+              <p>Sur la page de connexion, cliquez sur <strong>« Mot de passe oublié »</strong>. Vous recevrez un code de réinitialisation par SMS ou par email selon votre méthode d'inscription.</p>
+              <p>Le lien de réinitialisation est valable 30 minutes. Si vous ne recevez rien, vérifiez vos spams ou contactez <a href="mailto:support@estra-link.com">support@estra-link.com</a>.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" data-cat="demarrage">
+            <summary><span><span class="faq-cat-badge">Démarrage</span>Comment modifier mes informations de profil ?</span></summary>
+            <div class="faq-body">
+              <p>Allez dans <strong>Paramètres → Profil</strong> depuis le menu principal. Vous pouvez y modifier votre avatar, votre bio, votre établissement, votre filière et vos centres d'intérêt.</p>
+              <p>Le nom et le prénom sont verrouillés après inscription pour des raisons de sécurité : contactez le support pour les changer.</p>
+            </div>
+          </details>
+
+          <!-- COMPTE -->
+          <details class="faq-item" data-cat="compte">
+            <summary><span><span class="faq-cat-badge">Compte</span>Comment activer l'authentification à deux facteurs (2FA) ?</span></summary>
+            <div class="faq-body">
+              <p>Rendez-vous dans <a href="settings.html#2fa">Paramètres → Sécurité → 2FA</a>. Vous pouvez choisir entre :</p>
+              <ul>
+                <li>Code par SMS (+243)</li>
+                <li>Application d'authentification (Google Authenticator, Authy...)</li>
+              </ul>
+              <p>Nous recommandons fortement l'activation, surtout si vous êtes enseignant ou tuteur.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" data-cat="compte">
+            <summary><span><span class="faq-cat-badge">Compte</span>J'ai été piraté, que faire immédiatement ?</span></summary>
+            <div class="faq-body">
+              <p>Agissez vite :</p>
+              <ul>
+                <li>Changez votre mot de passe depuis un appareil sûr</li>
+                <li>Activez la 2FA depuis les paramètres de sécurité</li>
+                <li>Déconnectez toutes les sessions depuis <a href="settings.html#security">Paramètres → Sécurité</a></li>
+                <li>Écrivez à <a href="mailto:support@estra-link.com">support@estra-link.com</a> avec l'objet « COMPTE PIRATÉ »</li>
+              </ul>
+              <p>Notre équipe peut bloquer temporairement votre compte le temps de sécuriser l'accès.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" data-cat="compte">
+            <summary><span><span class="faq-cat-badge">Compte</span>Comment supprimer définitivement mon compte ?</span></summary>
+            <div class="faq-body">
+              <p>Depuis <a href="settings.html#privacy">Paramètres → Confidentialité → Supprimer mon compte</a>. Une double confirmation vous sera demandée.</p>
+              <p>La suppression est <strong>irréversible</strong> : profil, publications, messages, progression et certificats sont effacés sous 30 jours (sauvegardes techniques incluses).</p>
+            </div>
+          </details>
+
+          <!-- COURS -->
+          <details class="faq-item" data-cat="cours">
+            <summary><span><span class="faq-cat-badge">Cours</span>Les cours sont-ils gratuits ?</span></summary>
+            <div class="faq-body">
+              <p>Oui. <strong>L'accès de base est gratuit</strong> pour tous les apprenants. Certains contenus avancés (certifications officielles, formations premium) pourront être payants à l'avenir, mais le cœur de la plateforme reste gratuit.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" data-cat="cours">
+            <summary><span><span class="faq-cat-badge">Cours</span>Comment obtenir un certificat ?</span></summary>
+            <div class="faq-body">
+              <p>Un certificat est délivré lorsque vous terminez :</p>
+              <ul>
+                <li>100 % des leçons d'un cours</li>
+                <li>Les quiz et exercices avec un score minimum de 70 %</li>
+              </ul>
+              <p>Votre certificat est nominatif, infalsifiable, et téléchargeable en PDF depuis votre profil.</p>
+            </div>
+          </details>
+
+          <!-- MESSAGES -->
+          <details class="faq-item" data-cat="messages">
+            <summary><span><span class="faq-cat-badge">Messages</span>Comment fonctionnent les suggestions de binômes ?</span></summary>
+            <div class="faq-body">
+              <p>L'algorithme propose des profils compatibles avec le vôtre en se basant sur :</p>
+              <ul>
+                <li>Vos centres d'intérêt</li>
+                <li>Votre filière et niveau scolaire</li>
+                <li>Vos relations en commun</li>
+              </ul>
+              <p><strong>Aucune donnée sensible</strong> (ethnie, religion, santé, opinions) n'est utilisée. Vous pouvez désactiver les suggestions dans <a href="settings.html#privacy">Paramètres → Confidentialité</a>.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" data-cat="messages">
+            <summary><span><span class="faq-cat-badge">Messages</span>Pourquoi la messagerie est-elle désactivée avec certains utilisateurs ?</span></summary>
+            <div class="faq-body">
+              <p>Par mesure de protection des mineurs, la messagerie est <strong>désactivée entre un adulte et un mineur non binôme</strong>. Cette règle s'applique systématiquement et ne peut pas être désactivée.</p>
+              <p>Si vous pensez qu'il s'agit d'une erreur, contactez <a href="mailto:support@estra-link.com">support@estra-link.com</a>.</p>
+            </div>
+          </details>
+
+          <!-- NOTIFICATIONS -->
+          <details class="faq-item" data-cat="notifications">
+            <summary><span><span class="faq-cat-badge">Notifications</span>Pourquoi je ne reçois pas mes notifications push ?</span></summary>
+            <div class="faq-body">
+              <p>Vérifiez ces trois points :</p>
+              <ul>
+                <li>L'autorisation des notifications dans votre navigateur ou OS</li>
+                <li>Vos préférences dans <a href="settings.html#privacy">Paramètres → Confidentialité</a></li>
+                <li>Le mode « Ne pas déranger » de votre téléphone</li>
+              </ul>
+              <p>Sur certains navigateurs (Safari iOS notamment), les push nécessitent d'ajouter ESTRA LINK à l'écran d'accueil.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" data-cat="notifications">
+            <summary><span><span class="faq-cat-badge">Notifications</span>Comment gérer mes préférences de notification ?</span></summary>
+            <div class="faq-body">
+              <p>Dans <a href="settings.html#privacy">Paramètres → Confidentialité</a>, vous pouvez activer ou désactiver séparément :</p>
+              <ul>
+                <li>Notifications push</li>
+                <li>Emails (sécurité, cours, marketing)</li>
+                <li>SMS critiques</li>
+              </ul>
+              <p>Les notifications de sécurité (nouvelle connexion, changement de mot de passe) restent toujours actives.</p>
+            </div>
+          </details>
+
+          <!-- CONFIDENTIALITÉ -->
+          <details class="faq-item" data-cat="privacy">
+            <summary><span><span class="faq-cat-badge">Confidentialité</span>Comment exporter mes données personnelles ?</span></summary>
+            <div class="faq-body">
+              <p>Depuis <a href="settings.html#privacy">Paramètres → Confidentialité → Télécharger mes données</a>. Vous recevrez un fichier JSON contenant :</p>
+              <ul>
+                <li>Votre profil</li>
+                <li>Vos consentements</li>
+                <li>Vos publications et commentaires</li>
+                <li>Votre progression dans les cours</li>
+              </ul>
+              <p>L'export est disponible immédiatement pour les données de base, et sous 24 h pour les données volumineuses.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" data-cat="privacy">
+            <summary><span><span class="faq-cat-badge">Confidentialité</span>Qui peut voir mon profil ?</span></summary>
+            <div class="faq-body">
+              <p>Cela dépend de vos paramètres. Par défaut :</p>
+              <ul>
+                <li><strong>Adultes</strong> : profil visible par tous les membres</li>
+                <li><strong>Mineurs</strong> : profil <strong>privé par défaut</strong> (visible par vos contacts uniquement)</li>
+              </ul>
+              <p>Vous pouvez ajuster ces paramètres à tout moment depuis <a href="settings.html#privacy">Paramètres → Confidentialité</a>.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" data-cat="privacy">
+            <summary><span><span class="faq-cat-badge">Confidentialité</span>Comment exercer mes droits sur mes données ?</span></summary>
+            <div class="faq-body">
+              <p>Vous disposez de droits d'accès, de rectification, d'effacement, de portabilité, d'opposition et de limitation. Contactez le DPO : <a href="mailto:dpo@estra-link.com">dpo@estra-link.com</a> — réponse sous 30 jours.</p>
+              <p>La plupart des actions (export, suppression, consentements) sont directement accessibles dans <a href="settings.html#privacy">Paramètres → Confidentialité</a>. Consultez la <a href="privacy.html">Politique de confidentialité</a> pour tous les détails.</p>
+            </div>
+          </details>
+
+          <!-- SIGNALEMENT -->
+          <details class="faq-item" data-cat="signalement">
+            <summary><span><span class="faq-cat-badge">Signalement</span>Comment signaler un contenu inapproprié ?</span></summary>
+            <div class="faq-body">
+              <p>Chaque publication, commentaire, message et profil dispose d'un bouton <strong>« Signaler »</strong> (icône drapeau). Sélectionnez le motif et ajoutez un commentaire si nécessaire.</p>
+              <p>Vous pouvez aussi écrire à <a href="mailto:contact@estra-link.com?subject=Signalement">contact@estra-link.com</a>. L'identité du signaleur reste strictement confidentielle.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" data-cat="signalement">
+            <summary><span><span class="faq-cat-badge">Signalement</span>Que se passe-t-il après un signalement ?</span></summary>
+            <div class="faq-body">
+              <p>Notre équipe de modération examine chaque signalement sous <strong>48 à 72 h</strong> (priorité absolue pour les cas graves : contenu impliquant un mineur, menace imminente).</p>
+              <p>Selon la gravité, nous pouvons : avertir l'utilisateur, retirer le contenu, suspendre temporairement ou définitivement le compte, et/ou signaler aux autorités compétentes.</p>
+            </div>
+          </details>
+
+          <!-- PARENTS -->
+          <details class="faq-item" data-cat="parents">
+            <summary><span><span class="faq-cat-badge">Parents</span>Mon enfant a moins de 15 ans, comment l'inscrire ?</span></summary>
+            <div class="faq-body">
+              <p>L'inscription d'un mineur de moins de 15 ans nécessite votre consentement explicite. Pendant l'inscription de votre enfant, renseignez :</p>
+              <ul>
+                <li>Votre nom complet</li>
+                <li>Votre numéro de téléphone (+243)</li>
+              </ul>
+              <p>Vous recevrez un SMS de confirmation et pourrez à tout moment demander la suppression du compte de votre enfant.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" data-cat="parents">
+            <summary><span><span class="faq-cat-badge">Parents</span>Comment superviser le compte de mon enfant ?</span></summary>
+            <div class="faq-body">
+              <p>Pour les mineurs, les protections suivantes sont actives automatiquement :</p>
+              <ul>
+                <li>Profil privé par défaut</li>
+                <li>Messagerie restreinte avec les adultes</li>
+                <li>Aucune publicité ciblée</li>
+                <li>Filtrage des contenus inappropriés</li>
+              </ul>
+              <p>Un espace tuteur complet est en cours de développement pour vous permettre de gérer les autorisations.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" data-cat="parents">
+            <summary><span><span class="faq-cat-badge">Parents</span>Comment supprimer le compte de mon enfant ?</span></summary>
+            <div class="faq-body">
+              <p>Écrivez à <a href="mailto:dpo@estra-link.com">dpo@estra-link.com</a> en précisant :</p>
+              <ul>
+                <li>Le nom d'utilisateur de votre enfant</li>
+                <li>Votre nom et votre numéro de téléphone (celui enregistré à l'inscription)</li>
+                <li>Le motif de la demande</li>
+              </ul>
+              <p>La suppression est traitée sous 7 jours ouvrés, sans justification à fournir au-delà.</p>
+            </div>
+          </details>
+
+        </div>
+
+        <div class="no-results" id="noResults" hidden>
+          <i class="fas fa-search-minus" aria-hidden="true"></i>
+          <strong>Aucun résultat trouvé</strong>
+          Essayez un autre mot-clé ou <a href="mailto:support@estra-link.com" style="color:var(--primary);font-weight:600;text-decoration:none">contactez le support</a>.
+        </div>
+      </section>
+
+      <!-- GUIDES -->
+      <section class="section reveal">
+        <h2 class="section-title"><i class="fas fa-book" aria-hidden="true"></i> Guides et tutoriels</h2>
+        <p class="section-subtitle">Des pas-à-pas détaillés pour maîtriser ESTRA LINK.</p>
+        <div class="guides-grid">
+          <a href="#" class="guide-card">
+            <div class="guide-meta"><span class="guide-level">Débutant</span>· Lecture 5 min</div>
+            <h3>Bien démarrer sur ESTRA LINK</h3>
+            <p>Créer son compte, compléter son profil et faire ses premiers pas dans la communauté.</p>
+            <i class="fas fa-arrow-right guide-arrow" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="guide-card">
+            <div class="guide-meta"><span class="guide-level">Débutant</span>· Lecture 4 min</div>
+            <h3>Sécuriser son compte en 5 étapes</h3>
+            <p>Mot de passe robuste, 2FA, sessions actives : les bonnes pratiques essentielles.</p>
+            <i class="fas fa-arrow-right guide-arrow" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="guide-card">
+            <div class="guide-meta"><span class="guide-level inter">Intermédiaire</span>· Lecture 7 min</div>
+            <h3>Trouver son binôme d'étude idéal</h3>
+            <p>Comment utiliser les suggestions, filtrer les profils et initier un premier contact.</p>
+            <i class="fas fa-arrow-right guide-arrow" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="guide-card">
+            <div class="guide-meta"><span class="guide-level inter">Intermédiaire</span>· Lecture 6 min</div>
+            <h3>Suivre un cours et obtenir un certificat</h3>
+            <p>Comprendre la progression, passer les quiz et télécharger votre certificat.</p>
+            <i class="fas fa-arrow-right guide-arrow" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="guide-card">
+            <div class="guide-meta"><span class="guide-level inter">Intermédiaire</span>· Lecture 8 min</div>
+            <h3>Guide des parents et tuteurs</h3>
+            <p>Inscrire son enfant, comprendre les protections et superviser son activité.</p>
+            <i class="fas fa-arrow-right guide-arrow" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="guide-card">
+            <div class="guide-meta"><span class="guide-level adv">Avancé</span>· Lecture 10 min</div>
+            <h3>Maîtriser sa confidentialité</h3>
+            <p>Tous les réglages pour contrôler sa visibilité, ses données et ses consentements.</p>
+            <i class="fas fa-arrow-right guide-arrow" aria-hidden="true"></i>
+          </a>
+        </div>
+      </section>
+
+      <!-- DÉPANNAGE -->
+      <section class="section reveal">
+        <h2 class="section-title"><i class="fas fa-wrench" aria-hidden="true"></i> Dépannage rapide</h2>
+        <p class="section-subtitle">Les problèmes les plus courants et leurs solutions immédiates.</p>
+        <div class="troubleshoot-list">
+          <div class="troubleshoot-item">
+            <i class="fas fa-circle-exclamation" aria-hidden="true"></i>
+            <div class="troubleshoot-content">
+              <strong>La page ne se charge pas</strong>
+              <p>Vérifiez votre connexion Internet. Essayez de recharger avec <code>Ctrl+Shift+R</code> (ou <code>Cmd+Shift+R</code> sur Mac). Videz le cache de votre navigateur si le problème persiste.</p>
+            </div>
+          </div>
+          <div class="troubleshoot-item">
+            <i class="fas fa-circle-exclamation" aria-hidden="true"></i>
+            <div class="troubleshoot-content">
+              <strong>Impossible de se connecter</strong>
+              <p>Vérifiez que votre clavier n'est pas en majuscules. Utilisez « Mot de passe oublié » si nécessaire. Si votre compte est bloqué, contactez le support.</p>
+            </div>
+          </div>
+          <div class="troubleshoot-item">
+            <i class="fas fa-circle-exclamation" aria-hidden="true"></i>
+            <div class="troubleshoot-content">
+              <strong>Mes messages ne s'envoient pas</strong>
+              <p>Vérifiez votre connexion. Si le destinataire vous a bloqué, le message échouera silencieusement. Essayez de recharger la conversation.</p>
+            </div>
+          </div>
+          <div class="troubleshoot-item">
+            <i class="fas fa-circle-exclamation" aria-hidden="true"></i>
+            <div class="troubleshoot-content">
+              <strong>L'application est lente ou plante</strong>
+              <p>Fermez les autres onglets gourmands. Mettez à jour votre navigateur. Sur mobile, désinstallez/réinstallez la PWA. Si le problème persiste, signalez-le à <a href="mailto:support@estra-link.com" style="color:var(--primary);text-decoration:none;font-weight:600">support@estra-link.com</a>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="section reveal">
+        <h2 class="section-title"><i class="fas fa-envelope" aria-hidden="true"></i> Nous contacter</h2>
+        <p class="section-subtitle">Une question sans réponse ? Choisissez le bon interlocuteur.</p>
+        <div class="contact-grid">
+          <a href="mailto:support@estra-link.com" class="contact-card">
+            <i class="fas fa-life-ring" aria-hidden="true"></i>
+            <strong>Support technique</strong>
+            <small>support@estra-link.com</small>
+            <span class="contact-eta"><i class="fas fa-clock" aria-hidden="true"></i> Réponse 24-48 h</span>
+          </a>
+          <a href="mailto:contact@estra-link.com" class="contact-card">
+            <i class="fas fa-envelope" aria-hidden="true"></i>
+            <strong>Contact général</strong>
+            <small>contact@estra-link.com</small>
+            <span class="contact-eta"><i class="fas fa-clock" aria-hidden="true"></i> Réponse 48 h</span>
+          </a>
+          <a href="mailto:dpo@estra-link.com" class="contact-card">
+            <i class="fas fa-user-shield" aria-hidden="true"></i>
+            <strong>Données personnelles (DPO)</strong>
+            <small>dpo@estra-link.com</small>
+            <span class="contact-eta"><i class="fas fa-clock" aria-hidden="true"></i> Réponse 30 jours</span>
+          </a>
+          <a href="mailto:partenariats@estra-link.com" class="contact-card">
+            <i class="fas fa-handshake" aria-hidden="true"></i>
+            <strong>Partenariats</strong>
+            <small>partenariats@estra-link.com</small>
+            <span class="contact-eta"><i class="fas fa-clock" aria-hidden="true"></i> Réponse 5 j ouvrés</span>
+          </a>
+          <a href="mailto:presse@estra-link.com" class="contact-card">
+            <i class="fas fa-newspaper" aria-hidden="true"></i>
+            <strong>Presse &amp; médias</strong>
+            <small>presse@estra-link.com</small>
+            <span class="contact-eta"><i class="fas fa-clock" aria-hidden="true"></i> Réponse 5 j ouvrés</span>
+          </a>
+          <a href="about.html#contact" class="contact-card">
+            <i class="fas fa-circle-info" aria-hidden="true"></i>
+            <strong>Tous les contacts</strong>
+            <small>Voir la page À propos</small>
+            <span class="contact-eta"><i class="fas fa-arrow-right" aria-hidden="true"></i> Ouvrir</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- SIGNALEMENT -->
+      <section class="section reveal">
+        <h2 class="section-title"><i class="fas fa-flag" aria-hidden="true"></i> Signaler un problème</h2>
+        <p class="section-subtitle">Aidez-nous à garder ESTRA LINK sûr pour tous.</p>
+        <div class="report-grid">
+          <a href="mailto:contact@estra-link.com?subject=Signalement%20de%20contenu" class="report-card">
+            <i class="fas fa-shield-halved" aria-hidden="true"></i>
+            <strong>Contenu illicite ou abusif</strong>
+            <small>Harcèlement, contenu sexuel, haine, désinformation</small>
+          </a>
+          <a href="mailto:support@estra-link.com?subject=Bug%20technique" class="report-card">
+            <i class="fas fa-bug" aria-hidden="true"></i>
+            <strong>Bug technique</strong>
+            <small>Décrivez le problème, joignez une capture si possible</small>
+          </a>
+          <a href="mailto:support@estra-link.com?subject=Faille%20de%20s%C3%A9curit%C3%A9" class="report-card">
+            <i class="fas fa-lock" aria-hidden="true"></i>
+            <strong>Faille de sécurité</strong>
+            <small>Vulnérabilité, phishing, compte suspect</small>
+          </a>
+        </div>
+      </section>
+
+      <!-- RESSOURCES LÉGALES -->
+      <section class="section reveal">
+        <h2 class="section-title"><i class="fas fa-gavel" aria-hidden="true"></i> Ressources légales</h2>
+        <div class="legal-links">
+          <a href="privacy.html" class="legal-link"><i class="fas fa-user-shield" aria-hidden="true"></i> Politique de confidentialité</a>
+          <a href="terms.html" class="legal-link"><i class="fas fa-scroll" aria-hidden="true"></i> Conditions d'utilisation</a>
+          <a href="about.html" class="legal-link"><i class="fas fa-circle-info" aria-hidden="true"></i> À propos d'ESTRA LINK</a>
+          <a href="mailto:dpo@estra-link.com" class="legal-link"><i class="fas fa-envelope" aria-hidden="true"></i> Contacter le DPO</a>
+        </div>
+      </section>
+
+      <!-- CTA VISITEUR -->
+      <div id="guestCta">
+        <section class="cta-section reveal">
+          <h2>Toujours bloqué ?</h2>
+          <p>Créez un compte gratuit pour accéder au support personnalisé et à toutes les fonctionnalités.</p>
+          <div class="cta-buttons">
+            <a href="signup.html" class="btn btn-primary"><i class="fas fa-user-plus" aria-hidden="true"></i> Créer un compte</a>
+            <a href="mailto:support@estra-link.com" class="btn btn-secondary"><i class="fas fa-envelope" aria-hidden="true"></i> Écrire au support</a>
+          </div>
+        </section>
+      </div>
+
+      <!-- CTA AUTH -->
+      <div id="authCta" hidden>
+        <section class="cta-section reveal">
+          <h2>Besoin d'aide personnalisée ?</h2>
+          <p>Notre équipe vous répond sous 24 à 48 h. Priorité pour les comptes bloqués.</p>
+          <div class="cta-buttons">
+            <a href="mailto:support@estra-link.com" class="btn btn-primary"><i class="fas fa-envelope" aria-hidden="true"></i> Contacter le support</a>
+            <a href="settings.html" class="btn btn-secondary"><i class="fas fa-cog" aria-hidden="true"></i> Paramètres</a>
+          </div>
+        </section>
+      </div>
+
+      <!-- FOOTER -->
+      <footer class="page-footer">
+        <div class="footer-links">
+          <a href="about.html">À propos</a> ·
+          <a href="help.html">Aide</a> ·
+          <a href="terms.html">Conditions</a> ·
+          <a href="privacy.html">Confidentialité</a>
+        </div>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+          <a href="#" class="social-link" aria-label="X (Twitter)"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+          <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+          <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+          <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+        </div>
+        <p>© 2026 ESTRA LINK — Tous droits réservés</p>
+      </footer>
+
+    </div>
+  </main>
+</div>
+
+<button type="button" class="back-to-top" id="backToTop" aria-label="Retour en haut de page">
+  <i class="fas fa-arrow-up" aria-hidden="true"></i>
+</button>
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   NOTIFICATIONS
+══════════════════════════════════════════════════════════ */
+const notifBanner = document.getElementById('notificationBanner');
+const notifIcon   = document.getElementById('notificationIcon');
+const notifText   = document.getElementById('notificationText');
+const notifAction = document.getElementById('notificationAction');
+let notifTimer = null, isPersistentNotif = false;
+const SVG_ICONS = {
+  success:'<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>',
+  error:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>',
+  info:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
+  warning:'<svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>'
+};
+function showNotification(msg, type, opts) {
+  opts = opts || {}; type = type || 'info';
+  isPersistentNotif = opts.persistent === true;
+  notifText.textContent = '';
+  let cls = 'notification-banner show ';
+  if (type === 'success') cls += 'success';
+  else if (type === 'error') cls += 'error';
+  else if (type === 'warning') cls += 'warning';
+  else cls += 'info';
+  if (isPersistentNotif) cls += ' persistent';
+  notifBanner.className = cls;
+  notifBanner.setAttribute('data-hide-close', opts.hideClose === true ? 'true' : 'false');
+  if (notifAction) {
+    if (opts.action && opts.action.label && typeof opts.action.onClick === 'function') {
+      notifAction.hidden = false;
+      notifAction.textContent = opts.action.label;
+      const clone = notifAction.cloneNode(true);
+      notifAction.parentNode.replaceChild(clone, notifAction);
+      clone.addEventListener('click', opts.action.onClick);
+    } else notifAction.hidden = true;
+  }
+  requestAnimationFrame(() => {
+    notifIcon.innerHTML = SVG_ICONS[type] || SVG_ICONS.info;
+    notifText.textContent = msg;
+  });
+  if (notifTimer) clearTimeout(notifTimer);
+  if (!isPersistentNotif) notifTimer = setTimeout(() => notifBanner.classList.remove('show'), opts.duration || 3800);
+}
+function hideNotification() {
+  notifBanner.classList.remove('show');
+  if (notifTimer) clearTimeout(notifTimer);
+  isPersistentNotif = false;
+  notifBanner.setAttribute('data-hide-close', 'false');
+  if (notifAction) notifAction.hidden = true;
+}
+
+/* ══════════════════════════════════════════════════════════
+   OFFLINE
+══════════════════════════════════════════════════════════ */
+function enableOfflineDetection(opts) {
+  opts = opts || {};
+  const offlineMsg = opts.offlineMessage || 'Pas de connexion Internet. Vérifiez votre réseau.';
+  const onlineMsg  = opts.onlineMessage  || 'Connexion rétablie';
+  const canDismiss = opts.canDismiss === true;
+  function onOffline() {
+    showNotification(offlineMsg, 'warning', {
+      persistent: true, hideClose: !canDismiss,
+      action: typeof opts.onRetry === 'function'
+        ? { label: 'Réessayer', onClick: () => {
+            if (navigator.onLine) hideNotification();
+            else if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
+            if (typeof opts.onRetry === 'function') opts.onRetry();
+          }}
+        : null
+    });
+  }
+  function onOnline() { showNotification(onlineMsg, 'success', { duration: 2200 }); }
+  window.addEventListener('offline', onOffline);
+  window.addEventListener('online', onOnline);
+  if (!navigator.onLine) onOffline();
+}
+
+/* ══════════════════════════════════════════════════════════
+   SESSION TOGGLE
+══════════════════════════════════════════════════════════ */
+function toggleSessionViews() {
+  const session = localStorage.getItem('estra_session') || sessionStorage.getItem('estra_session');
+  let isValid = false;
+  let profile = {};
+  if (session) {
+    try {
+      const d = JSON.parse(session);
+      if (d.expiresAt && d.expiresAt > Date.now()) isValid = true;
+    } catch (e) {}
+  }
+  try { profile = JSON.parse(localStorage.getItem('estra_profile') || '{}'); }
+  catch (e) { profile = {}; }
+
+  const vg = document.getElementById('viewGuest');
+  const va = document.getElementById('viewAuth');
+  const gc = document.getElementById('guestCta');
+  const ac = document.getElementById('authCta');
+  const bl = document.getElementById('backLink');
+  const un = document.getElementById('helpUserName');
+
+  if (isValid) {
+    vg.hidden = true; va.hidden = false;
+    gc.hidden = true; ac.hidden = false;
+    bl.href = 'home.html';
+    if (profile.prenom && un) un.textContent = profile.prenom;
+  } else {
+    vg.hidden = false; va.hidden = true;
+    gc.hidden = false; ac.hidden = true;
+    bl.href = 'login.html';
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   FAQ FILTER
+══════════════════════════════════════════════════════════ */
+const searchInput = document.getElementById('faqSearch');
+const searchClear = document.getElementById('searchClear');
+const faqItems    = document.querySelectorAll('.faq-item');
+const filterBtns  = document.querySelectorAll('.filter-btn');
+const noResults   = document.getElementById('noResults');
+let currentCat = 'all';
+
+function filterFAQ() {
+  const term = (searchInput.value || '').toLowerCase().trim();
+  searchClear.hidden = !term;
+  let visible = 0;
+
+  faqItems.forEach(item => {
+    const matchCat = currentCat === 'all' || item.dataset.cat === currentCat;
+    const matchSearch = !term || item.textContent.toLowerCase().includes(term);
+    const show = matchCat && matchSearch;
+    item.hidden = !show;
+    if (show) visible++;
+  });
+
+  noResults.hidden = visible > 0;
+  if (term) {
+    faqItems.forEach(item => {
+      if (!item.hidden) item.open = true;
+    });
+  }
+}
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCat = btn.dataset.cat;
+    filterFAQ();
+  });
+});
+
+if (searchInput) searchInput.addEventListener('input', filterFAQ);
+if (searchClear) searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  filterFAQ();
+  searchInput.focus();
+});
+
+document.querySelectorAll('.suggestion-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    searchInput.value = chip.dataset.search;
+    currentCat = 'all';
+    filterBtns.forEach(b => b.classList.toggle('active', b.dataset.cat === 'all'));
+    filterFAQ();
+    searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+});
+
+document.querySelectorAll('.quick-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const cat = card.dataset.jump;
+    searchInput.value = '';
+    currentCat = cat;
+    filterBtns.forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
+    filterFAQ();
+    document.querySelector('.faq-filter').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+/* ══════════════════════════════════════════════════════════
+   BACK TO TOP
+══════════════════════════════════════════════════════════ */
+function initBackToTop() {
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        btn.classList.toggle('visible', window.scrollY > 400);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
+
+/* ══════════════════════════════════════════════════════════
+   REVEAL
+══════════════════════════════════════════════════════════ */
+function initRevealAnimation() {
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+/* ══════════════════════════════════════════════════════════
+   PLACEHOLDER ADAPTATIF
+══════════════════════════════════════════════════════════ */
+function adaptPlaceholder() {
+  const input = document.getElementById('faqSearch');
+  if (!input) return;
+  const isSmall = window.innerWidth < 480;
+  input.placeholder = isSmall
+    ? "Rechercher dans l'aide..."
+    : "Rechercher dans l'aide (mot de passe, cours, données...)";
+}
+
+/* ══════════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════════ */
+window.addEventListener('load', () => {
+  enableOfflineDetection({ canDismiss: true });
+  toggleSessionViews();
+  initBackToTop();
+  initRevealAnimation();
+  adaptPlaceholder();
+});
+
+let _resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(_resizeTimer);
+  _resizeTimer = setTimeout(adaptPlaceholder, 150);
+});
+</script>
+</body>
+</html>
