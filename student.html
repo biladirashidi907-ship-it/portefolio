@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="ESTRA LINK">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="ESTRA LINK — Complétez votre profil étudiant pour personnaliser votre expérience universitaire.">
+    <title>ESTRA LINK — Profil Étudiant</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================================
+           DESIGN TOKENS
+           ============================================================ */
+        :root {
+            color-scheme: light;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-alt: #f1f5f9;
+            --surface-soft: #f8fafc;
+            --text: #0f172a;
+            --text-2: #334155;
+            --text-muted: #475569;
+            --text-soft: #64748b;
+            --border: #e2e8f0;
+            --border-strong: #cbd5e1;
+            --primary: #0284c7;
+            --primary-hover: #0ea5e9;
+            --primary-active: #0369a1;
+            --primary-soft: rgba(56, 189, 248, 0.15);
+            --primary-ring: rgba(56, 189, 248, 0.18);
+            --error: #b91c1c;
+            --error-soft: rgba(185, 28, 28, 0.12);
+            --success: #047857;
+            --success-bg: #dbeafe;
+            --success-border: #bfdbfe;
+            --success-text: #1e40af;
+            --warning: #b45309;
+            --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08);
+            --shadow-md: 0 2px 10px rgba(15, 23, 42, 0.05);
+            --shadow-lg: 0 30px 80px -30px rgba(15, 23, 42, 0.22);
+            --select-arrow: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'/%3e%3c/svg%3e");
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                color-scheme: dark;
+                --bg: #0b1220;
+                --surface: #0f172a;
+                --surface-alt: #111b2e;
+                --surface-soft: #0b1424;
+                --text: #f1f5f9;
+                --text-2: #cbd5e1;
+                --text-muted: #94a3b8;
+                --text-soft: #64748b;
+                --border: #1e293b;
+                --border-strong: #334155;
+                --primary: #38bdf8;
+                --primary-hover: #0ea5e9;
+                --primary-active: #0284c7;
+                --primary-soft: rgba(56, 189, 248, 0.15);
+                --primary-ring: rgba(56, 189, 248, 0.22);
+                --error: #f87171;
+                --error-soft: rgba(248, 113, 113, 0.18);
+                --success: #34d399;
+                --success-bg: rgba(56, 189, 248, 0.15);
+                --success-border: rgba(56, 189, 248, 0.35);
+                --success-text: #bae6fd;
+                --warning: #fbbf24;
+                --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+                --shadow-md: 0 2px 10px rgba(0, 0, 0, 0.5);
+                --shadow-lg: 0 30px 80px -30px rgba(0, 0, 0, 0.7);
+                --select-arrow: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'/%3e%3c/svg%3e");
+            }
+        }
+
+        /* ============================================================
+           RESET / BASE
+           ============================================================ */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: 16px;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding:
+                max(24px, env(safe-area-inset-top))
+                max(20px, env(safe-area-inset-right))
+                max(24px, env(safe-area-inset-bottom))
+                max(20px, env(safe-area-inset-left));
+            -webkit-overflow-scrolling: touch;
+        }
+
+        :where(button, a, input, select, textarea, [tabindex]):focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+            border-radius: 2px;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            background: var(--primary);
+            color: #fff;
+            padding: 10px 16px;
+            z-index: 100000;
+            font-weight: 600;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .skip-link:focus { left: 8px; top: 8px; }
+
+        /* ============================================================
+           LAYOUT — mobile : empilé, form centré
+           ============================================================ */
+        .setup-container {
+            width: 100%;
+            max-width: 480px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .brand-panel { display: none; }
+
+        .form-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* ============================================================
+           HEADER
+           ============================================================ */
+        .setup-header { text-align: center; }
+
+        .type-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: var(--success-bg);
+            color: var(--success-text);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            border: 1px solid var(--success-border);
+            margin-bottom: 14px;
+        }
+
+        .type-badge i { font-size: 0.85rem; }
+
+        .setup-title {
+            font-size: clamp(1.3rem, 1.1rem + 1vw, 1.9rem);
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .setup-subtitle {
+            color: var(--text-muted);
+            font-size: clamp(0.83rem, 0.78rem + 0.2vw, 0.95rem);
+            line-height: 1.55;
+        }
+
+        /* ============================================================
+           PROGRESS
+           ============================================================ */
+        .progress-dots {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 14px;
+        }
+
+        .progress-dots span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--border-strong);
+            display: inline-block;
+            transition: background-color 0.2s, width 0.2s;
+        }
+
+        .progress-dots span.active {
+            background: var(--primary);
+            width: 22px;
+            border-radius: 3px;
+        }
+
+        /* ============================================================
+           CARD
+           ============================================================ */
+        .setup-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 24px 20px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-group { margin-bottom: 16px; }
+        .form-group:last-of-type { margin-bottom: 20px; }
+
+        .form-group > label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-2);
+            margin-bottom: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .required-mark { color: var(--error); margin-left: 2px; }
+        .hint { color: var(--text-soft); font-weight: 400; font-size: 0.72rem; }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            min-height: 48px;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-soft);
+        }
+
+        .input-wrapper.error {
+            border-color: var(--error);
+            box-shadow: 0 0 0 3px var(--error-soft);
+        }
+
+        .input-wrapper > i.icon-left {
+            padding: 0 4px 0 14px;
+            color: var(--text-soft);
+            font-size: 0.9rem;
+            width: 34px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .input-wrapper input,
+        .input-wrapper select,
+        .input-wrapper textarea {
+            flex: 1 1 0%;
+            background: transparent;
+            border: none;
+            outline: none;
+            padding: 14px;
+            color: var(--text);
+            font-size: 0.92rem;
+            font-family: inherit;
+            min-width: 0;
+            width: 100%;
+            appearance: none;
+        }
+
+        .input-wrapper textarea {
+            resize: none;
+            min-height: 90px;
+            line-height: 1.5;
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+
+        .input-wrapper input { cursor: text; }
+
+        .input-wrapper input::placeholder,
+        .input-wrapper textarea::placeholder { color: var(--text-soft); opacity: 1; }
+
+        .input-wrapper select {
+            background-image: var(--select-arrow);
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+            cursor: pointer;
+        }
+
+        .input-wrapper select option {
+            background: var(--surface);
+            color: var(--text);
+        }
+
+        .input-wrapper input:-webkit-autofill,
+        .input-wrapper input:-webkit-autofill:hover,
+        .input-wrapper input:-webkit-autofill:focus,
+        .input-wrapper textarea:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 1000px var(--surface) inset !important;
+            -webkit-text-fill-color: var(--text) !important;
+            caret-color: var(--text);
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        .input-wrapper.textarea-wrapper { align-items: flex-start; }
+        .input-wrapper.textarea-wrapper > i.icon-left { padding-top: 14px; }
+
+        .check-icon {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--success);
+            color: #fff;
+            font-size: 0.6rem;
+            margin-right: 12px;
+            flex-shrink: 0;
+            animation: checkPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .check-icon.show { display: flex; }
+
+        @keyframes checkPop {
+            0%   { transform: scale(0); opacity: 0; }
+            60%  { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .error-msg {
+            display: none;
+            color: var(--error);
+            font-size: 0.73rem;
+            margin-top: 4px;
+            line-height: 1.3;
+            word-wrap: break-word;
+        }
+
+        .error-msg.show { display: block; }
+
+        /* ============================================================
+           CHIPS
+           ============================================================ */
+        .chip-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .chip {
+            padding: 7px 14px;
+            border: 1.5px solid var(--border);
+            background: var(--surface);
+            font-family: inherit;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+            appearance: none;
+            min-height: 36px;
+        }
+
+        .chip:hover { border-color: var(--border-strong); }
+
+        .chip.selected {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #ffffff;
+        }
+
+        /* ============================================================
+           CHARACTER HINT
+           ============================================================ */
+        .char-hint {
+            font-size: 0.68rem;
+            color: var(--text-soft);
+            margin-top: 4px;
+            text-align: right;
+            display: none;
+        }
+
+        .char-hint.visible { display: block; }
+        .char-hint.warning { color: var(--warning); }
+        .char-hint.danger  { color: var(--error); }
+
+        /* ============================================================
+           BUTTON
+           ============================================================ */
+        .btn-finish {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            background: var(--primary);
+            color: #ffffff;
+            font-size: 0.98rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background-color 0.2s;
+            letter-spacing: 0.3px;
+            min-height: 52px;
+            margin-top: 4px;
+            appearance: none;
+        }
+
+        .btn-finish:hover:not(:disabled)  { background: var(--primary-hover); }
+        .btn-finish:active:not(:disabled) { background: var(--primary-active); }
+        .btn-finish:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        .btn-finish .spinner {
+            display: none;
+            width: 16px; height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            order: -1;
+        }
+
+        .btn-finish.loading .spinner { display: block; }
+        .btn-finish.loading .arrow { display: none; }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        .setup-footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-soft);
+            line-height: 1.6;
+        }
+
+        .setup-footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin: 0 4px;
+            padding: 4px 2px;
+            display: inline-block;
+        }
+        .setup-footer a:hover { color: var(--primary); }
+        .setup-footer p { margin-top: 8px; font-size: 0.7rem; opacity: 0.85; }
+
+        /* ============================================================
+           NOTIFICATION BANNER
+           ============================================================ */
+        .notification-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding:
+                max(14px, env(safe-area-inset-top))
+                max(18px, env(safe-area-inset-right))
+                14px
+                max(18px, env(safe-area-inset-left));
+            background: #1e293b;
+            color: #ffffff;
+            font-size: 0.88rem;
+            font-weight: 600;
+            z-index: 10000;
+            transform: translateY(-120%);
+            transition: transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            pointer-events: none;
+        }
+
+        .notification-banner.show {
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .notification-banner.error   { background: #b91c1c; }
+        .notification-banner.success { background: #047857; }
+        .notification-banner.info    { background: #0284c7; }
+        .notification-banner.warning { background: #b45309; }
+
+        .notification-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .notification-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: #ffffff;
+            stroke-width: 2.5;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            display: block;
+        }
+
+        .notification-text {
+            flex: 1 1 0%;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .notification-action {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+            min-height: 32px;
+            transition: background-color 0.2s;
+            appearance: none;
+        }
+
+        .notification-action:hover  { background: rgba(255, 255, 255, 0.32); }
+        .notification-action:active { background: rgba(255, 255, 255, 0.45); }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.85);
+            cursor: pointer;
+            padding: 6px;
+            flex-shrink: 0;
+            appearance: none;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 32px;
+            min-height: 32px;
+            border-radius: 4px;
+        }
+
+        .notification-close svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .notification-close:hover { color: #ffffff; }
+
+        .notification-banner[data-hide-close="true"] .notification-close { display: none; }
+
+        .notification-banner.persistent .notification-icon svg {
+            animation: notifPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes notifPulse {
+            0%, 100% { opacity: 1; }
+            50%      { opacity: 0.5; }
+        }
+
+        /* ============================================================
+           DESKTOP — SPLIT-SCREEN STICKY (≥ 1100px)
+           ============================================================ */
+        @media (min-width: 1100px) {
+            body {
+                padding: 0;
+                align-items: stretch;
+                justify-content: flex-start;
+                display: block;
+            }
+
+            .setup-container {
+                display: grid;
+                grid-template-columns: 440px 1fr;
+                min-height: 100vh;
+                min-height: 100dvh;
+                max-width: none;
+                margin: 0;
+                gap: 0;
+                box-shadow: none;
+                background: var(--surface);
+                border-radius: 0;
+                overflow: visible;
+                animation: none;
+            }
+
+            .brand-panel {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 48px 44px;
+                background: linear-gradient(140deg, #0284c7 0%, #4338ca 70%, #7c3aed 130%);
+                color: #ffffff;
+                position: sticky;
+                top: 0;
+                height: 100vh;
+                height: 100dvh;
+                overflow-y: auto;
+                overflow-x: hidden;
+                align-self: start;
+                border-radius: 0;
+            }
+
+            .brand-panel::before,
+            .brand-panel::after {
+                content: '';
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.07);
+                pointer-events: none;
+            }
+            .brand-panel::before { width: 340px; height: 340px; top: -140px; right: -110px; }
+            .brand-panel::after  { width: 220px; height: 220px; bottom: -90px; left: -70px; }
+
+            .brand-content {
+                position: relative;
+                z-index: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .brand-logo {
+                font-weight: 800;
+                font-size: 1.15rem;
+                letter-spacing: 4px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .brand-logo i { font-size: 1.3rem; color: #c7d2fe; }
+
+            .brand-headline {
+                font-size: clamp(1.7rem, 2.2vw, 2.4rem);
+                font-weight: 800;
+                line-height: 1.18;
+                letter-spacing: -0.5px;
+            }
+
+            .brand-sub {
+                font-size: 0.98rem;
+                opacity: 0.9;
+                line-height: 1.6;
+                max-width: 36ch;
+            }
+
+            .brand-features {
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                margin-top: 8px;
+                font-size: 0.92rem;
+            }
+
+            .brand-features li {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .brand-features i {
+                width: 34px;
+                height: 34px;
+                display: inline-grid;
+                place-items: center;
+                background: rgba(255, 255, 255, 0.16);
+                border-radius: 50%;
+                flex-shrink: 0;
+                font-size: 0.9rem;
+                color: #c7d2fe;
+            }
+
+            .form-panel {
+                padding: max(48px, env(safe-area-inset-top)) max(48px, env(safe-area-inset-right)) max(48px, env(safe-area-inset-bottom)) max(48px, env(safe-area-inset-left));
+                min-height: 100vh;
+                min-height: 100dvh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                justify-content: safe center;
+                background: var(--surface);
+                gap: 20px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .form-panel > * {
+                width: 100%;
+                max-width: 480px;
+            }
+
+            .setup-header { text-align: left; }
+
+            .progress-dots { justify-content: flex-start; }
+
+            .setup-card {
+                border: none;
+                box-shadow: none;
+                padding: 0;
+                background: transparent;
+            }
+
+            .setup-footer {
+                margin-top: 0;
+                padding-top: 12px;
+            }
+        }
+
+        /* ============================================================
+           LARGE DESKTOP (≥ 1440px)
+           ============================================================ */
+        @media (min-width: 1440px) {
+            .setup-container { grid-template-columns: 480px 1fr; }
+            .brand-panel { padding: 64px 56px; }
+            .form-panel  { padding: max(56px, env(safe-area-inset-top)) max(56px, env(safe-area-inset-right)) max(56px, env(safe-area-inset-bottom)) max(56px, env(safe-area-inset-left)); }
+            .form-panel > * { max-width: 500px; }
+        }
+
+        /* ============================================================
+           ULTRA-WIDE (≥ 1920px)
+           ============================================================ */
+        @media (min-width: 1920px) {
+            html { font-size: 17px; }
+            .setup-container { grid-template-columns: 540px 1fr; }
+            .form-panel  { padding: max(64px, env(safe-area-inset-top)) max(72px, env(safe-area-inset-right)) max(64px, env(safe-area-inset-bottom)) max(72px, env(safe-area-inset-left)); }
+            .form-panel > * { max-width: 520px; }
+            .brand-panel { padding: 72px 72px; }
+            .input-wrapper { min-height: 52px; }
+            .btn-finish { min-height: 56px; }
+            .notification-banner {
+                max-width: 560px;
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%) translateY(-120%);
+                top: 16px;
+                border-radius: 6px;
+                padding: 16px 20px;
+            }
+            .notification-banner.show { transform: translateX(-50%) translateY(0); }
+        }
+
+        @media (min-width: 2560px) {
+            html { font-size: 18px; }
+            .setup-container { grid-template-columns: 620px 1fr; }
+            .brand-headline { font-size: 2.8rem; }
+        }
+
+        /* ============================================================
+           BREAKPOINTS MOBILES
+           ============================================================ */
+        @media (max-width: 480px) {
+            body { padding: 20px 14px; }
+            .setup-card { padding: 20px 16px; }
+            .chip { font-size: 0.72rem; padding: 6px 11px; }
+            .notification-banner { padding: 12px 14px; font-size: 0.82rem; }
+            .notification-icon { width: 22px; height: 22px; }
+            .notification-icon svg { width: 18px; height: 18px; }
+        }
+
+        /* Notification centrée sur tablette */
+        @media (min-width: 768px) and (max-width: 1099px) {
+            .notification-banner {
+                max-width: 520px;
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%) translateY(-120%);
+                top: 16px;
+                border-radius: 6px;
+            }
+            .notification-banner.show {
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        /* ============================================================
+           MOTION
+           ============================================================ */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .notification-banner.persistent .notification-icon svg { animation: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#studentForm" class="skip-link">Aller au formulaire</a>
+
+    <!-- NOTIFICATION BANNER -->
+    <div class="notification-banner" id="notificationBanner" role="status" aria-live="polite" aria-atomic="true">
+        <div class="notification-icon" id="notificationIcon" aria-hidden="true"></div>
+        <div class="notification-text" id="notificationText"></div>
+        <button type="button" class="notification-action" id="notificationAction" hidden></button>
+        <button type="button" class="notification-close" id="notificationClose" onclick="hideNotification()" aria-label="Fermer la notification">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+
+    <div class="setup-container">
+        <!-- BRAND PANEL — sticky left desktop -->
+        <aside class="brand-panel" aria-hidden="true">
+            <div class="brand-content">
+                <div class="brand-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>ESTRA LINK</span>
+                </div>
+                <h2 class="brand-headline">Votre parcours<br>universitaire,<br>connecté.</h2>
+                <p class="brand-sub">
+                    Complétez votre profil étudiant pour rejoindre les
+                    communautés de votre filière et accéder aux ressources adaptées.
+                </p>
+                <ul class="brand-features">
+                    <li><i class="fas fa-book-open" aria-hidden="true"></i> Ressources de votre filière</li>
+                    <li><i class="fas fa-users" aria-hidden="true"></i> Groupes d'étude par promotion</li>
+                    <li><i class="fas fa-lightbulb" aria-hidden="true"></i> Projets et opportunités</li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- FORM PANEL -->
+        <main class="form-panel">
+            <div class="setup-header">
+                <span class="type-badge">
+                    <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                    <span>Étudiant</span>
+                </span>
+                <h1 class="setup-title">Votre parcours étudiant</h1>
+                <p class="setup-subtitle" id="setupSubtitle">Aidez-nous à personnaliser votre expérience universitaire.</p>
+
+                <div class="progress-dots" role="img" aria-label="Étape 3 sur 3">
+                    <span class="active"></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="setup-card">
+                <form id="studentForm" novalidate>
+
+                    <!-- Université / Institut -->
+                    <div class="form-group">
+                        <label for="universite">Université / Institut <span class="required-mark" aria-hidden="true">*</span></label>
+                        <div class="input-wrapper" id="universiteWrapper">
+                            <i class="fas fa-university icon-left" aria-hidden="true"></i>
+                            <input type="text" id="universite" placeholder="Ex: Université de Kinshasa"
+                                   maxlength="80" autocomplete="organization"
+                                   aria-describedby="universiteError universiteHint" aria-invalid="false" required>
+                            <span class="check-icon" id="universiteCheck" aria-hidden="true"><i class="fas fa-check"></i></span>
+                        </div>
+                        <span class="error-msg" id="universiteError" aria-live="polite"></span>
+                        <div class="char-hint" id="universiteHint" aria-hidden="true">0/80</div>
+                    </div>
+
+                    <!-- Faculté / Domaine -->
+                    <div class="form-group">
+                        <label for="faculte">Faculté / Domaine <span class="required-mark" aria-hidden="true">*</span></label>
+                        <div class="input-wrapper" id="faculteWrapper">
+                            <i class="fas fa-building-columns icon-left" aria-hidden="true"></i>
+                            <select id="faculte" aria-describedby="faculteError" aria-invalid="false" required>
+                                <option value="">Sélectionnez votre faculté</option>
+                                <option value="sciences">Sciences</option>
+                                <option value="informatique">Informatique / Technologies</option>
+                                <option value="medecine">Médecine / Santé</option>
+                                <option value="droit">Droit</option>
+                                <option value="economie">Économie / Gestion</option>
+                                <option value="lettres">Lettres / Langues</option>
+                                <option value="sciences-sociales">Sciences sociales</option>
+                                <option value="ingenierie">Ingénierie</option>
+                                <option value="agronomie">Agronomie</option>
+                                <option value="psychologie">Psychologie</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+                        <span class="error-msg" id="faculteError" aria-live="polite"></span>
+                    </div>
+
+                    <!-- Filière / Spécialité -->
+                    <div class="form-group">
+                        <label for="filiere">Filière / Spécialité <span class="required-mark" aria-hidden="true">*</span></label>
+                        <div class="input-wrapper" id="filiereWrapper">
+                            <i class="fas fa-book icon-left" aria-hidden="true"></i>
+                            <input type="text" id="filiere" placeholder="Ex: Génie logiciel, Médecine générale..."
+                                   maxlength="60"
+                                   aria-describedby="filiereError filiereHint" aria-invalid="false" required>
+                            <span class="check-icon" id="filiereCheck" aria-hidden="true"><i class="fas fa-check"></i></span>
+                        </div>
+                        <span class="error-msg" id="filiereError" aria-live="polite"></span>
+                        <div class="char-hint" id="filiereHint" aria-hidden="true">0/60</div>
+                    </div>
+
+                    <!-- Niveau -->
+                    <div class="form-group">
+                        <label for="niveau">Niveau d'études <span class="required-mark" aria-hidden="true">*</span></label>
+                        <div class="input-wrapper" id="niveauWrapper">
+                            <i class="fas fa-layer-group icon-left" aria-hidden="true"></i>
+                            <select id="niveau" aria-describedby="niveauError" aria-invalid="false" required>
+                                <option value="">Sélectionnez votre niveau</option>
+                                <option value="L1">Licence 1 (L1)</option>
+                                <option value="L2">Licence 2 (L2)</option>
+                                <option value="L3">Licence 3 (L3)</option>
+                                <option value="M1">Master 1 (M1)</option>
+                                <option value="M2">Master 2 (M2)</option>
+                                <option value="doctorat">Doctorat</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+                        <span class="error-msg" id="niveauError" aria-live="polite"></span>
+                    </div>
+
+                    <!-- Année académique -->
+                    <div class="form-group">
+                        <label for="anneeAcademique">Année académique <span class="required-mark" aria-hidden="true">*</span></label>
+                        <div class="input-wrapper" id="anneeAcademiqueWrapper">
+                            <i class="fas fa-calendar icon-left" aria-hidden="true"></i>
+                            <input type="text" id="anneeAcademique" placeholder="Ex: 2025-2026"
+                                   maxlength="9" inputmode="numeric"
+                                   aria-describedby="anneeAcademiqueError" aria-invalid="false" required>
+                            <span class="check-icon" id="anneeAcademiqueCheck" aria-hidden="true"><i class="fas fa-check"></i></span>
+                        </div>
+                        <span class="error-msg" id="anneeAcademiqueError" aria-live="polite"></span>
+                    </div>
+
+                    <!-- Centres d'intérêt -->
+                    <div class="form-group">
+                        <label id="interetsLabel">Centres d'intérêt <span class="required-mark" aria-hidden="true">*</span> <span class="hint">(plusieurs possibles)</span></label>
+                        <div class="chip-group" id="interetsChips" role="group" aria-labelledby="interetsLabel" aria-describedby="interetsError">
+                            <button type="button" class="chip" data-interet="Programmation" aria-pressed="false">Programmation</button>
+                            <button type="button" class="chip" data-interet="Intelligence Artificielle" aria-pressed="false">IA</button>
+                            <button type="button" class="chip" data-interet="Design" aria-pressed="false">Design</button>
+                            <button type="button" class="chip" data-interet="Marketing" aria-pressed="false">Marketing</button>
+                            <button type="button" class="chip" data-interet="Entrepreneuriat" aria-pressed="false">Entrepreneuriat</button>
+                            <button type="button" class="chip" data-interet="Recherche" aria-pressed="false">Recherche</button>
+                            <button type="button" class="chip" data-interet="Robotique" aria-pressed="false">Robotique</button>
+                            <button type="button" class="chip" data-interet="Cybersécurité" aria-pressed="false">Cybersécurité</button>
+                            <button type="button" class="chip" data-interet="Data Science" aria-pressed="false">Data Science</button>
+                            <button type="button" class="chip" data-interet="Médecine" aria-pressed="false">Médecine</button>
+                            <button type="button" class="chip" data-interet="Droit" aria-pressed="false">Droit</button>
+                            <button type="button" class="chip" data-interet="Économie" aria-pressed="false">Économie</button>
+                            <button type="button" class="chip" data-interet="Langues" aria-pressed="false">Langues</button>
+                            <button type="button" class="chip" data-interet="Sport" aria-pressed="false">Sport</button>
+                            <button type="button" class="chip" data-interet="Musique" aria-pressed="false">Musique</button>
+                            <button type="button" class="chip" data-interet="Art" aria-pressed="false">Art</button>
+                        </div>
+                        <span class="error-msg" id="interetsError" role="alert" aria-live="polite"></span>
+                    </div>
+
+                    <!-- Ville -->
+                    <div class="form-group">
+                        <label for="ville">Ville <span class="required-mark" aria-hidden="true">*</span></label>
+                        <div class="input-wrapper" id="villeWrapper">
+                            <i class="fas fa-map-marker-alt icon-left" aria-hidden="true"></i>
+                            <input type="text" id="ville" placeholder="Ex: Kinshasa, Lubumbashi..."
+                                   maxlength="40" autocomplete="address-level2"
+                                   aria-describedby="villeError villeHint" aria-invalid="false" required>
+                            <span class="check-icon" id="villeCheck" aria-hidden="true"><i class="fas fa-check"></i></span>
+                        </div>
+                        <span class="error-msg" id="villeError" aria-live="polite"></span>
+                        <div class="char-hint" id="villeHint" aria-hidden="true">0/40</div>
+                    </div>
+
+                    <!-- Biographie -->
+                    <div class="form-group">
+                        <label for="bio">Biographie <span class="hint">(facultatif)</span></label>
+                        <div class="input-wrapper textarea-wrapper" id="bioWrapper">
+                            <i class="fas fa-pen icon-left" aria-hidden="true"></i>
+                            <textarea id="bio" placeholder="Présentez-vous en quelques mots (projets, ambitions, passions)..."
+                                      maxlength="200" aria-describedby="bioHint"></textarea>
+                        </div>
+                        <div class="char-hint" id="bioHint" aria-hidden="true">0/200</div>
+                    </div>
+
+                    <!-- Bouton -->
+                    <button type="submit" class="btn-finish" id="finishBtn">
+                        <span class="spinner" aria-hidden="true"></span>
+                        <span id="finishBtnText">Continuer</span>
+                        <i class="fas fa-arrow-right arrow" aria-hidden="true"></i>
+                    </button>
+                </form>
+            </div>
+
+            <div class="setup-footer">
+                <a href="terms.html">Conditions</a> ·
+                <a href="privacy.html">Confidentialité</a> ·
+                <a href="help.html">Aide</a>
+                <p>© 2026 ESTRA LINK</p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // ============================================================
+        // ÉTAT
+        // ============================================================
+        let selectedInterets = [];
+        let notifTimer = null;
+        let isPersistentNotif = false;
+
+        // ============================================================
+        // NOTIFICATION SYSTEM
+        // ============================================================
+        const notifBanner = document.getElementById('notificationBanner');
+        const notifIcon   = document.getElementById('notificationIcon');
+        const notifText   = document.getElementById('notificationText');
+        const notifAction = document.getElementById('notificationAction');
+
+        const SVG_ICONS = {
+            success: '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>',
+            error:   '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>',
+            info:    '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
+            warning: '<svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>'
+        };
+
+        function showNotification(msg, type, opts) {
+            opts = opts || {};
+            type = type || 'info';
+            isPersistentNotif = opts.persistent === true;
+
+            notifText.textContent = '';
+
+            let cls = 'notification-banner show ';
+            if (type === 'success')      cls += 'success';
+            else if (type === 'error')   cls += 'error';
+            else if (type === 'warning') cls += 'warning';
+            else                         cls += 'info';
+            if (isPersistentNotif) cls += ' persistent';
+            notifBanner.className = cls;
+
+            notifBanner.setAttribute('data-hide-close', opts.hideClose === true ? 'true' : 'false');
+
+            if (notifAction) {
+                if (opts.action && opts.action.label && typeof opts.action.onClick === 'function') {
+                    notifAction.hidden = false;
+                    notifAction.textContent = opts.action.label;
+                    const clone = notifAction.cloneNode(true);
+                    notifAction.parentNode.replaceChild(clone, notifAction);
+                    clone.addEventListener('click', opts.action.onClick);
+                } else {
+                    notifAction.hidden = true;
+                }
+            }
+
+            requestAnimationFrame(function () {
+                notifIcon.innerHTML = SVG_ICONS[type] || SVG_ICONS.info;
+                notifText.textContent = msg;
+            });
+
+            if (notifTimer) clearTimeout(notifTimer);
+            if (!isPersistentNotif) {
+                notifTimer = setTimeout(function () {
+                    notifBanner.classList.remove('show');
+                }, opts.duration || 3800);
+            }
+        }
+
+        function hideNotification() {
+            notifBanner.classList.remove('show');
+            if (notifTimer) clearTimeout(notifTimer);
+            isPersistentNotif = false;
+            notifBanner.setAttribute('data-hide-close', 'false');
+            if (notifAction) notifAction.hidden = true;
+        }
+
+        function showToast(msg, type, opts) { showNotification(msg, type, opts); }
+
+        // ============================================================
+        // DÉTECTION OFFLINE
+        // ============================================================
+        function enableOfflineDetection(opts) {
+            opts = opts || {};
+
+            const offlineMsg = opts.offlineMessage || 'Pas de connexion Internet. Vérifiez votre réseau.';
+            const onlineMsg  = opts.onlineMessage  || 'Connexion rétablie';
+            const showFlash  = opts.showOnlineFlash !== false;
+            const canDismiss = opts.canDismiss === true;
+
+            function onOffline() {
+                showNotification(offlineMsg, 'warning', {
+                    persistent: true,
+                    hideClose: !canDismiss,
+                    action: typeof opts.onRetry === 'function' ? {
+                        label: 'Réessayer',
+                        onClick: function () {
+                            if (navigator.onLine) {
+                                hideNotification();
+                            } else if (navigator.vibrate) {
+                                navigator.vibrate([30, 50, 30]);
+                            }
+                            if (typeof opts.onRetry === 'function') opts.onRetry();
+                        }
+                    } : null
+                });
+                if (typeof opts.onOffline === 'function') opts.onOffline();
+            }
+
+            function onOnline() {
+                if (showFlash) {
+                    showNotification(onlineMsg, 'success', { duration: 2200 });
+                } else {
+                    hideNotification();
+                }
+                if (typeof opts.onOnline === 'function') opts.onOnline();
+            }
+
+            window.addEventListener('offline', onOffline);
+            window.addEventListener('online', onOnline);
+
+            if (!navigator.onLine) onOffline();
+
+            return function cleanup() {
+                window.removeEventListener('offline', onOffline);
+                window.removeEventListener('online', onOnline);
+            };
+        }
+
+        // ============================================================
+        // HELPERS VALIDATION
+        // ============================================================
+        function setFieldState(fieldId, isValid, errorMessage) {
+            const wrapper = document.getElementById(fieldId + 'Wrapper');
+            const errorEl = document.getElementById(fieldId + 'Error');
+            const checkEl = document.getElementById(fieldId + 'Check');
+            const input   = document.getElementById(fieldId);
+            if (!wrapper) return;
+
+            if (isValid) {
+                wrapper.classList.remove('error');
+                if (checkEl) checkEl.classList.add('show');
+                if (errorEl) errorEl.textContent = '';
+                if (input) input.setAttribute('aria-invalid', 'false');
+            } else if (errorMessage) {
+                wrapper.classList.add('error');
+                if (checkEl) checkEl.classList.remove('show');
+                if (errorEl) errorEl.textContent = errorMessage;
+                if (input) input.setAttribute('aria-invalid', 'true');
+            } else {
+                wrapper.classList.remove('error');
+                if (checkEl) checkEl.classList.remove('show');
+                if (errorEl) errorEl.textContent = '';
+                if (input) input.setAttribute('aria-invalid', 'false');
+            }
+        }
+
+        function validateText(inputId, minLen, maxLen) {
+            const input = document.getElementById(inputId);
+            if (!input) return true;
+            const v = input.value.trim();
+            if (!v) { setFieldState(inputId, false, null); return false; }
+            if (v.length < minLen) {
+                setFieldState(inputId, false, 'Minimum ' + minLen + ' caractères');
+                return false;
+            }
+            if (v.length > maxLen) {
+                setFieldState(inputId, false, 'Maximum ' + maxLen + ' caractères');
+                return false;
+            }
+            setFieldState(inputId, true, null);
+            return true;
+        }
+
+        function validateSelect(selectId) {
+            const select  = document.getElementById(selectId);
+            const wrapper = document.getElementById(selectId + 'Wrapper');
+            const errorEl = document.getElementById(selectId + 'Error');
+            if (!select) return true;
+
+            if (!select.value) {
+                if (wrapper) wrapper.classList.add('error');
+                if (errorEl) errorEl.textContent = 'Veuillez sélectionner une option';
+                select.setAttribute('aria-invalid', 'true');
+                return false;
+            }
+            if (wrapper) wrapper.classList.remove('error');
+            if (errorEl) errorEl.textContent = '';
+            select.setAttribute('aria-invalid', 'false');
+            return true;
+        }
+
+        // ============================================================
+        // COMPTEURS
+        // ============================================================
+        function updateCharHint(inputId, hintId, max) {
+            const input = document.getElementById(inputId);
+            const hint  = document.getElementById(hintId);
+            if (!input || !hint) return;
+            const len = input.value.length;
+            hint.textContent = len + '/' + max;
+            hint.classList.toggle('visible', len > 0);
+            hint.classList.remove('warning', 'danger');
+            if (len >= max) hint.classList.add('danger');
+            else if (len >= max - 5) hint.classList.add('warning');
+        }
+
+        // ============================================================
+        // LISTENERS
+        // ============================================================
+        const universiteInput = document.getElementById('universite');
+        const filiereInput    = document.getElementById('filiere');
+        const anneeInput      = document.getElementById('anneeAcademique');
+        const villeInput      = document.getElementById('ville');
+        const bioInput        = document.getElementById('bio');
+        const faculteSelect   = document.getElementById('faculte');
+        const niveauSelect    = document.getElementById('niveau');
+
+        universiteInput.addEventListener('input', function () {
+            updateCharHint('universite', 'universiteHint', 80);
+            if (this.value.trim().length >= 2) setFieldState('universite', true, null);
+            else setFieldState('universite', false, null);
+        });
+
+        filiereInput.addEventListener('input', function () {
+            updateCharHint('filiere', 'filiereHint', 60);
+            if (this.value.trim().length >= 2) setFieldState('filiere', true, null);
+            else setFieldState('filiere', false, null);
+        });
+
+        villeInput.addEventListener('input', function () {
+            updateCharHint('ville', 'villeHint', 40);
+            if (this.value.trim().length >= 2) setFieldState('ville', true, null);
+            else setFieldState('ville', false, null);
+        });
+
+        bioInput.addEventListener('input', function () {
+            updateCharHint('bio', 'bioHint', 200);
+        });
+
+        faculteSelect.addEventListener('change', function () { validateSelect('faculte'); });
+        niveauSelect.addEventListener('change', function () { validateSelect('niveau'); });
+
+        // Année académique : format YYYY-YYYY
+        anneeInput.addEventListener('input', function () {
+            let v = this.value.replace(/[^0-9-]/g, '');
+            if (v.length === 4 && !v.includes('-')) v = v + '-';
+            if (v.length > 9) v = v.slice(0, 9);
+            this.value = v;
+
+            const match = v.match(/^(\d{4})-(\d{4})$/);
+            if (match) {
+                const y1 = parseInt(match[1], 10);
+                const y2 = parseInt(match[2], 10);
+                if (y2 === y1 + 1 && y1 >= 2020 && y1 <= 2060) {
+                    setFieldState('anneeAcademique', true, null);
+                } else if (y2 !== y1 + 1) {
+                    setFieldState('anneeAcademique', false, 'Les années doivent se suivre (ex: 2025-2026)');
+                } else {
+                    setFieldState('anneeAcademique', false, null);
+                }
+            } else if (v === '') {
+                setFieldState('anneeAcademique', false, null);
+            } else {
+                setFieldState('anneeAcademique', false, null);
+            }
+        });
+
+        // Chips
+        document.querySelectorAll('#interetsChips .chip').forEach(function (chip) {
+            chip.addEventListener('click', function () {
+                const isSelected = this.classList.toggle('selected');
+                this.setAttribute('aria-pressed', String(isSelected));
+
+                const interet = this.dataset.interet;
+                if (isSelected) {
+                    if (!selectedInterets.includes(interet)) selectedInterets.push(interet);
+                } else {
+                    selectedInterets = selectedInterets.filter(function (i) { return i !== interet; });
+                }
+                document.getElementById('interetsError').textContent = '';
+            });
+        });
+
+        // ============================================================
+        // SOUMISSION
+        // ============================================================
+        document.getElementById('studentForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            let isValid = true;
+            let firstInvalidId = null;
+
+            const checks = [
+                { ok: validateText('universite', 2, 80), id: 'universite' },
+                { ok: validateSelect('faculte'),         id: 'faculte' },
+                { ok: validateText('filiere', 2, 60),    id: 'filiere' },
+                { ok: validateSelect('niveau'),          id: 'niveau' },
+                { ok: false, id: 'anneeAcademique' },
+                { ok: selectedInterets.length > 0,       id: 'interets' },
+                { ok: validateText('ville', 2, 40),      id: 'ville' }
+            ];
+
+            const anneeMatch = anneeInput.value.match(/^(\d{4})-(\d{4})$/);
+            if (!anneeMatch) {
+                setFieldState('anneeAcademique', false, 'Format requis : 2025-2026');
+            } else {
+                const y1 = parseInt(anneeMatch[1], 10);
+                const y2 = parseInt(anneeMatch[2], 10);
+                if (y2 !== y1 + 1) {
+                    setFieldState('anneeAcademique', false, 'Les années doivent se suivre');
+                } else if (y1 < 2020 || y1 > 2060) {
+                    setFieldState('anneeAcademique', false, 'Année invalide');
+                } else {
+                    setFieldState('anneeAcademique', true, null);
+                    checks[4].ok = true;
+                }
+            }
+
+            if (selectedInterets.length === 0) {
+                document.getElementById('interetsError').textContent = 'Sélectionnez au moins un centre d\'intérêt';
+            }
+
+            checks.forEach(function (c) {
+                if (!c.ok) {
+                    isValid = false;
+                    if (!firstInvalidId) firstInvalidId = c.id;
+                }
+            });
+
+            if (!isValid) {
+                showNotification('Veuillez remplir tous les champs obligatoires', 'error');
+                const target = document.getElementById(firstInvalidId + 'Wrapper')
+                            || document.getElementById('interetsChips');
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                const input = document.getElementById(firstInvalidId);
+                if (input) setTimeout(function () { input.focus({ preventScroll: true }); }, 300);
+                return;
+            }
+
+            if (!navigator.onLine) {
+                showNotification('Pas de connexion Internet. Vérifiez votre réseau.', 'warning', { persistent: true });
+                return;
+            }
+
+            const btn = document.getElementById('finishBtn');
+            btn.disabled = true;
+            btn.classList.add('loading');
+            document.getElementById('finishBtnText').textContent = 'Enregistrement...';
+
+            try {
+                const data = {
+                    accountType: 'etudiant',
+                    universite: universiteInput.value.trim(),
+                    faculte: faculteSelect.value,
+                    filiere: filiereInput.value.trim(),
+                    niveau: niveauSelect.value,
+                    anneeAcademique: anneeInput.value,
+                    interets: selectedInterets.slice(),
+                    ville: villeInput.value.trim(),
+                    bio: bioInput.value.trim()
+                };
+
+                // 🔗 REMPLACE PAR TON ENDPOINT :
+                // await fetch('/api/auth/profile-setup', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify(data)
+                // });
+
+                await new Promise(function (r) { setTimeout(r, 1000); });
+
+                let profile = {};
+                try { profile = JSON.parse(localStorage.getItem('estra_profile') || '{}'); }
+                catch (err) { profile = {}; }
+
+                profile.profileData = data;
+                profile.profileSetupCompleted = true;
+                profile.profileSetupAt = Date.now();
+                localStorage.setItem('estra_profile', JSON.stringify(profile));
+
+                showNotification('Profil étudiant complété avec succès', 'success');
+                setTimeout(function () { window.location.href = 'objectives.html'; }, 900);
+            } catch (err) {
+                showNotification(err.message || 'Une erreur est survenue', 'error');
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                document.getElementById('finishBtnText').textContent = 'Continuer';
+            }
+        });
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        window.addEventListener('load', function () {
+            enableOfflineDetection({
+                canDismiss: true,
+                onRetry: function () {
+                    if (navigator.onLine) universiteInput.focus({ preventScroll: true });
+                }
+            });
+
+            const session = localStorage.getItem('estra_session') || sessionStorage.getItem('estra_session');
+            if (session) {
+                try {
+                    const data = JSON.parse(session);
+                    if (!data.expiresAt || data.expiresAt <= Date.now()) {
+                        localStorage.removeItem('estra_session');
+                        sessionStorage.removeItem('estra_session');
+                    }
+                } catch (err) {
+                    localStorage.removeItem('estra_session');
+                    sessionStorage.removeItem('estra_session');
+                }
+            }
+
+            let profile = {};
+            try { profile = JSON.parse(localStorage.getItem('estra_profile') || '{}'); }
+            catch (err) { profile = {}; }
+
+            if (profile.prenom) {
+                document.getElementById('setupSubtitle').textContent =
+                    'Bonjour ' + profile.prenom + ' ! Aidez-nous à personnaliser votre expérience universitaire.';
+            }
+        });
+    </script>
+</body>
+</html>
