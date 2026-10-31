@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+<title>ESTRA LINK | Amis & Binômes</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0284c7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ESTRA LINK">
+<link rel="apple-touch-icon" href="https://ui-avatars.com/api/?background=0284c7&color=fff&name=E&size=152">
+<style>
+:root, [data-theme="light"] {
+  --cyan:#0284c7; --bg:#f8fafc; --card-bg:rgba(255,255,255,.95);
+  --text:#0f172a; --text-secondary:#475569; --border:rgba(0,0,0,0.1);
+  --purple:#7c3aed; --success:#059669; --danger:#dc2626; --warning:#d97706;
+  --shadow:0 4px 20px rgba(0,0,0,.08); --shadow-lg:0 10px 40px rgba(0,0,0,.15);
+  --sidebar-bg:#fff; --navbar-bg:rgba(255,255,255,.9);
+  --input-bg:#f1f5f9; --hover-bg:#f8fafc;
+  --overlay-bg:rgba(0,0,0,.6);
+  --transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --cyan:#38bdf8; --bg:#0b1220; --card-bg:rgba(15,23,42,.95);
+  --text:#f1f5f9; --text-secondary:#cbd5e1; --border:#1e293b;
+  --purple:#a78bfa; --success:#34d399; --danger:#f87171; --warning:#fbbf24;
+  --shadow:0 4px 20px rgba(0,0,0,.4); --shadow-lg:0 10px 40px rgba(0,0,0,.6);
+  --sidebar-bg:#0f172a; --navbar-bg:rgba(15,23,42,.9);
+  --input-bg:#111b2e; --hover-bg:#111b2e;
+  --overlay-bg:rgba(0,0,0,.8);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background-color:var(--bg);background-image:radial-gradient(at 0% 0%,rgba(2,132,199,.08) 0px,transparent 50%),radial-gradient(at 100% 100%,rgba(2,132,199,.08) 0px,transparent 50%);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;padding-bottom:80px;min-height:100vh;overflow-x:hidden;transition:background-color .4s,color .4s}
+:where(button,a,[role="button"],[tabindex]):focus-visible{outline:2px solid var(--cyan);outline-offset:2px;border-radius:4px}
+::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:var(--border);border-radius:10px}::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:10px}
+
+/* NOTIFICATION BANNER */
+.notification-banner{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;gap:12px;padding:max(14px,env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) 14px max(18px,env(safe-area-inset-left));background:#1e293b;color:#fff;font-size:.88rem;font-weight:600;z-index:10000;transform:translateY(-120%);transition:transform .35s cubic-bezier(.34,1.2,.64,1);box-shadow:0 4px 20px rgba(0,0,0,.18);border-bottom:1px solid rgba(255,255,255,.08);pointer-events:none}
+.notification-banner.show{transform:translateY(0);pointer-events:auto}
+.notification-banner.error{background:#b91c1c}.notification-banner.success{background:#047857}.notification-banner.info{background:#0284c7}.notification-banner.warning{background:#b45309}
+.notification-icon{display:flex;align-items:center;justify-content:center;width:24px;height:24px;flex-shrink:0}
+.notification-icon svg{width:20px;height:20px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;display:block}
+.notification-text{flex:1 1 0%;line-height:1.4;word-wrap:break-word}
+.notification-action{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:#fff;padding:6px 12px;border-radius:4px;font-family:inherit;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;min-height:32px;transition:background-color .2s;appearance:none}
+.notification-action:hover{background:rgba(255,255,255,.32)}
+.notification-close{background:none;border:none;color:rgba(255,255,255,.85);cursor:pointer;padding:6px;flex-shrink:0;appearance:none;display:flex;align-items:center;justify-content:center;min-width:32px;min-height:32px;border-radius:4px}
+.notification-close svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.notification-close:hover{color:#fff}
+.notification-banner[data-hide-close="true"] .notification-close{display:none}
+.notification-banner.persistent .notification-icon svg{animation:notifPulse 2s ease-in-out infinite}
+@keyframes notifPulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* SIDEBAR */
+.sidebar-overlay{position:fixed;inset:0;background:var(--overlay-bg);backdrop-filter:blur(4px);z-index:1050;opacity:0;visibility:hidden;transition:var(--transition)}
+.sidebar-overlay.active{opacity:1;visibility:visible}
+.sidebar{position:fixed;top:0;left:-280px;width:220px;height:100vh;background:var(--sidebar-bg);border-right:1px solid var(--border);z-index:1060;transition:left .3s ease;padding:30px 15px;overflow-y:auto}
+.sidebar.open{left:0}
+.profile-section{text-align:center;padding-bottom:25px;border-bottom:1px solid var(--border);margin-bottom:20px;position:relative}
+.profile-img-sidebar{width:65px;height:65px;border-radius:50%;border:2px solid var(--cyan);margin-bottom:10px;object-fit:cover}
+.online-indicator{position:absolute;top:50px;right:50px;width:14px;height:14px;border-radius:50%;background:var(--success);border:2px solid var(--sidebar-bg)}
+.profile-stats{display:flex;justify-content:center;gap:20px;margin-top:12px}
+.profile-stats div{text-align:center}
+.profile-stats strong{display:block;font-size:.95rem;color:var(--cyan)}
+.profile-stats span{font-size:.65rem;color:var(--text-secondary)}
+.sidebar-nav{display:flex;flex-direction:column;gap:4px}
+.sidebar-link{display:flex;align-items:center;gap:12px;padding:12px 15px;border-radius:10px;color:var(--text-secondary);text-decoration:none;font-size:.9rem;transition:var(--transition);cursor:pointer;background:none;border:0;width:100%;font-family:inherit;text-align:left}
+.sidebar-link svg{width:20px;height:20px;stroke-width:2;flex-shrink:0}
+.sidebar-link:hover,.sidebar-link.active{background:rgba(2,132,199,.08);color:var(--cyan);transform:translateX(5px);border-right:2px solid var(--cyan)}
+.sidebar-link.logout-link{color:var(--danger)}
+.sidebar-link.logout-link:hover{background:rgba(239,68,68,.1);color:var(--danger);border-right-color:var(--danger)}
+.sidebar-divider{margin:10px 0;border:none;border-top:1px solid var(--border)}
+
+/* NAVBAR */
+.navbar{padding:10px 15px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:var(--navbar-bg);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100}
+.nav-left,.nav-right{display:flex;align-items:center;gap:12px}
+.navbar-brand{font-weight:800;color:coral;letter-spacing:1.5px;font-size:1.1rem;text-decoration:none}
+.menu-toggle{background:none;border:none;cursor:pointer;padding:8px;display:flex;align-items:center;color:var(--text-secondary);transition:var(--transition);border-radius:6px}
+.menu-toggle:hover{color:var(--cyan);background:var(--hover-bg)}
+.avatar-nav{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--cyan);object-fit:cover;cursor:pointer}
+
+/* MAIN */
+.main-content{max-width:800px;margin:0 auto;background:var(--card-bg);border-left:1px solid var(--border);border-right:1px solid var(--border);min-height:calc(100vh - 60px)}
+.page-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:12px}
+.page-header h2{display:flex;align-items:center;gap:10px;font-size:1.3rem;color:var(--text)}
+.create-btn{background:var(--cyan);border:none;padding:10px 20px;border-radius:30px;color:#fff;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:8px;transition:var(--transition);font-family:inherit;font-size:.85rem;min-height:40px}
+.create-btn:hover{opacity:.9;transform:scale(1.02)}
+
+.friends-search{padding:12px 24px;border-bottom:1px solid var(--border)}
+.search-wrapper{display:flex;align-items:center;background:var(--input-bg);border:1px solid var(--border);border-radius:30px;padding:8px 18px;transition:var(--transition)}
+.search-wrapper:focus-within{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(2,132,199,.1)}
+.search-wrapper i{color:var(--text-secondary);margin-right:12px}
+.search-wrapper input{flex:1;background:transparent;border:none;padding:10px 0;color:var(--text);font-size:.95rem;outline:none;font-family:inherit;min-width:0}
+
+/* TABS */
+.friends-tabs{display:flex;gap:8px;padding:14px 24px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.friends-tabs::-webkit-scrollbar{display:none}
+.tab-btn{padding:10px 18px;background:var(--input-bg);border:1px solid var(--border);border-radius:24px;color:var(--text-secondary);cursor:pointer;font-size:.85rem;white-space:nowrap;transition:var(--transition);display:flex;align-items:center;gap:8px;font-family:inherit;min-height:40px;font-weight:600}
+.tab-btn i{font-size:.8rem}
+.tab-btn .tab-count{background:rgba(0,0,0,.08);padding:2px 8px;border-radius:12px;font-size:.7rem;font-weight:700}
+.tab-btn.active{background:var(--cyan);color:#fff;border-color:var(--cyan)}
+.tab-btn.active .tab-count{background:rgba(255,255,255,.3);color:#fff}
+.tab-btn:hover:not(.active){border-color:var(--cyan);color:var(--cyan)}
+[data-theme="dark"] .tab-btn .tab-count{background:rgba(255,255,255,.15)}
+
+/* SECTIONS */
+.section-block{padding:16px 24px;border-bottom:1px solid var(--border)}
+.section-block:last-child{border-bottom:none}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px;flex-wrap:wrap}
+.section-header h3{display:flex;align-items:center;gap:10px;font-size:1.05rem;color:var(--text);font-weight:700}
+.section-header h3 i{color:var(--cyan);font-size:1rem}
+.section-header .section-count{padding:3px 10px;background:var(--input-bg);color:var(--text-secondary);border-radius:20px;font-size:.72rem;font-weight:700}
+.section-header button{background:var(--input-bg);border:1px solid var(--border);padding:8px 14px;border-radius:20px;color:var(--text-secondary);cursor:pointer;font-size:.8rem;font-weight:600;font-family:inherit;display:flex;align-items:center;gap:6px;transition:var(--transition)}
+.section-header button:hover{background:var(--cyan);color:#fff;border-color:var(--cyan)}
+
+/* PERSON CARD */
+.person-card{background:var(--hover-bg);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:14px;border:1px solid var(--border);transition:var(--transition);margin-bottom:10px}
+.person-card:hover{border-color:var(--cyan);transform:translateY(-1px)}
+.person-avatar{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--cyan);cursor:pointer;flex-shrink:0}
+.person-info{flex:1;cursor:pointer;min-width:0}
+.person-info h4{font-size:.98rem;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;color:var(--text)}
+.person-info h4 .binome-badge{font-size:.62rem;padding:2px 8px;border-radius:10px;font-weight:700;background:rgba(124,58,237,.12);color:var(--purple);text-transform:uppercase;letter-spacing:.3px}
+.person-info h4 .auto-badge{font-size:.62rem;padding:2px 8px;border-radius:10px;font-weight:700;background:rgba(5,150,105,.12);color:var(--success);text-transform:uppercase;letter-spacing:.3px}
+.person-meta{display:flex;flex-wrap:wrap;gap:10px;font-size:.74rem;color:var(--text-secondary)}
+.person-meta span{display:flex;align-items:center;gap:4px}
+.person-meta i{font-size:.7rem;color:var(--cyan)}
+.person-actions{display:flex;gap:6px;flex-shrink:0}
+.person-chat,.person-more{background:var(--input-bg);border:1px solid var(--border);width:38px;height:38px;border-radius:50%;cursor:pointer;color:var(--text-secondary);transition:var(--transition);display:flex;align-items:center;justify-content:center;text-decoration:none;font-family:inherit;font-size:1.1rem}
+.person-chat:hover{background:var(--cyan);color:#fff;border-color:var(--cyan)}
+.person-more:hover{background:var(--warning);color:#fff;border-color:var(--warning)}
+
+/* EMPTY */
+.empty-section{padding:40px 20px;text-align:center;color:var(--text-secondary);font-size:.85rem;background:var(--hover-bg);border-radius:16px;border:2px dashed var(--border);margin:8px 0}
+.empty-section i{font-size:2.6rem;margin-bottom:12px;opacity:.4;display:block}
+.empty-section p{margin-bottom:6px;font-weight:600;color:var(--text)}
+.empty-section small{font-size:.78rem}
+
+/* REQUESTS */
+.requests-header{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-weight:600;color:var(--text);font-size:.92rem}
+.request-card{background:var(--hover-bg);border-radius:14px;padding:12px;display:flex;align-items:center;gap:12px;border:1px solid var(--border);margin-bottom:10px}
+.request-avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--cyan);flex-shrink:0}
+.request-info{flex:1;min-width:0}
+.request-info h4{font-size:.92rem;font-weight:600;margin-bottom:3px;color:var(--text)}
+.request-info p{font-size:.72rem;color:var(--text-secondary)}
+.request-actions{display:flex;gap:6px;flex-shrink:0}
+.request-accept,.request-decline{border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;color:#fff;transition:var(--transition)}
+.request-accept{background:var(--success)}
+.request-accept:hover{transform:scale(1.08)}
+.request-decline{background:var(--input-bg);color:var(--text-secondary);border:1px solid var(--border)}
+.request-decline:hover{background:var(--danger);color:#fff}
+
+/* MENU CONTEXTUEL */
+.friend-menu{position:fixed;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:8px 0;min-width:210px;z-index:9999;box-shadow:var(--shadow-lg);animation:fadeIn .18s ease}
+@keyframes fadeIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.friend-menu-item{display:flex;align-items:center;gap:12px;padding:11px 16px;cursor:pointer;color:var(--text);transition:var(--transition);font-size:.85rem;text-decoration:none;font-family:inherit;border:none;background:none;width:100%;text-align:left}
+.friend-menu-item:hover{background:var(--hover-bg)}
+.friend-menu-item.danger{color:var(--danger)}
+.friend-menu-item i{width:16px;text-align:center;font-size:.85rem}
+.friend-menu-divider{height:1px;background:var(--border);margin:4px 0}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:var(--overlay-bg);backdrop-filter:blur(4px);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:var(--transition);padding:20px}
+.modal-overlay.active{opacity:1;visibility:visible}
+.modal-content{background:var(--card-bg);padding:24px;border-radius:24px;width:100%;max-width:420px;border:1px solid var(--border);transition:transform .4s cubic-bezier(.4,0,.2,1);transform:scale(.95);max-height:85vh;overflow-y:auto}
+.modal-overlay.active .modal-content{transform:scale(1)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.modal-header h3{font-size:1.1rem;color:var(--text);font-weight:700;display:flex;align-items:center;gap:8px}
+.modal-close{background:none;border:none;color:var(--text-secondary);font-size:1.5rem;cursor:pointer;padding:4px;border-radius:4px;font-family:inherit;line-height:1}
+.modal-close:hover{color:var(--danger);background:var(--input-bg)}
+.invite-methods{display:flex;flex-direction:column;gap:12px}
+.invite-method{display:flex;align-items:center;gap:12px;padding:14px;background:var(--input-bg);border-radius:12px;cursor:pointer;transition:var(--transition)}
+.invite-method:hover{background:rgba(2,132,199,.08)}
+.invite-method i{width:30px;font-size:1.2rem;color:var(--cyan);text-align:center}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;width:100%;height:60px;background:var(--navbar-bg);backdrop-filter:blur(15px);border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:center;z-index:1000}
+.bottom-nav-item{color:var(--text-secondary);padding:8px;cursor:pointer;transition:var(--transition);position:relative;text-decoration:none;display:flex;align-items:center}
+.bottom-nav-item svg{width:22px;height:22px}
+.bottom-nav-item:hover,.bottom-nav-item.active{color:var(--cyan)}
+.badge-count{position:absolute;top:0;right:-2px;background:var(--danger);color:#fff;font-size:.55rem;padding:2px 5px;border-radius:10px;font-weight:700;min-width:16px;text-align:center;display:none}
+
+/* RIGHT PANEL */
+.right-panel{display:none}
+.stats-ball-container{display:flex;flex-direction:column;gap:30px;align-items:center;margin-top:20px}
+.stats-ball{position:relative;width:130px;height:130px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--card-bg);z-index:1;text-align:center;box-shadow:var(--shadow)}
+.stats-ball::before{content:'';position:absolute;inset:-4px;border-radius:50%;background:conic-gradient(from 0deg,var(--cyan),var(--purple),var(--warning),var(--cyan));z-index:-1;animation:spinBall 4s linear infinite}
+.stats-ball::after{content:'';position:absolute;inset:2px;border-radius:50%;background:var(--sidebar-bg);z-index:-1}
+.stats-ball.purple::before{background:conic-gradient(from 0deg,var(--purple),var(--cyan),var(--purple))}
+@keyframes spinBall{100%{transform:rotate(360deg)}}
+.stats-ball-value{font-size:2.2rem;font-weight:800;color:var(--text);line-height:1}
+.stats-ball-label{font-size:.8rem;color:var(--text-secondary);margin-top:6px;text-transform:uppercase;letter-spacing:1px;font-weight:600}
+
+@media (max-width:768px){.person-actions{flex-direction:row}}
+@media (max-width:480px){
+  .page-header{padding:16px 14px}
+  .friends-search,.friends-tabs,.section-block{padding-left:14px;padding-right:14px}
+  .person-card{padding:12px 14px;gap:10px}
+  .person-avatar{width:44px;height:44px}
+  .person-info h4{font-size:.9rem}
+  .person-chat,.person-more{width:34px;height:34px;font-size:1rem}
+  .tab-btn{padding:9px 14px;font-size:.8rem}
+  .tab-btn i{font-size:.7rem}
+  .section-header h3{font-size:.95rem}
+  .notification-banner{padding:12px 14px;font-size:.82rem}
+  .notification-icon{width:22px;height:22px}
+  .notification-icon svg{width:18px;height:18px}
+}
+
+@media (min-width:1024px){
+  body{padding-bottom:0}
+  .sidebar{left:0!important;width:240px}
+  .sidebar-overlay{display:none!important}
+  .navbar{margin-left:240px;margin-right:70px}
+  .menu-toggle{display:none}
+  .main-content{margin-left:240px;margin-right:350px;max-width:none;min-height:calc(100vh - 40px);border-radius:16px;box-shadow:var(--shadow);margin-top:20px;margin-bottom:20px}
+  .right-panel{display:block;position:fixed;top:0;right:70px;width:280px;height:100vh;background:var(--sidebar-bg);border-left:1px solid var(--border);z-index:90;overflow-y:auto;padding:80px 20px 20px}
+  .bottom-nav{position:fixed;top:0;right:0;bottom:auto;width:70px;height:100vh;flex-direction:column;justify-content:flex-start;padding-top:30px;gap:30px;border-top:none;border-left:1px solid var(--border);background:var(--sidebar-bg)}
+  .bottom-nav-item{margin:0;padding:25px;width:100%;justify-content:center;border-radius:12px}
+  .modal-overlay{justify-content:flex-end;padding:0;align-items:stretch}
+  .modal-content{margin:0;height:100vh;max-height:100vh;width:420px;max-width:420px;border-radius:0;border-top:none;border-bottom:none;border-right:none;transform:translateX(100%);box-shadow:-10px 0 50px rgba(0,0,0,.3)}
+  .modal-overlay.active .modal-content{transform:translateX(0)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .notification-banner.persistent .notification-icon svg{animation:none!important}
+  .stats-ball::before{animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<div class="notification-banner" id="notificationBanner" role="status" aria-live="polite" aria-atomic="true">
+  <div class="notification-icon" id="notificationIcon" aria-hidden="true"></div>
+  <div class="notification-text" id="notificationText"></div>
+  <button type="button" class="notification-action" id="notificationAction" hidden></button>
+  <button type="button" class="notification-close" id="notificationClose" onclick="hideNotification()" aria-label="Fermer la notification">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+</div>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<aside class="sidebar" id="sidebar" aria-label="Menu principal">
+  <div class="profile-section">
+    <div style="position:relative;display:inline-block">
+      <img src="" class="profile-img-sidebar" id="sidebarAvatar" alt="Photo de profil">
+      <div class="online-indicator"></div>
+    </div>
+    <h3 style="margin:0;font-size:1.05rem;color:var(--text);" id="sidebarName">…</h3>
+    <div class="profile-stats">
+      <div><strong id="sidebarPosts">0</strong><span>Posts</span></div>
+      <div><strong id="sidebarFriends">0</strong><span>Amis</span></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="home.html" class="sidebar-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Accueil</a>
+    <a href="friends.html" class="sidebar-link active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> Amis & Binômes</a>
+    <a href="courses.html" class="sidebar-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Cours</a>
+    <a href="events.html" class="sidebar-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg> Événements</a>
+    <a href="profile.html" class="sidebar-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Mon Profil</a>
+    <hr class="sidebar-divider">
+    <a href="settings.html" class="sidebar-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Paramètres</a>
+    <hr class="sidebar-divider">
+    <button class="sidebar-link logout-link" onclick="logout()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Déconnexion</button>
+  </nav>
+</aside>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="4" y1="7" x2="16" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="12" y2="17"/><circle cx="18" cy="17" r="2"/></svg></button>
+    <a href="home.html" class="navbar-brand">ESTRA LINK</a>
+  </div>
+  <div class="nav-right"><img src="" class="avatar-nav" id="navAvatar" onclick="viewOwnProfile()" alt="Mon profil"></div>
+</nav>
+
+<main class="main-content">
+  <div class="page-header">
+    <h2><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> Amis & Binômes</h2>
+    <button class="create-btn" onclick="openInviteModal()"><i class="fas fa-user-plus"></i> Inviter</button>
+  </div>
+
+  <div class="friends-search">
+    <div class="search-wrapper">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="Rechercher une personne..." oninput="renderCurrentTab()">
+    </div>
+  </div>
+
+  <div class="friends-tabs" role="tablist">
+    <button class="tab-btn active" data-tab="followed" onclick="switchTab('followed', this)" role="tab" aria-selected="true">
+      <i class="fas fa-user-check"></i> Déjà suivi <span class="tab-count" id="countFollowed">0</span>
+    </button>
+    <button class="tab-btn" data-tab="binomes" onclick="switchTab('binomes', this)" role="tab" aria-selected="false">
+      <i class="fas fa-link"></i> Suggestions des binômes <span class="tab-count" id="countBinomes">0</span>
+    </button>
+    <button class="tab-btn" data-tab="friends" onclick="switchTab('friends', this)" role="tab" aria-selected="false">
+      <i class="fas fa-user-plus"></i> Suggestions des amis <span class="tab-count" id="countFriends">0</span>
+    </button>
+  </div>
+
+  <div id="requestsSection" class="section-block" style="display:none;"></div>
+  <div id="listContainer" class="section-block"></div>
+</main>
+
+<div class="modal-overlay" id="inviteModal" role="dialog" aria-modal="true">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3><i class="fas fa-user-plus"></i> Inviter un ami</h3>
+      <button class="modal-close" onclick="closeInviteModal()" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="invite-methods">
+      <div class="invite-method" onclick="shareProfile()"><i class="fas fa-link"></i><span>Copier le lien d'invitation</span></div>
+      <div class="invite-method" onclick="shareViaWhatsApp()"><i class="fab fa-whatsapp" style="color:#25D366;"></i><span>Partager via WhatsApp</span></div>
+      <div class="invite-method" onclick="shareViaEmail()"><i class="fas fa-envelope"></i><span>Partager par email</span></div>
+    </div>
+  </div>
+</div>
+
+<aside class="right-panel">
+  <h3 style="font-size:1.1rem;color:var(--text);margin-bottom:20px;display:flex;align-items:center;gap:8px;"><i class="fas fa-chart-pie" style="color:var(--cyan)"></i> Mes statistiques</h3>
+  <div class="stats-ball-container">
+    <div class="stats-ball"><div class="stats-ball-value" id="ballFriends">0</div><div class="stats-ball-label">Amis</div></div>
+    <div class="stats-ball purple"><div class="stats-ball-value" id="ballBinomes">0</div><div class="stats-ball-label">Binômes</div></div>
+  </div>
+</aside>
+
+<div class="bottom-nav">
+  <a href="home.html" class="bottom-nav-item" aria-label="Accueil"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></a>
+  <a href="notifications.html" class="bottom-nav-item" title="Notifications" aria-label="Notifications" style="position:relative"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge-count" id="notifBadge" style="display:none" aria-label="Notifications">0</span></a>
+  <a href="messages.html" class="bottom-nav-item" title="Messages" aria-label="Messages" style="position:relative"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span class="badge-count" id="msgBadge" style="display:none" aria-label="Messages">0</span></a>
+  <a href="courses.html" class="bottom-nav-item" title="Cours" aria-label="Cours" style="position:relative"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span class="badge-count" id="courseBadge" style="display:none" aria-label="Cours">0</span></a>
+  <a href="profile.html" class="bottom-nav-item" aria-label="Profil"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
+</div>
+
+<script>
+'use strict';
+
+/* ══════════════════════════════════════════════════════════
+   NOTIFICATION BANNER
+   ══════════════════════════════════════════════════════════ */
+const notifBanner = document.getElementById('notificationBanner');
+const notifIcon = document.getElementById('notificationIcon');
+const notifText = document.getElementById('notificationText');
+const notifAction = document.getElementById('notificationAction');
+let notifTimer = null, isPersistentNotif = false;
+const SVG_ICONS = {
+  success:'<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>',
+  error:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>',
+  info:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
+  warning:'<svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>'
+};
+function showNotification(msg, type, opts) {
+  opts = opts || {}; type = type || 'info';
+  isPersistentNotif = opts.persistent === true;
+  notifText.textContent = '';
+  let cls = 'notification-banner show ';
+  if (type === 'success') cls += 'success';
+  else if (type === 'error') cls += 'error';
+  else if (type === 'warning') cls += 'warning';
+  else cls += 'info';
+  if (isPersistentNotif) cls += ' persistent';
+  notifBanner.className = cls;
+  notifBanner.setAttribute('data-hide-close', opts.hideClose === true ? 'true' : 'false');
+  if (notifAction) {
+    if (opts.action && opts.action.label && typeof opts.action.onClick === 'function') {
+      notifAction.hidden = false;
+      notifAction.textContent = opts.action.label;
+      const clone = notifAction.cloneNode(true);
+      notifAction.parentNode.replaceChild(clone, notifAction);
+      clone.addEventListener('click', opts.action.onClick);
+    } else notifAction.hidden = true;
+  }
+  requestAnimationFrame(() => {
+    notifIcon.innerHTML = SVG_ICONS[type] || SVG_ICONS.info;
+    notifText.textContent = msg;
+  });
+  if (notifTimer) clearTimeout(notifTimer);
+  if (!isPersistentNotif) notifTimer = setTimeout(() => notifBanner.classList.remove('show'), opts.duration || 3800);
+}
+function hideNotification() {
+  notifBanner.classList.remove('show');
+  if (notifTimer) clearTimeout(notifTimer);
+  isPersistentNotif = false;
+  notifBanner.setAttribute('data-hide-close', 'false');
+  if (notifAction) notifAction.hidden = true;
+}
+function enableOfflineDetection(opts) {
+  opts = opts || {};
+  const canDismiss = opts.canDismiss === true;
+  function onOffline() {
+    showNotification(opts.offlineMessage || 'Pas de connexion Internet. Vérifiez votre réseau.', 'warning', {
+      persistent: true, hideClose: !canDismiss,
+      action: { label: 'Réessayer', onClick: () => { if (navigator.onLine) hideNotification(); } }
+    });
+  }
+  function onOnline() { showNotification(opts.onlineMessage || 'Connexion rétablie', 'success', { duration: 2200 }); }
+  window.addEventListener('offline', onOffline);
+  window.addEventListener('online', onOnline);
+  if (!navigator.onLine) onOffline();
+}
+function showToast(msg, type) { showNotification(msg, type || 'info', { duration: 3000 }); }
+
+/* ══════════════════════════════════════════════════════════
+   BROADCAST
+   ══════════════════════════════════════════════════════════ */
+const ESTRA_CHANNEL = new BroadcastChannel('estra_network');
+function estraEmit(type, data = {}) { ESTRA_CHANNEL.postMessage({ type, data, timestamp: Date.now() }); }
+ESTRA_CHANNEL.onmessage = (e) => {
+  const { type } = e.data;
+  if (type === 'friends_updated' || type === 'binomes_updated') loadAllData();
+  if (type === 'notification_updated' || type === 'badges_updated') updateBadges();
+};
+
+/* ══════════════════════════════════════════════════════════
+   ESTRA GLOBAL
+   ══════════════════════════════════════════════════════════ */
+if (typeof window.ESTRA === 'undefined') {
+  window.ESTRA = {
+    getProfile: () => JSON.parse(localStorage.getItem('estra_profile')) || { fullName:'Utilisateur', username:'user' },
+    logout: () => { localStorage.setItem('estra_logged_in', 'false'); window.location.href = 'login.html'; }
+  };
+}
+
+/* ══════════════════════════════════════════════════════════
+   USERS DB — avec institution + faculty + promotion
+   ══════════════════════════════════════════════════════════ */
+function getAllUsers() {
+  let users = JSON.parse(localStorage.getItem('estra_all_users') || '[]');
+  if (users.length === 0) {
+    users = [
+      { id:'rashidi', username:'rashidi', fullName:'Rashidi Levieux', bio:'Étudiant passionné', avatar:'https://ui-avatars.com/api/?background=1d9bf0&color=fff&name=Rashidi&size=120', verified:true, accountType:'student', institution:'Université de Kinshasa', faculty:'Informatique', promotion:'L2', mutualFriends:12 },
+      { id:'marie_claire', username:'marie_claire', fullName:'Marie Claire Kabongo', bio:'Enseignante Web', avatar:'https://ui-avatars.com/api/?name=Marie&background=10b981&color=fff', verified:true, accountType:'teacher', institution:'Université de Kinshasa', faculty:'Informatique', promotion:'M2', mutualFriends:8 },
+      { id:'david_mwamba', username:'david_mwamba', fullName:'David Mwamba', bio:'Chercheur IA', avatar:'https://ui-avatars.com/api/?name=David&background=8b5cf6&color=fff', verified:false, accountType:'student', institution:'Université de Kinshasa', faculty:'Informatique', promotion:'L2', mutualFriends:5 },
+      { id:'alice_mwila', username:'alice_mwila', fullName:'Alice Kasongo', bio:'Élève Scientifique', avatar:'https://ui-avatars.com/api/?name=Alice&background=059669&color=fff', verified:false, accountType:'highschool', institution:'Institut Scientifique de Kolwezi', faculty:'Biologie-Chimie', promotion:'3ème Humanité', mutualFriends:2 },
+      { id:'sophie_mukendi', username:'sophie_mukendi', fullName:'Sophie Mukendi', bio:'Étudiante Médecine', avatar:'https://ui-avatars.com/api/?name=Sophie&background=ec4899&color=fff', verified:false, accountType:'student', institution:'Université de Lubumbashi', faculty:'Médecine', promotion:'L3', mutualFriends:3 },
+      { id:'mr_muteba', username:'mr_muteba', fullName:'Mr. Muteba', bio:'Enseignant Maths', avatar:'https://ui-avatars.com/api/?name=MrM&background=d97706&color=fff', verified:false, accountType:'teacher', institution:'Université de Kinshasa', faculty:'Mathématiques', promotion:'Doctorat', mutualFriends:6 },
+      { id:'patrick_tshi', username:'patrick_tshi', fullName:'Patrick Tshibangu', bio:'Étudiant Info', avatar:'https://ui-avatars.com/api/?name=Patrick&background=7c3aed&color=fff', verified:false, accountType:'student', institution:'Université de Kinshasa', faculty:'Informatique', promotion:'L2', mutualFriends:9 },
+      { id:'sarah_ali', username:'sarah_ali', fullName:'Sarah Ali', bio:'Étudiante Info', avatar:'https://ui-avatars.com/api/?name=Sarah&background=0ea5e9&color=fff', verified:false, accountType:'student', institution:'Université de Kinshasa', faculty:'Informatique', promotion:'L2', mutualFriends:4 },
+      { id:'jean_kabila', username:'jean_kabila', fullName:'Jean Kabila', bio:'Étudiant Droit', avatar:'https://ui-avatars.com/api/?name=Jean&background=ef4444&color=fff', verified:false, accountType:'student', institution:'Université de Kinshasa', faculty:'Droit', promotion:'L1', mutualFriends:1 },
+      { id:'nadine_cibangu', username:'nadine_cibangu', fullName:'Nadine Cibangu', bio:'Étudiante Médecine', avatar:'https://ui-avatars.com/api/?name=Nadine&background=f59e0b&color=fff', verified:false, accountType:'student', institution:'Université de Kinshasa', faculty:'Médecine', promotion:'L2', mutualFriends:7 }
+    ];
+    localStorage.setItem('estra_all_users', JSON.stringify(users));
+  }
+  return users;
+}
+function findUserByAnyId(identifier) {
+  if (!identifier) return null;
+  const norm = String(identifier).toLowerCase().trim();
+  return getAllUsers().find(u =>
+    u.username.toLowerCase() === norm ||
+    u.fullName.toLowerCase() === norm ||
+    u.id.toLowerCase() === norm ||
+    u.fullName.toLowerCase().replace(/\s+/g,'_') === norm
+  ) || null;
+}
+
+/* ══════════════════════════════════════════════════════════
+   STATE
+   ══════════════════════════════════════════════════════════ */
+let currentTab = 'followed', activeMenu = null;
+let friends = [], binomes = [];
+let receivedFriendRequests = [], receivedBinomeRequests = [];
+let sentFriendRequests = [], sentBinomeRequests = [];
+let hiddenBinomes = [], hiddenFriends = [];
+let currentUser = { name:'Utilisateur', username:'user', avatar:'https://ui-avatars.com/api/?background=0284c7&color=fff&name=User&size=80' };
+
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ══════════════════════════════════════════════════════════
+   BADGES / STATS
+   ══════════════════════════════════════════════════════════ */
+function updateBadges() {
+  const notifs = JSON.parse(localStorage.getItem('estra_notifications') || '[]');
+  const unread = notifs.filter(n => !n.read).length;
+  const nb = document.getElementById('notifBadge');
+  if (nb) { nb.style.display = unread > 0 ? 'block' : 'none'; if (unread > 0) nb.textContent = unread > 99 ? '99+' : unread; }
+
+  const msgs = JSON.parse(localStorage.getItem('estra_messages_data') || '{}');
+  let unreadMsgs = 0;
+  Object.values(msgs).forEach(arr => { if (Array.isArray(arr)) unreadMsgs += arr.filter(m => m.sender === 'them' && m.status !== 'read').length; });
+  const mb = document.getElementById('msgBadge');
+  if (mb) { mb.style.display = unreadMsgs > 0 ? 'block' : 'none'; if (unreadMsgs > 0) mb.textContent = unreadMsgs > 99 ? '99+' : unreadMsgs; }
+
+  const courseTypes = ['course','certification','session'];
+  const unreadCourses = notifs.filter(n => courseTypes.includes(n.type) && !n.read).length;
+  const cb = document.getElementById('courseBadge');
+  if (cb) { cb.style.display = unreadCourses > 0 ? 'block' : 'none'; if (unreadCourses > 0) cb.textContent = unreadCourses > 99 ? '99+' : unreadCourses; }
+}
+
+function updateSidebarStats() {
+  const sf = document.getElementById('sidebarFriends'); if (sf) sf.textContent = friends.length + binomes.length;
+  const sn = document.getElementById('sidebarName'); if (sn) sn.textContent = currentUser.name;
+  const sa = document.getElementById('sidebarAvatar'); if (sa) { sa.src = currentUser.avatar; sa.alt = 'Photo de profil de ' + currentUser.name; }
+  const na = document.getElementById('navAvatar'); if (na) { na.src = currentUser.avatar; na.alt = 'Mon profil'; }
+  const sp = document.getElementById('sidebarPosts');
+  if (sp) {
+    const posts = JSON.parse(localStorage.getItem('estra_posts') || '[]');
+    sp.textContent = posts.filter(p => p.author === currentUser.name).length || 0;
+  }
+  const bf = document.getElementById('ballFriends'); if (bf) bf.textContent = friends.length;
+  const bb = document.getElementById('ballBinomes'); if (bb) bb.textContent = binomes.length;
+}
+
+/* ══════════════════════════════════════════════════════════
+   LOAD
+   ══════════════════════════════════════════════════════════ */
+function loadAllData() {
+  const sp = ESTRA.getProfile();
+  if (sp) {
+    currentUser.name = sp.fullName || currentUser.name;
+    currentUser.username = sp.username || currentUser.username;
+    currentUser.avatar = sp.avatar || currentUser.avatar;
+  }
+  friends = JSON.parse(localStorage.getItem('estra_friends') || '[]');
+  binomes = JSON.parse(localStorage.getItem('estra_binomes') || '[]');
+  receivedFriendRequests = JSON.parse(localStorage.getItem('estra_received_friend_requests') || '[]');
+  receivedBinomeRequests = JSON.parse(localStorage.getItem('estra_received_binome_requests') || '[]');
+  sentFriendRequests = JSON.parse(localStorage.getItem('estra_sent_friend_requests') || '[]');
+  sentBinomeRequests = JSON.parse(localStorage.getItem('estra_sent_binome_requests') || '[]');
+  hiddenBinomes = JSON.parse(localStorage.getItem('estra_hidden_binomes') || '[]');
+  hiddenFriends = JSON.parse(localStorage.getItem('estra_hidden_friends') || '[]');
+
+  if (!friends.length && !binomes.length) {
+    const users = getAllUsers();
+    const me = findUserByAnyId(currentUser.username);
+    if (me) {
+      const sameFac = users.filter(u =>
+        u.username !== currentUser.username &&
+        u.institution === me.institution &&
+        u.faculty === me.faculty
+      );
+      if (sameFac[0]) {
+        binomes = [{
+          id:'b_'+sameFac[0].username, name:sameFac[0].fullName, username:sameFac[0].username,
+          avatar:sameFac[0].avatar, bio:sameFac[0].bio || '',
+          faculty:sameFac[0].faculty, promotion:sameFac[0].promotion,
+          mutualFriends:sameFac[0].mutualFriends || 0,
+          favorite:false, verified:sameFac[0].verified || false
+        }];
+        localStorage.setItem('estra_binomes', JSON.stringify(binomes));
+      }
+      const otherFac = users.filter(u =>
+        u.username !== currentUser.username &&
+        u.faculty !== me.faculty
+      );
+      if (otherFac[0]) {
+        friends = [{
+          id:'f_'+otherFac[0].username, name:otherFac[0].fullName, username:otherFac[0].username,
+          avatar:otherFac[0].avatar, bio:otherFac[0].bio || '',
+          faculty:otherFac[0].faculty, promotion:otherFac[0].promotion,
+          mutualFriends:otherFac[0].mutualFriends || 0,
+          favorite:false, verified:otherFac[0].verified || false
+        }];
+        localStorage.setItem('estra_friends', JSON.stringify(friends));
+      }
+    }
+  }
+  updateSidebarStats();
+  updateBadges();
+}
+
+function saveData() {
+  localStorage.setItem('estra_friends', JSON.stringify(friends));
+  localStorage.setItem('estra_binomes', JSON.stringify(binomes));
+  localStorage.setItem('estra_received_friend_requests', JSON.stringify(receivedFriendRequests));
+  localStorage.setItem('estra_received_binome_requests', JSON.stringify(receivedBinomeRequests));
+  localStorage.setItem('estra_sent_friend_requests', JSON.stringify(sentFriendRequests));
+  localStorage.setItem('estra_sent_binome_requests', JSON.stringify(sentBinomeRequests));
+  localStorage.setItem('estra_hidden_binomes', JSON.stringify(hiddenBinomes));
+  localStorage.setItem('estra_hidden_friends', JSON.stringify(hiddenFriends));
+  updateSidebarStats();
+  estraEmit('friends_updated', {});
+  estraEmit('binomes_updated', {});
+}
+
+/* ══════════════════════════════════════════════════════════
+   AUTO-MATCHED BINÔMES (institution + faculty)
+   ══════════════════════════════════════════════════════════ */
+function getBinomeSuggestions() {
+  const me = findUserByAnyId(currentUser.username);
+  if (!me) return [];
+  const existing = [...friends.map(f => f.username || f.name), ...binomes.map(b => b.username || b.name)];
+  return getAllUsers().filter(u =>
+    u.username !== currentUser.username &&
+    !existing.includes(u.username) &&
+    !hiddenBinomes.includes(u.id) &&
+    u.institution === me.institution &&
+    u.faculty === me.faculty
+  );
+}
+
+function getFriendSuggestions() {
+  const me = findUserByAnyId(currentUser.username);
+  const existing = [...friends.map(f => f.username || f.name), ...binomes.map(b => b.username || b.name)];
+  return getAllUsers().filter(u =>
+    u.username !== currentUser.username &&
+    !existing.includes(u.username) &&
+    !hiddenFriends.includes(u.id) &&
+    (!me || u.faculty !== me.faculty || u.institution !== me.institution)
+  );
+}
+
+/* ══════════════════════════════════════════════════════════
+   RENDER ALL
+   ══════════════════════════════════════════════════════════ */
+function renderAll() {
+  const countFollowed = document.getElementById('countFollowed');
+  const countBinomes = document.getElementById('countBinomes');
+  const countFriends = document.getElementById('countFriends');
+  if (countFollowed) countFollowed.textContent = friends.length + binomes.length;
+  if (countBinomes) countBinomes.textContent = getBinomeSuggestions().length;
+  if (countFriends) countFriends.textContent = getFriendSuggestions().length;
+  renderRequests();
+  renderCurrentTab();
+}
+
+function switchTab(tab, btn) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
+  if (btn) {
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+  }
+  renderCurrentTab();
+}
+
+function renderCurrentTab() {
+  const container = document.getElementById('listContainer');
+  if (!container) return;
+  const query = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
+
+  let list = [];
+  let tabLabel = '';
+
+  if (currentTab === 'followed') {
+    tabLabel = 'Déjà suivi';
+    list = [...friends];
+    binomes.forEach(b => {
+      if (!list.find(f => f.id === b.id || f.name === b.name)) list.push({ ...b, isBinome: true });
+    });
+  } else if (currentTab === 'binomes') {
+    tabLabel = 'Suggestions des binômes';
+    list = getBinomeSuggestions().map(u => ({
+      id: u.id, name: u.fullName, username: u.username, avatar: u.avatar, bio: u.bio,
+      faculty: u.faculty, promotion: u.promotion, mutualFriends: u.mutualFriends || 0,
+      verified: u.verified, favorite: false, isSuggestion: true
+    }));
+  } else if (currentTab === 'friends') {
+    tabLabel = 'Suggestions des amis';
+    list = getFriendSuggestions().map(u => ({
+      id: u.id, name: u.fullName, username: u.username, avatar: u.avatar, bio: u.bio,
+      faculty: u.faculty, promotion: u.promotion, mutualFriends: u.mutualFriends || 0,
+      verified: u.verified, favorite: false, isSuggestion: true
+    }));
+  }
+
+  if (query) list = list.filter(p => p.name.toLowerCase().includes(query));
+
+  if (!list.length) {
+    container.innerHTML = '<div class="empty-section"><i class="fas fa-' + (currentTab === 'binomes' ? 'link' : currentTab === 'friends' ? 'user-plus' : 'user-check') + '" aria-hidden="true"></i><p>Aucun résultat</p><small>' + tabLabel + ' — vide pour le moment.</small></div>';
+    return;
+  }
+
+  container.innerHTML = list.map(p => renderPersonCard(p, currentTab)).join('');
+  attachListListeners();
+}
+
+/* ══════════════════════════════════════════════════════════
+   RENDER PERSON CARD
+   ══════════════════════════════════════════════════════════ */
+function renderPersonCard(p, tab) {
+  const isBinome = tab === 'followed' && (p.isBinome || binomes.find(b => b.id === p.id || b.name === p.name));
+  const isSuggestion = tab !== 'followed';
+
+  let badgeHtml = '';
+  if (isBinome) badgeHtml += '<span class="binome-badge">Binôme</span>';
+  if (isSuggestion && tab === 'binomes') badgeHtml += '<span class="auto-badge">Auto</span>';
+
+  const faculty = p.faculty || p.domain || '—';
+  const promotion = p.promotion || p.level || '';
+  const facultyLine = promotion ? faculty + ' · ' + promotion : faculty;
+
+  const favoriteIcon = p.favorite ? '<i class="fas fa-star" style="color:#fbbf24"></i>' : '';
+  const verifiedIcon = p.verified ? '<i class="fas fa-check-circle" style="color:#1DA1F2"></i>' : '';
+
+  const identifier = p.username || p.name;
+
+  return '<div class="person-card" data-user-id="' + escapeHtml(p.id) + '" data-is-suggestion="' + (isSuggestion ? '1' : '0') + '" data-tab="' + tab + '">' +
+    '<img src="' + escapeHtml(p.avatar) + '" class="person-avatar" data-action="profile" data-user="' + escapeHtml(identifier) + '" alt="">' +
+    '<div class="person-info" data-action="profile" data-user="' + escapeHtml(identifier) + '">' +
+      '<h4>' + escapeHtml(p.name) + ' ' + verifiedIcon + favoriteIcon + ' ' + badgeHtml + '</h4>' +
+      '<div class="person-meta">' +
+        '<span><i class="fas fa-user-friends"></i> ' + (p.mutualFriends || 0) + ' amis en commun</span>' +
+        '<span><i class="fas fa-graduation-cap"></i> ' + escapeHtml(facultyLine) + '</span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="person-actions">' +
+      '<a href="messages.html?friend=' + encodeURIComponent(p.name) + '" class="person-chat" title="Message" aria-label="Message"><i class="fas fa-comment-dots"></i></a>' +
+      '<button class="person-more" data-action="menu" data-user-id="' + escapeHtml(p.id) + '" data-is-suggestion="' + (isSuggestion ? '1' : '0') + '" aria-label="Plus">⋯</button>' +
+    '</div>' +
+  '</div>';
+}
+
+let _listListenersAttached = false;
+function attachListListeners() {
+  const container = document.getElementById('listContainer');
+  if (!container || _listListenersAttached) return;
+  _listListenersAttached = true;
+  container.addEventListener('click', (e) => {
+    const profileEl = e.target.closest('[data-action="profile"]');
+    if (profileEl) { viewProfile(profileEl.dataset.user); return; }
+    const menuBtn = e.target.closest('[data-action="menu"]');
+    if (menuBtn) {
+      openPersonMenu(menuBtn.dataset.userId, menuBtn.dataset.isSuggestion === '1', e);
+      return;
+    }
+  });
+}
+
+/* ══════════════════════════════════════════════════════════
+   MENU CONTEXTUEL (sans backdrop — fermé via listener global)
+   ══════════════════════════════════════════════════════════ */
+function openPersonMenu(userId, isSuggestion, event) {
+  event.stopPropagation();
+  if (activeMenu) { activeMenu.remove(); activeMenu = null; }
+
+  const person = friends.find(x => x.id === userId) ||
+                 binomes.find(x => x.id === userId) ||
+                 getAllUsers().find(x => x.id === userId);
+  if (!person) return;
+
+  const isFavorite = person.favorite || false;
+  const isCurrentlyBinome = binomes.find(b => b.id === userId || b.name === person.name);
+
+  /* 1) Créer le menu hors écran pour mesurer sa taille réelle */
+  const menu = document.createElement('div');
+  menu.className = 'friend-menu';
+  menu.style.position = 'fixed';
+  menu.style.top = '-9999px';
+  menu.style.right = '-9999px';
+  menu.style.visibility = 'hidden';
+  menu.style.display = 'block';
+
+  const identifier = person.username || person.name;
+  const profileUrl = 'profile.html?user=' + encodeURIComponent(identifier);
+
+  let items = '';
+  items += '<a href="' + profileUrl + '" class="friend-menu-item"><i class="fas fa-user"></i> Voir le profil</a>';
+  items += '<a href="messages.html?friend=' + encodeURIComponent(person.name || person.fullName) + '" class="friend-menu-item"><i class="fas fa-comment-dots"></i> Message</a>';
+  items += '<button class="friend-menu-item" data-action="toggle-fav" data-user-id="' + escapeHtml(userId) + '"><i class="fas fa-star"></i> ' + (isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris') + '</button>';
+  items += '<div class="friend-menu-divider"></div>';
+  if (isSuggestion) {
+    items += '<button class="friend-menu-item danger" data-action="hide" data-user-id="' + escapeHtml(userId) + '" data-tab="' + currentTab + '"><i class="fas fa-times"></i> Retirer la suggestion</button>';
+  } else {
+    if (isCurrentlyBinome) {
+      items += '<button class="friend-menu-item" data-action="remove-binome" data-user-id="' + escapeHtml(userId) + '"><i class="fas fa-unlink"></i> Retirer le binôme</button>';
+    }
+    items += '<button class="friend-menu-item danger" data-action="remove" data-user-id="' + escapeHtml(userId) + '"><i class="fas fa-user-minus"></i> Retirer la relation</button>';
+  }
+  menu.innerHTML = items;
+
+  document.body.appendChild(menu);
+
+  /* 2) Mesurer la taille réelle du menu */
+  const menuRect = menu.getBoundingClientRect();
+  const menuHeight = menuRect.height;
+  const menuWidth = menuRect.width;
+
+  /* 3) Position du bouton ⋮ cliqué */
+  const btnRect = event.currentTarget.getBoundingClientRect();
+  const viewportH = window.innerHeight;
+  const viewportW = window.innerWidth;
+  const padding = 8;
+  const gap = 6;
+
+  /* 4) Calculer la position verticale optimale */
+  const spaceBelow = viewportH - btnRect.bottom;
+  const spaceAbove = btnRect.top;
+  let top;
+
+  if (spaceBelow >= menuHeight + gap + padding) {
+    /* → Assez de place EN DESSOUS : ouvrir sous le bouton */
+    top = btnRect.bottom + gap;
+  } else if (spaceAbove >= menuHeight + gap + padding) {
+    /* → Pas assez en dessous : ouvrir AU-DESSUS du bouton */
+    top = btnRect.top - menuHeight - gap;
+  } else {
+    /* → Pas assez ni au-dessus ni en dessous : placer au mieux dans la fenêtre */
+    top = Math.max(padding, Math.min(viewportH - menuHeight - padding, btnRect.bottom + gap));
+  }
+
+  /* 5) Calculer la position horizontale (aligné à droite du bouton) */
+  let right = viewportW - btnRect.right;
+  /* Vérifier que le menu ne déborde pas à gauche */
+  const menuLeft = viewportW - right - menuWidth;
+  if (menuLeft < padding) {
+    right = viewportW - padding - menuWidth;
+  }
+  /* Vérifier aussi qu'il ne déborde pas à droite */
+  if (right < padding) {
+    right = padding;
+  }
+
+  /* 6) Appliquer la position et rendre visible */
+  menu.style.top = top + 'px';
+  menu.style.right = right + 'px';
+  menu.style.visibility = 'visible';
+
+  activeMenu = menu;
+
+  menu.addEventListener('click', (e) => {
+    const toggleFav = e.target.closest('[data-action="toggle-fav"]');
+    if (toggleFav) { toggleFavorite(toggleFav.dataset.userId); closeMenu(); return; }
+    const hideEl = e.target.closest('[data-action="hide"]');
+    if (hideEl) { hideSuggestion(hideEl.dataset.userId, hideEl.dataset.tab); closeMenu(); return; }
+    const removeBinomeEl = e.target.closest('[data-action="remove-binome"]');
+    if (removeBinomeEl) { removeBinome(removeBinomeEl.dataset.userId); closeMenu(); return; }
+    const removeEl = e.target.closest('[data-action="remove"]');
+    if (removeEl) { removeRelation(removeEl.dataset.userId); closeMenu(); return; }
+  });
+}
+function closeMenu() {
+  if (activeMenu) { activeMenu.remove(); activeMenu = null; }
+}
+
+function toggleFavorite(userId) {
+  let person = friends.find(x => x.id === userId) || binomes.find(x => x.id === userId);
+  if (!person) {
+    const u = getAllUsers().find(x => x.id === userId);
+    if (!u) return;
+    person = { favorite: false };
+  }
+  person.favorite = !person.favorite;
+  saveData();
+  renderCurrentTab();
+  showToast(person.favorite ? 'Ajouté aux favoris' : 'Retiré des favoris', 'success');
+}
+
+function hideSuggestion(userId, tab) {
+  if (tab === 'binomes') {
+    if (!hiddenBinomes.includes(userId)) hiddenBinomes.push(userId);
+  } else {
+    if (!hiddenFriends.includes(userId)) hiddenFriends.push(userId);
+  }
+  saveData();
+  renderAll();
+  showToast('Suggestion retirée', 'info');
+}
+
+function removeBinome(userId) {
+  if (!confirm('Retirer ce binôme de vos relations ?')) return;
+  binomes = binomes.filter(x => x.id !== userId);
+  saveData();
+  renderAll();
+  showToast('Binôme retiré', 'success');
+}
+
+function removeRelation(userId) {
+  if (!confirm('Voulez-vous vraiment retirer cette relation ?')) return;
+  friends = friends.filter(x => x.id !== userId);
+  binomes = binomes.filter(x => x.id !== userId);
+  saveData();
+  renderAll();
+  showToast('Relation retirée', 'success');
+}
+
+/* ══════════════════════════════════════════════════════════
+   REQUESTS
+   ══════════════════════════════════════════════════════════ */
+function renderRequests() {
+  const section = document.getElementById('requestsSection');
+  if (!section) return;
+  const all = [
+    ...receivedFriendRequests.map(r => ({ ...r, type:'friend' })),
+    ...receivedBinomeRequests.map(r => ({ ...r, type:'binome' }))
+  ];
+  if (!all.length) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+  section.innerHTML = '<div class="requests-header"><i class="fas fa-user-clock" style="color:var(--warning);"></i> Demandes reçues (' + all.length + ')</div>' +
+    all.map(req => '<div class="request-card">' +
+      '<img src="' + escapeHtml(req.avatar) + '" class="request-avatar" alt="">' +
+      '<div class="request-info">' +
+        '<h4>' + escapeHtml(req.name) + ' ' + (req.type === 'binome' ? '<span class="binome-badge" style="font-size:.6rem;padding:2px 8px;border-radius:10px;background:rgba(124,58,237,.12);color:var(--purple);font-weight:700;text-transform:uppercase">Binôme</span>' : '') + '</h4>' +
+        '<p>' + escapeHtml(req.bio || 'Souhaite se connecter') + '</p>' +
+      '</div>' +
+      '<div class="request-actions">' +
+        '<button class="request-accept" data-action="accept" data-req-id="' + escapeHtml(req.id) + '" data-req-type="' + req.type + '" aria-label="Accepter"><i class="fas fa-check"></i></button>' +
+        '<button class="request-decline" data-action="decline" data-req-id="' + escapeHtml(req.id) + '" data-req-type="' + req.type + '" aria-label="Refuser"><i class="fas fa-times"></i></button>' +
+      '</div>' +
+    '</div>').join('');
+
+  if (!section._listenersAttached) {
+    section._listenersAttached = true;
+    section.addEventListener('click', (e) => {
+      const acceptBtn = e.target.closest('[data-action="accept"]');
+      if (acceptBtn) { acceptRequest(acceptBtn.dataset.reqId, acceptBtn.dataset.reqType); return; }
+      const declineBtn = e.target.closest('[data-action="decline"]');
+      if (declineBtn) { declineRequest(declineBtn.dataset.reqId, declineBtn.dataset.reqType); return; }
+    });
+  }
+}
+
+function acceptRequest(reqId, type) {
+  let req;
+  if (type === 'friend') {
+    req = receivedFriendRequests.find(r => r.id === reqId);
+    if (req) {
+      friends.push({ id:req.userId || 'f_'+Date.now(), name:req.name, avatar:req.avatar, bio:req.bio||'', mutualFriends:req.mutualFriends||0, verified:false, favorite:false, faculty:req.faculty||'', promotion:req.promotion||'' });
+      receivedFriendRequests = receivedFriendRequests.filter(r => r.id !== reqId);
+    }
+  } else if (type === 'binome') {
+    req = receivedBinomeRequests.find(r => r.id === reqId);
+    if (req) {
+      binomes.push({ id:req.userId || 'b_'+Date.now(), name:req.name, avatar:req.avatar, bio:req.bio||'', mutualFriends:req.mutualFriends||0, verified:false, favorite:false, faculty:req.faculty||'', promotion:req.promotion||'' });
+      receivedBinomeRequests = receivedBinomeRequests.filter(r => r.id !== reqId);
+    }
+  }
+  saveData();
+  renderAll();
+  showToast('Demande acceptée', 'success');
+}
+
+function declineRequest(reqId, type) {
+  if (type === 'friend') receivedFriendRequests = receivedFriendRequests.filter(r => r.id !== reqId);
+  else if (type === 'binome') receivedBinomeRequests = receivedBinomeRequests.filter(r => r.id !== reqId);
+  saveData();
+  renderRequests();
+  renderAll();
+  showToast('Demande refusée', 'info');
+}
+
+/* ══════════════════════════════════════════════════════════
+   NAVIGATION
+   ══════════════════════════════════════════════════════════ */
+function viewProfile(identifier) {
+  if (!identifier) return;
+  const found = findUserByAnyId(identifier);
+  const target = found ? found.username : String(identifier).toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
+  window.location.href = 'profile.html?user=' + encodeURIComponent(target);
+}
+function viewOwnProfile() {
+  const username = currentUser.username || 'rashidi';
+  window.location.href = 'profile.html?user=' + encodeURIComponent(username);
+}
+function openInviteModal() { document.getElementById('inviteModal').classList.add('active'); }
+function closeInviteModal() { document.getElementById('inviteModal').classList.remove('active'); }
+function shareProfile() {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(window.location.origin + '/invite').then(() => {
+      showToast('Lien copié !', 'success'); closeInviteModal();
+    });
+  }
+}
+function shareViaWhatsApp() {
+  window.open('https://wa.me/?text=' + encodeURIComponent('Rejoins-moi sur ESTRA LINK ! ' + window.location.origin), '_blank');
+  closeInviteModal();
+}
+function shareViaEmail() {
+  window.location.href = 'mailto:?subject=Invitation ESTRA LINK&body=Salut ! Rejoins-moi sur ESTRA LINK ! ' + window.location.origin;
+  closeInviteModal();
+}
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sidebarOverlay').classList.toggle('active'); }
+function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('active'); }
+function logout() { ESTRA.logout(); }
+function closeAllModals() { closeInviteModal(); closeMenu(); }
+
+/* ══════════════════════════════════════════════════════════
+   INIT
+   ══════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  loadAllData();
+  renderAll();
+  enableOfflineDetection({ canDismiss: true });
+
+  document.getElementById('sidebarOverlay').addEventListener('click', closeSidebar);
+  document.getElementById('inviteModal').addEventListener('click', function(e) {
+    if (e.target === this) closeInviteModal();
+  });
+
+  /* ✅ UN SEUL LISTENER GLOBAL : ferme le menu si clic en dehors + ferme la sidebar */
+  document.addEventListener('click', function(e) {
+    // Fermer le menu contextuel s'il est ouvert et que le clic n'est ni dans le menu ni sur un bouton ⋮
+    if (activeMenu && !activeMenu.contains(e.target) && !e.target.closest('[data-action="menu"]')) {
+      closeMenu();
+    }
+    // Fermer la sidebar si clic à l'extérieur
+    const sidebar = document.getElementById('sidebar');
+    const menuToggle = document.querySelector('.menu-toggle');
+    if (sidebar && sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== menuToggle && !menuToggle?.contains(e.target)) closeSidebar();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeAllModals();
+  });
+
+  window.addEventListener('storage', (e) => {
+    if (e.key && e.key.startsWith('estra_')) {
+      loadAllData();
+      renderAll();
+    }
+  });
+
+  /* ✅ Ferme le menu sur scroll */
+  window.addEventListener('scroll', function() {
+    if (activeMenu) closeMenu();
+  }, { passive: true });
+
+  /* ✅ Ferme le menu sur resize */
+  window.addEventListener('resize', function() {
+    if (activeMenu) closeMenu();
+  });
+});
+
+/* ══════════════════════════════════════════════════════════
+   EXPORTS
+   ══════════════════════════════════════════════════════════ */
+window.showNotification = showNotification;
+window.hideNotification = hideNotification;
+window.enableOfflineDetection = enableOfflineDetection;
+window.showToast = showToast;
+window.switchTab = switchTab;
+window.renderCurrentTab = renderCurrentTab;
+window.renderAll = renderAll;
+window.openPersonMenu = openPersonMenu;
+window.closeMenu = closeMenu;
+window.toggleFavorite = toggleFavorite;
+window.hideSuggestion = hideSuggestion;
+window.removeBinome = removeBinome;
+window.removeRelation = removeRelation;
+window.acceptRequest = acceptRequest;
+window.declineRequest = declineRequest;
+window.viewProfile = viewProfile;
+window.viewOwnProfile = viewOwnProfile;
+window.openInviteModal = openInviteModal;
+window.closeInviteModal = closeInviteModal;
+window.toggleSidebar = toggleSidebar;
+window.closeSidebar = closeSidebar;
+window.logout = logout;
+window.updateBadges = updateBadges;
+window.closeAllModals = closeAllModals;
+window.shareProfile = shareProfile;
+window.shareViaWhatsApp = shareViaWhatsApp;
+window.shareViaEmail = shareViaEmail;
+window.estraEmit = estraEmit;
+</script>
+<script src="i18n.js"></script>
+<script src="pwa-init.js"></script>
+</body>
+</html>
