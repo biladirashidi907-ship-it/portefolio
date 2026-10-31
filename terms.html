@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ESTRA LINK">
+<meta name="format-detection" content="telephone=no">
+<meta name="description" content="ESTRA LINK — Conditions générales d'utilisation. Règles, droits et obligations des utilisateurs.">
+<title>ESTRA LINK — Conditions d'utilisation</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════════════════════════ */
+:root{color-scheme:light;--bg:#f8fafc;--surface:#fff;--surface-alt:#f1f5f9;--surface-soft:#f8fafc;--text:#0f172a;--text-2:#334155;--text-muted:#475569;--text-soft:#64748b;--border:#e2e8f0;--border-strong:#cbd5e1;--primary:#0284c7;--primary-hover:#0ea5e9;--primary-active:#0369a1;--primary-soft:rgba(56,189,248,0.15);--error:#b91c1c;--error-soft:rgba(185,28,28,0.12);--success:#047857;--success-soft:rgba(4,120,87,0.12);--warning:#b45309;--warning-soft:rgba(180,83,9,0.12);--info-bg:rgba(56,189,248,0.12);--info-border:rgba(56,189,248,0.35);--shadow-sm:0 1px 3px rgba(15,23,42,0.08);--shadow-md:0 2px 10px rgba(15,23,42,0.05)}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0b1220;--surface:#0f172a;--surface-alt:#111b2e;--surface-soft:#0b1424;--text:#f1f5f9;--text-2:#cbd5e1;--text-muted:#94a3b8;--text-soft:#64748b;--border:#1e293b;--border-strong:#334155;--primary:#38bdf8;--primary-hover:#0ea5e9;--primary-active:#0284c7;--primary-soft:rgba(56,189,248,0.15);--error:#f87171;--error-soft:rgba(248,113,113,0.18);--success:#34d399;--success-soft:rgba(52,211,153,0.12);--warning:#fbbf24;--warning-soft:rgba(251,191,36,0.15);--info-bg:rgba(56,189,248,0.12);--info-border:rgba(56,189,248,0.35);--shadow-sm:0 1px 3px rgba(0,0,0,0.4);--shadow-md:0 2px 10px rgba(0,0,0,0.5)}}
+
+/* ═══════════════════════════════════════════════════════════
+   RESET / BASE
+   ═══════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;width:100%;min-height:100%}
+body{width:100%;min-height:100vh;min-height:100dvh;background:var(--bg);color:var(--text);font-family:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-size:16px;line-height:1.6;display:flex;flex-direction:column;align-items:stretch}
+:where(button,a,input,[tabindex],summary):focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:2px}
+.skip-link{position:absolute;left:-9999px;top:0;background:var(--primary);color:#fff;padding:10px 16px;z-index:100000;font-weight:600;border-radius:4px;text-decoration:none}
+.skip-link:focus{left:8px;top:8px}
+
+/* ═══════════════════════════════════════════════════════════
+   NOTIFICATION BANNER
+   ═══════════════════════════════════════════════════════════ */
+.notification-banner{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;gap:12px;padding:max(14px,env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) 14px max(18px,env(safe-area-inset-left));background:#1e293b;color:#fff;font-size:0.88rem;font-weight:600;z-index:10000;transform:translateY(-120%);transition:transform 0.35s cubic-bezier(0.34,1.2,0.64,1);box-shadow:0 4px 20px rgba(0,0,0,0.18);border-bottom:1px solid rgba(255,255,255,0.08);pointer-events:none}
+.notification-banner.show{transform:translateY(0);pointer-events:auto}
+.notification-banner.error{background:#b91c1c}.notification-banner.success{background:#047857}.notification-banner.info{background:#0284c7}.notification-banner.warning{background:#b45309}
+.notification-icon{display:flex;align-items:center;justify-content:center;width:24px;height:24px;flex-shrink:0}
+.notification-icon svg{width:20px;height:20px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;display:block}
+.notification-text{flex:1 1 0%;line-height:1.4;word-wrap:break-word}
+.notification-action{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);color:#fff;padding:6px 12px;border-radius:4px;font-family:inherit;font-size:0.78rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;min-height:32px;transition:background-color 0.2s;appearance:none}
+.notification-action:hover{background:rgba(255,255,255,0.32)}
+.notification-close{background:none;border:none;color:rgba(255,255,255,0.85);cursor:pointer;padding:6px;flex-shrink:0;appearance:none;display:flex;align-items:center;justify-content:center;min-width:32px;min-height:32px;border-radius:4px}
+.notification-close svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.notification-close:hover{color:#fff}
+.notification-banner[data-hide-close="true"] .notification-close{display:none}
+.notification-banner.persistent .notification-icon svg{animation:notifPulse 2s ease-in-out infinite}
+@keyframes notifPulse{0%,100%{opacity:1}50%{opacity:0.5}}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYOUT SPLIT-SCREEN
+   ═══════════════════════════════════════════════════════════ */
+.terms-container{display:flex;flex-direction:column;width:100%;min-height:100vh;min-height:100dvh}
+
+/* ═══════════════════════════════════════════════════════════
+   BRAND PANEL — MOBILE (compact hero, devient sticky en desktop)
+   ═══════════════════════════════════════════════════════════ */
+.brand-panel{
+  background:linear-gradient(140deg,#0284c7 0%,#0369a1 55%,#b45309 130%);
+  color:#fff;
+  padding:max(32px,calc(env(safe-area-inset-top) + 24px)) 20px 40px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.brand-panel::before,.brand-panel::after{content:'';position:absolute;border-radius:50%;background:rgba(255,255,255,0.07);pointer-events:none}
+.brand-panel::before{width:300px;height:300px;top:-120px;right:-100px}
+.brand-panel::after{width:200px;height:200px;bottom:-80px;left:-60px}
+
+.back-link{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.85);text-decoration:none;font-size:0.85rem;font-weight:600;padding:6px 12px;border-radius:4px;transition:background-color 0.2s;position:relative;z-index:2;margin-bottom:16px;align-self:center}
+.back-link:hover{background:rgba(255,255,255,0.15);color:#fff}
+
+.brand-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;max-width:520px;width:100%}
+.brand-logo{display:flex;align-items:center;justify-content:center;gap:10px;font-weight:800;font-size:1rem;letter-spacing:3px}
+.brand-logo i{font-size:1.2rem;color:#fed7aa}
+.brand-headline{font-size:clamp(1.4rem,1.2rem+1.2vw,1.8rem);font-weight:800;line-height:1.18;letter-spacing:-0.3px;word-break:break-word}
+.brand-sub{font-size:0.9rem;line-height:1.55;opacity:0.9;max-width:42ch;margin:0 auto}
+.brand-features{display:none;list-style:none;flex-direction:column;gap:14px;margin-top:8px;font-size:0.9rem}
+.brand-features li{display:flex;align-items:center;gap:12px}
+.brand-features i{width:32px;height:32px;display:inline-grid;place-items:center;background:rgba(255,255,255,0.14);border-radius:50%;flex-shrink:0;font-size:0.88rem;color:#fed7aa}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTENT PANEL
+   ═══════════════════════════════════════════════════════════ */
+.content-panel{width:100%;padding:24px 16px max(40px,env(safe-area-inset-bottom));flex:1}
+.content-inner{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTEXT BANNERS
+   ═══════════════════════════════════════════════════════════ */
+.context-banner{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--primary);box-shadow:var(--shadow-sm)}
+.context-banner.guest{border-left-color:var(--primary);background:var(--info-bg)}
+.context-banner.auth{border-left-color:var(--success);background:var(--success-soft)}
+.context-banner>i{font-size:1.4rem;color:var(--primary);flex-shrink:0;margin-top:2px}
+.context-banner.auth>i{color:var(--success)}
+.context-banner-content{flex:1;min-width:0}
+.context-banner h2{font-size:1rem;font-weight:700;margin-bottom:4px;color:var(--text)}
+.context-banner p{font-size:0.82rem;color:var(--text-muted);line-height:1.5}
+.context-banner a{color:var(--primary);font-weight:600;text-decoration:none}
+.context-banner a:hover{text-decoration:underline}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTIONS
+   ═══════════════════════════════════════════════════════════ */
+.section{margin-bottom:8px}
+.section-title{font-size:1.3rem;font-weight:800;margin-bottom:14px;color:var(--text);display:flex;align-items:center;gap:10px}
+.section-title i{color:var(--primary);font-size:1.15rem}
+
+/* ═══════════════════════════════════════════════════════════
+   TL;DR
+   ═══════════════════════════════════════════════════════════ */
+.tldr-summary{background:linear-gradient(135deg,var(--primary-soft),var(--surface-soft));border:1px solid var(--primary);border-left:4px solid var(--primary);padding:20px 22px;box-shadow:var(--shadow-sm)}
+.tldr-summary h2{font-size:1.05rem;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:10px;color:var(--text)}
+.tldr-summary h2 i{color:var(--primary)}
+.tldr-summary ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px}
+.tldr-summary li{display:flex;align-items:flex-start;gap:10px;font-size:0.88rem;color:var(--text-2);line-height:1.5}
+.tldr-summary li i{color:var(--success);flex-shrink:0;margin-top:3px;font-size:0.92rem}
+
+/* ═══════════════════════════════════════════════════════════
+   CARTES
+   ═══════════════════════════════════════════════════════════ */
+.privacy-card{background:var(--surface);border:1px solid var(--border);padding:20px}
+.privacy-card h3{font-size:1rem;font-weight:700;margin-bottom:14px;color:var(--text);display:flex;align-items:center;gap:10px}
+.privacy-card h3 i{color:var(--primary)}
+.privacy-rights-list{display:flex;flex-direction:column;gap:2px}
+.privacy-right-link{display:flex;align-items:center;gap:12px;padding:12px 14px;text-decoration:none;color:var(--text);transition:background-color 0.2s;min-height:52px;border-radius:4px}
+.privacy-right-link:hover{background:var(--surface-soft)}
+.privacy-right-link i{font-size:1.05rem;color:var(--primary);flex-shrink:0;width:24px;text-align:center}
+.privacy-right-link div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.privacy-right-link strong{font-size:0.86rem}
+.privacy-right-link small{font-size:0.72rem;color:var(--text-muted)}
+
+/* ═══════════════════════════════════════════════════════════
+   RULES LIST
+   ═══════════════════════════════════════════════════════════ */
+.rules-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;margin:10px 0}
+.rules-list li{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:var(--surface-soft);border:1px solid var(--border);border-radius:4px;font-size:0.86rem;line-height:1.55}
+.rules-list li.rule-forbidden{border-left:3px solid var(--error)}
+.rules-list li.rule-allowed{border-left:3px solid var(--success)}
+.rules-list li>i{flex-shrink:0;margin-top:3px;font-size:0.92rem;width:18px;text-align:center}
+.rules-list li.rule-forbidden>i{color:var(--error)}
+.rules-list li.rule-allowed>i{color:var(--success)}
+.rules-list li strong{color:var(--text-2);font-weight:700}
+
+/* ═══════════════════════════════════════════════════════════
+   HIGHLIGHTS (vue visiteur)
+   ═══════════════════════════════════════════════════════════ */
+.privacy-highlights{margin-bottom:16px}
+.privacy-highlights h3{font-size:0.95rem;font-weight:700;margin:14px 0 8px;color:var(--text);display:flex;align-items:center;gap:8px}
+.privacy-highlights h3 i{color:var(--primary);font-size:0.9rem}
+.privacy-highlights ul{list-style:disc;padding-left:22px;font-size:0.85rem;line-height:1.7;color:var(--text-muted)}
+.privacy-highlights li{margin-bottom:4px}
+
+/* ═══════════════════════════════════════════════════════════
+   CTA BUTTONS
+   ═══════════════════════════════════════════════════════════ */
+.cta-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;font-family:inherit;font-size:0.9rem;font-weight:700;cursor:pointer;text-decoration:none;border:none;transition:background-color 0.2s;min-height:44px;border-radius:4px}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-hover)}
+.btn-secondary{background:var(--surface);color:var(--text);border:1.5px solid var(--border)}
+.btn-secondary:hover{background:var(--surface-alt)}
+
+/* ═══════════════════════════════════════════════════════════
+   ACCORDIONS
+   ═══════════════════════════════════════════════════════════ */
+.accordion{background:var(--surface);border:1px solid var(--border);margin-bottom:10px;overflow:hidden}
+.accordion[open]{border-color:var(--primary)}
+.accordion summary{padding:16px 18px;cursor:pointer;font-weight:700;font-size:0.92rem;color:var(--text);display:flex;align-items:center;justify-content:space-between;gap:12px;list-style:none;transition:background-color 0.2s;min-height:52px}
+.accordion summary::-webkit-details-marker{display:none}
+.accordion summary:hover{background:var(--surface-soft)}
+.accordion summary::after{content:'\f078';font-family:'Font Awesome 6 Free';font-weight:900;font-size:0.75rem;color:var(--text-soft);transition:transform 0.2s;flex-shrink:0}
+.accordion[open] summary::after{transform:rotate(180deg);color:var(--primary)}
+.accordion-body{padding:0 18px 16px 18px;font-size:0.86rem;line-height:1.7;color:var(--text-muted)}
+.accordion-body p{margin-bottom:10px}
+.accordion-body h3{font-size:0.92rem;font-weight:700;color:var(--text);margin:14px 0 6px}
+.accordion-body ul{list-style:disc;padding-left:20px;margin-bottom:10px}
+.accordion-body ol{padding-left:22px;margin-bottom:10px}
+.accordion-body li{margin-bottom:5px}
+.accordion-body strong{color:var(--text-2);font-weight:700}
+.accordion-body a{color:var(--primary);text-decoration:none}
+.accordion-body a:hover{text-decoration:underline}
+.accordion-body em{color:var(--text-soft);font-size:0.82rem}
+.accordion-body .alert-box{background:var(--warning-soft);border-left:3px solid var(--warning);padding:10px 14px;margin:10px 0;font-size:0.84rem;color:var(--text-2)}
+.accordion-body .alert-box-danger{background:var(--error-soft);border-left:3px solid var(--error);padding:10px 14px;margin:10px 0;font-size:0.84rem;color:var(--text-2)}
+.accordion-body .alert-box-success{background:var(--success-soft);border-left:3px solid var(--success);padding:10px 14px;margin:10px 0;font-size:0.84rem;color:var(--text-2)}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER (références croisées + social)
+   ═══════════════════════════════════════════════════════════ */
+.page-footer{text-align:center;font-size:0.75rem;color:var(--text-soft);line-height:1.6;padding-top:24px;border-top:1px solid var(--border);margin-top:16px}
+.footer-links{display:flex;justify-content:center;flex-wrap:wrap;align-items:center;gap:4px 8px;margin-bottom:12px}
+.footer-links a{color:var(--text-muted);text-decoration:none;padding:4px 2px;font-size:0.76rem;transition:color 0.2s}
+.footer-links a:hover{color:var(--primary)}
+.social-links{display:flex;justify-content:center;align-items:center;gap:8px;margin:12px 0}
+.social-link{width:34px;height:34px;border-radius:50%;background:var(--surface-alt);color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center;text-decoration:none;transition:background-color 0.2s,color 0.2s,transform 0.15s;font-size:0.82rem}
+.social-link:hover{background:var(--primary);color:#fff;transform:translateY(-1px)}
+.social-link:active{transform:translateY(0)}
+.page-footer p{margin-top:6px;font-size:0.7rem;opacity:0.85}
+
+/* ═══════════════════════════════════════════════════════════
+   BREAKPOINTS
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── DESKTOP ≥ 1100px : SPLIT-SCREEN ──────────── */
+@media (min-width: 1100px) {
+  .terms-container {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    min-height: 100vh;
+    align-items: stretch;
+  }
+  .brand-panel {
+    padding: 48px 44px;
+    text-align: left;
+    align-items: flex-start;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    align-self: start;
+    border-radius: 0;
+    box-shadow: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .brand-panel .back-link { align-self: flex-start; margin-bottom: 24px; }
+  .brand-content {
+    align-items: flex-start;
+    max-width: 100%;
+    flex: 1;
+    justify-content: center;
+    gap: 24px;
+  }
+  .brand-logo { justify-content: flex-start; font-size: 1.1rem; letter-spacing: 3.5px; }
+  .brand-logo i { font-size: 1.3rem; }
+  .brand-headline { font-size: clamp(1.7rem, 1.4rem + 0.8vw, 2.4rem); line-height: 1.15; }
+  .brand-sub { font-size: 0.95rem; max-width: 36ch; margin: 0; }
+  .brand-features { display: flex; list-style: none; }
+  .brand-features i { width: 36px; height: 36px; font-size: 0.92rem; }
+  .content-panel {
+    padding: 40px 40px max(40px, env(safe-area-inset-bottom) + 24px);
+    background: var(--bg);
+    min-width: 0;
+  }
+  .content-inner { max-width: 720px; margin: 0 auto; }
+  .section-title { font-size: 1.35rem; }
+  .tldr-summary { padding: 22px 24px; }
+}
+
+/* ── TABLETTE LARGE (769 – 1099) ──────────────── */
+@media (min-width: 769px) and (max-width: 1099px) {
+  .content-inner { max-width: 780px; }
+  .content-panel { padding-left: 24px; padding-right: 24px; }
+  .tldr-summary { padding: 20px 24px; }
+}
+
+/* ── MOBILE (≤ 480) ───────────────────────────── */
+@media (max-width: 480px) {
+  .content-panel { padding-left: 14px; padding-right: 14px; }
+  .notification-banner { padding: 12px 14px; font-size: 0.82rem; }
+  .notification-icon { width: 22px; height: 22px; }
+  .notification-icon svg { width: 18px; height: 18px; }
+  .section-title { font-size: 1.15rem; }
+  .section-title i { font-size: 1rem; }
+  .accordion-body { font-size: 0.82rem; }
+  .tldr-summary { padding: 16px 16px; }
+  .tldr-summary li { font-size: 0.84rem; }
+  .privacy-right-link { padding: 12px 12px; min-height: 50px; }
+  .privacy-right-link strong { font-size: 0.84rem; }
+  .privacy-right-link small { font-size: 0.7rem; }
+  .context-banner { padding: 14px 14px; }
+  .context-banner h2 { font-size: 0.92rem; }
+  .context-banner p { font-size: 0.78rem; }
+  .rules-list li { padding: 10px 12px; font-size: 0.84rem; }
+  .social-link { width: 32px; height: 32px; font-size: 0.78rem; }
+  .cta-buttons .btn { flex: 1 1 auto; min-width: 140px; }
+}
+
+/* ── PETIT MOBILE (≤ 360) ─────────────────────── */
+@media (max-width: 360px) {
+  .brand-panel { padding: 24px 12px 32px; }
+  .brand-headline { font-size: 1.25rem; }
+  .brand-sub { font-size: 0.82rem; }
+  .brand-logo { font-size: 0.9rem; letter-spacing: 2.5px; }
+  .brand-logo i { font-size: 1rem; }
+  .content-panel { padding-left: 12px; padding-right: 12px; }
+  .section-title { font-size: 1.05rem; }
+  .section-title i { font-size: 0.95rem; }
+  .tldr-summary { padding: 14px 14px; }
+  .tldr-summary li { font-size: 0.8rem; }
+  .accordion summary { font-size: 0.84rem; padding: 12px 14px; }
+  .accordion-body { padding: 0 14px 12px; font-size: 0.8rem; }
+  .privacy-right-link { padding: 10px 10px; }
+  .privacy-right-link strong { font-size: 0.8rem; }
+  .privacy-right-link small { font-size: 0.68rem; }
+  .cta-buttons { flex-direction: column; }
+  .cta-buttons .btn { width: 100%; }
+  .social-links { gap: 6px; }
+  .social-link { width: 30px; height: 30px; font-size: 0.72rem; }
+  /* Empêcher tout débordement horizontal */
+  .accordion-body, .rules-list li, .context-banner p, .privacy-right-link small { overflow-wrap: break-word; word-wrap: break-word; }
+}
+
+/* ── TRÈS GRAND ÉCRAN ─────────────────────────── */
+@media (min-width: 1440px) {
+  .terms-container { grid-template-columns: 480px 1fr; }
+  .brand-panel { padding: 64px 56px; }
+  .content-panel { padding: 56px 56px max(48px, env(safe-area-inset-bottom) + 32px); }
+  .content-inner { max-width: 780px; }
+}
+
+/* ── DESKTOP COURT (hauteur) ──────────────────── */
+@media (min-width: 1100px) and (max-height: 700px) {
+  .brand-panel { padding: 32px 36px; }
+  .brand-content { gap: 16px; }
+  .brand-features { gap: 10px; }
+}
+
+/* ── MOBILE PAYSAGE ───────────────────────────── */
+@media (max-height: 500px) and (orientation: landscape) and (max-width: 1099px) {
+  .brand-panel { padding: 20px 16px 24px; }
+  .brand-headline { font-size: 1.3rem; }
+  .brand-sub { font-size: 0.82rem; }
+  .brand-logo { font-size: 0.9rem; }
+  .back-link { margin-bottom: 8px; }
+}
+
+/* ── NOTIFICATION CENTER ──────────────────────── */
+@media (min-width: 768px) and (max-width: 1919px) {
+  .notification-banner {
+    max-width: 520px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%) translateY(-120%);
+    top: 16px;
+    border-radius: 6px;
+  }
+  .notification-banner.show { transform: translateX(-50%) translateY(0); }
+}
+@media (min-width: 1920px) {
+  .notification-banner {
+    max-width: 560px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%) translateY(-120%);
+    top: 16px;
+    border-radius: 6px;
+    padding: 16px 20px;
+  }
+  .notification-banner.show { transform: translateX(-50%) translateY(0); }
+}
+
+/* ── PRÉFÉRENCES MOUVEMENT ────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important}
+  .notification-banner.persistent .notification-icon svg{animation:none !important}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Aller au contenu</a>
+
+<div class="notification-banner" id="notificationBanner" role="status" aria-live="polite" aria-atomic="true">
+  <div class="notification-icon" id="notificationIcon" aria-hidden="true"></div>
+  <div class="notification-text" id="notificationText"></div>
+  <button type="button" class="notification-action" id="notificationAction" hidden></button>
+  <button type="button" class="notification-close" id="notificationClose" onclick="hideNotification()" aria-label="Fermer la notification">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+</div>
+
+<div class="terms-container">
+
+  <!-- ═══════════════════════════════════════════════════════
+       BRAND PANEL (sticky sidebar desktop / hero compact mobile)
+       ═══════════════════════════════════════════════════════ -->
+  <aside class="brand-panel">
+    <a href="#" class="back-link" id="backLink"><i class="fas fa-arrow-left" aria-hidden="true"></i> Retour</a>
+
+    <div class="brand-content">
+      <div class="brand-logo">
+        <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+        <span>ESTRA LINK</span>
+      </div>
+
+      <h1 class="brand-headline">Conditions d'utilisation</h1>
+
+      <p class="brand-sub">Les règles claires pour une communauté éducative saine, respectueuse et sécurisée.</p>
+
+      <ul class="brand-features">
+        <li><i class="fas fa-shield-halved" aria-hidden="true"></i> Règles claires</li>
+        <li><i class="fas fa-child-reaching" aria-hidden="true"></i> Protection des mineurs</li>
+        <li><i class="fas fa-scale-balanced" aria-hidden="true"></i> Vos droits garantis</li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════════════
+       CONTENT PANEL
+       ═══════════════════════════════════════════════════════ -->
+  <main class="content-panel" id="main">
+    <div class="content-inner">
+
+      <!-- ═══════════════════ VUE VISITEUR ═══════════════════ -->
+      <div id="viewGuest">
+        <div class="context-banner guest">
+          <i class="fas fa-file-signature" aria-hidden="true"></i>
+          <div class="context-banner-content">
+            <h2>Avant de vous inscrire</h2>
+            <p>En créant un compte sur ESTRA LINK, vous acceptez ces conditions. Prenez 5 minutes pour les lire : elles protègent à la fois <strong>vous</strong> et <strong>la communauté</strong>.</p>
+          </div>
+        </div>
+
+        <div class="privacy-highlights">
+          <h3><i class="fas fa-check-circle" aria-hidden="true"></i> En rejoignant ESTRA LINK, vous vous engagez à :</h3>
+          <ul>
+            <li><strong>Respecter</strong> les autres membres (élèves, étudiants, enseignants)</li>
+            <li><strong>Publier du contenu authentique</strong> et éducatif</li>
+            <li><strong>Protéger</strong> vos identifiants et votre compte</li>
+            <li><strong>Signaler</strong> les contenus inappropriés</li>
+            <li><strong>Respecter le droit d'auteur</strong> des ressources partagées</li>
+          </ul>
+
+          <h3><i class="fas fa-ban" aria-hidden="true"></i> Sont strictement interdits :</h3>
+          <ul>
+            <li>Le <strong>harcèlement</strong>, les insultes, les menaces</li>
+            <li>Le <strong>contenu sexuel</strong>, violent ou discriminatoire</li>
+            <li>La <strong>désinformation</strong> et les faux comptes</li>
+            <li>Le <strong>spam</strong> et la publicité non autorisée</li>
+            <li>L'<strong>usurpation d'identité</strong></li>
+          </ul>
+
+          <h3><i class="fas fa-shield-alt" aria-hidden="true"></i> Vos garanties :</h3>
+          <ul>
+            <li>Vous restez <strong>propriétaire</strong> de vos contenus</li>
+            <li>Vous pouvez <strong>supprimer</strong> votre compte à tout moment</li>
+            <li>Les <strong>mineurs</strong> bénéficient de protections renforcées</li>
+            <li>Un <strong>système de signalement</strong> est disponible partout</li>
+          </ul>
+        </div>
+
+        <div class="cta-buttons">
+          <a href="signup.html" class="btn btn-primary"><i class="fas fa-user-plus" aria-hidden="true"></i> Créer un compte</a>
+          <a href="login.html" class="btn btn-secondary"><i class="fas fa-sign-in-alt" aria-hidden="true"></i> J'ai déjà un compte</a>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ VUE UTILISATEUR CONNECTÉ ═══════════════════ -->
+      <div id="viewAuth" hidden>
+        <div class="context-banner auth">
+          <i class="fas fa-handshake" aria-hidden="true"></i>
+          <div class="context-banner-content">
+            <h2>Bonjour <span id="termsUserName">…</span></h2>
+            <p>Vous avez accepté ces conditions lors de votre inscription. Consultez la version actuelle ci-dessous. Pour <strong>gérer votre compte</strong> ou <strong>signaler un problème</strong>, utilisez les liens ci-dessous.</p>
+          </div>
+        </div>
+
+        <div class="privacy-card" style="margin-top:16px">
+          <h3><i class="fas fa-bolt" aria-hidden="true"></i> Actions rapides</h3>
+          <div class="privacy-rights-list">
+            <a href="settings.html" class="privacy-right-link">
+              <i class="fas fa-cog" aria-hidden="true"></i>
+              <div><strong>Paramètres du compte</strong><small>Profil, sécurité, préférences</small></div>
+            </a>
+            <a href="settings.html#privacy" class="privacy-right-link">
+              <i class="fas fa-user-shield" aria-hidden="true"></i>
+              <div><strong>Confidentialité et données</strong><small>Consentements, export, suppression</small></div>
+            </a>
+            <a href="mailto:contact@estra-link.com?subject=Signalement" class="privacy-right-link">
+              <i class="fas fa-flag" aria-hidden="true"></i>
+              <div><strong>Signaler un contenu</strong><small>Contenu illicite ou comportement abusif</small></div>
+            </a>
+            <a href="help.html" class="privacy-right-link">
+              <i class="fas fa-question-circle" aria-hidden="true"></i>
+              <div><strong>Centre d'aide</strong><small>FAQ et support</small></div>
+            </a>
+            <a href="#section-resiliation" class="privacy-right-link">
+              <i class="fas fa-user-slash" aria-hidden="true"></i>
+              <div><strong>Résilier mon compte</strong><small>Section 16 — Conditions</small></div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ RÉSUMÉ EN 30 SECONDES ═══════════════════ -->
+      <div class="tldr-summary">
+        <h2><i class="fas fa-bolt" aria-hidden="true"></i> En 30 secondes</h2>
+        <ul>
+          <li><i class="fas fa-check-circle" aria-hidden="true"></i> ESTRA LINK est un <strong>réseau social éducatif</strong> : pas de commerce, pas de pub intrusive.</li>
+          <li><i class="fas fa-check-circle" aria-hidden="true"></i> Vous êtes <strong>responsable</strong> de vos publications et de votre compte.</li>
+          <li><i class="fas fa-check-circle" aria-hidden="true"></i> Vous restez <strong>propriétaire</strong> de vos contenus (photos, cours, messages).</li>
+          <li><i class="fas fa-check-circle" aria-hidden="true"></i> Le <strong>harcèlement</strong> et le contenu illicite entraînent la <strong>suspension immédiate</strong>.</li>
+          <li><i class="fas fa-check-circle" aria-hidden="true"></i> Les <strong>mineurs de moins de 15 ans</strong> nécessitent l'accord du tuteur légal.</li>
+        </ul>
+      </div>
+
+      <!-- ═══════════════════ CONDITIONS COMPLÈTES ═══════════════════ -->
+      <section class="section">
+        <h2 class="section-title"><i class="fas fa-scroll" aria-hidden="true"></i> Conditions complètes</h2>
+
+        <details class="accordion" id="section-objet">
+          <summary>1. Objet et acceptation</summary>
+          <div class="accordion-body">
+            <p>Les présentes Conditions Générales d'Utilisation (ci-après « <strong>CGU</strong> ») définissent les modalités d'accès et d'utilisation de la plateforme <strong>ESTRA LINK</strong>, un réseau social éducatif édité par <strong>[Nom de ta structure]</strong>, dont le siège social est situé à <strong>[Adresse], Kinshasa, République Démocratique du Congo</strong>.</p>
+            <h3>1.1 Acceptation</h3>
+            <p>L'utilisation d'ESTRA LINK, sous quelque forme que ce soit (consultation, inscription, publication), implique l'<strong>acceptation pleine et entière</strong> des présentes CGU.</p>
+            <p>Si vous n'acceptez pas ces conditions, vous devez <strong>cesser immédiatement</strong> d'utiliser la plateforme.</p>
+            <h3>1.2 Documents complémentaires</h3>
+            <p>Les CGU sont complétées par :</p>
+            <ul>
+              <li>La <a href="privacy.html">Politique de confidentialité</a> (protection des données)</li>
+              <li>La <a href="help.html">Charte communautaire</a> (règles de modération)</li>
+            </ul>
+            <p>En cas de contradiction, la Politique de confidentialité prévaut pour les questions relatives aux données personnelles.</p>
+          </div>
+        </details>
+
+        <details class="accordion" id="section-definitions">
+          <summary>2. Définitions</summary>
+          <div class="accordion-body">
+            <ul>
+              <li><strong>Plateforme</strong> : le service ESTRA LINK accessible via le web et les applications mobiles</li>
+              <li><strong>Utilisateur</strong> : toute personne utilisant la plateforme, inscrite ou non</li>
+              <li><strong>Compte</strong> : l'espace personnel créé par un utilisateur après inscription</li>
+              <li><strong>Contenu utilisateur</strong> : toute donnée publiée par un utilisateur (posts, commentaires, photos, vidéos, messages)</li>
+              <li><strong>Éditeur</strong> : [Nom de ta structure], responsable du service</li>
+              <li><strong>Modération</strong> : processus de vérification et de traitement des contenus signalés</li>
+              <li><strong>Mineur</strong> : utilisateur de moins de 18 ans (protection renforcée : moins de 15 ans)</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="accordion" id="section-eligibilite">
+          <summary>3. Éligibilité et âge minimum</summary>
+          <div class="accordion-body">
+            <div class="alert-box"><strong>Règle d'âge</strong> — L'âge minimum pour créer un compte est fixé selon les règles suivantes.</div>
+            <h3>3.1 Âge minimum</h3>
+            <ul>
+              <li><strong>16 ans et plus</strong> : inscription autonome</li>
+              <li><strong>Entre 15 et 18 ans</strong> : inscription autorisée, parent/tuteur informé par SMS</li>
+              <li><strong>Moins de 15 ans</strong> : inscription <strong>uniquement</strong> avec le consentement du parent/tuteur légal (nom + téléphone obligatoires)</li>
+            </ul>
+            <h3>3.2 Type de compte</h3>
+            <p>L'utilisateur choisit à l'inscription :</p>
+            <ul>
+              <li><strong>Élève</strong> (primaire, secondaire)</li>
+              <li><strong>Étudiant</strong> (supérieur, université)</li>
+              <li><strong>Enseignant</strong> (tout niveau)</li>
+            </ul>
+            <h3>3.3 Exactitude des informations</h3>
+            <p>Vous vous engagez à fournir des informations <strong>exactes, complètes et à jour</strong>. Toute fausse déclaration peut entraîner la suspension ou la suppression du compte.</p>
+            <h3>3.4 Un seul compte par personne</h3>
+            <p>Sauf autorisation expresse (compte professionnel distinct), vous ne pouvez détenir qu'<strong>un seul compte personnel</strong>.</p>
+          </div>
+        </details>
+
+        <details class="accordion" id="section-inscription">
+          <summary>4. Inscription et sécurité du compte</summary>
+          <div class="accordion-body">
+            <h3>4.1 Création de compte</h3>
+            <p>La création d'un compte nécessite :</p>
+            <ul>
+              <li>Un nom, post-nom et prénom (vérifiables)</li>
+              <li>Un numéro de téléphone (+243) <em>ou</em> une adresse email valide</li>
+              <li>Un mot de passe robuste (8 caractères minimum)</li>
+              <li>Le type de compte (élève, étudiant, enseignant)</li>
+              <li>Si mineur de moins de 15 ans : nom + téléphone du tuteur</li>
+            </ul>
+            <h3>4.2 Vos responsabilités</h3>
+            <ul>
+              <li><strong>Confidentialité</strong> : votre mot de passe ne doit jamais être partagé</li>
+              <li><strong>Sécurité</strong> : vous êtes responsable de toute activité sur votre compte</li>
+              <li><strong>Notification</strong> : si vous suspectez une intrusion, changez votre mot de passe et contactez-nous <strong>immédiatement</strong></li>
+              <li><strong>2FA recommandée</strong> : activez l'authentification à deux facteurs depuis les <a href="settings.html#2fa">paramètres</a></li>
+            </ul>
+            <h3>4.3 Vérification</h3>
+            <p>ESTRA LINK se réserve le droit de demander une vérification d'identité en cas de :</p>
+            <ul>
+              <li>Soupçon d'usurpation</li>
+              <li>Signalements répétés</li>
+              <li>Compte présentant un comportement anormal</li>
+            </ul>
+            <p>Le refus de vérification peut entraîner la <strong>suspension du compte</strong>.</p>
+          </div>
+        </details>
+
+        <details class="accordion" id="section-conduite">
+          <summary>5. Règles de conduite</summary>
+          <div class="accordion-body">
+            <p>ESTRA LINK est un espace éducatif. À ce titre, certaines règles sont <strong>strictement obligatoires</strong> et d'autres <strong>strictement interdites</strong>.</p>
+
+            <h3>5.1 Ce que vous vous engagez à faire</h3>
+            <ul class="rules-list">
+              <li class="rule-allowed"><i class="fas fa-check" aria-hidden="true"></i><span><strong>Respecter</strong> tous les utilisateurs, quel que soit leur niveau, leur origine, leur genre ou leurs opinions.</span></li>
+              <li class="rule-allowed"><i class="fas fa-check" aria-hidden="true"></i><span><strong>Publier du contenu constructif</strong> : questions, réponses, ressources utiles, encouragements.</span></li>
+              <li class="rule-allowed"><i class="fas fa-check" aria-hidden="true"></i><span><strong>Créditer les sources</strong> lorsque vous partagez un contenu qui n'est pas de vous.</span></li>
+              <li class="rule-allowed"><i class="fas fa-check" aria-hidden="true"></i><span><strong>Signaler</strong> les contenus inappropriés via le bouton « Signaler ».</span></li>
+              <li class="rule-allowed"><i class="fas fa-check" aria-hidden="true"></i><span><strong>Protéger votre vie privée</strong> et celle des autres (pas d'informations personnelles sensibles).</span></li>
+            </ul>
+
+            <h3>5.2 Ce qui est strictement interdit</h3>
+            <ul class="rules-list">
+              <li class="rule-forbidden"><i class="fas fa-times" aria-hidden="true"></i><span><strong>Harcèlement</strong> sous toutes ses formes : insultes, menaces, intimidation, doxxing.</span></li>
+              <li class="rule-forbidden"><i class="fas fa-times" aria-hidden="true"></i><span><strong>Contenu sexuel</strong>, violent, obscène ou pornographique (y compris sous forme humoristique).</span></li>
+              <li class="rule-forbidden"><i class="fas fa-times" aria-hidden="true"></i><span><strong>Discours de haine</strong> : racisme, sexisme, homophobie, xénophobie, discrimination religieuse.</span></li>
+              <li class="rule-forbidden"><i class="fas fa-times" aria-hidden="true"></i><span><strong>Désinformation</strong> : fausses nouvelles, contenus manipulés, propagande.</span></li>
+              <li class="rule-forbidden"><i class="fas fa-times" aria-hidden="true"></i><span><strong>Usurpation d'identité</strong> : se faire passer pour une autre personne, un enseignant, un établissement.</span></li>
+              <li class="rule-forbidden"><i class="fas fa-times" aria-hidden="true"></i><span><strong>Spam</strong> et publicité non sollicitée (liens commerciaux, arnaques, chaînes).</span></li>
+              <li class="rule-forbidden"><i class="fas fa-times" aria-hidden="true"></i><span><strong>Contenu illégal</strong> : incitation à la violence, apologie du crime, contenus pédocriminels.</span></li>
+              <li class="rule-forbidden"><i class="fas fa-times" aria-hidden="true"></i><span><strong>Virus et logiciels malveillants</strong> : phishing, liens dangereux, scripts d'attaque.</span></li>
+              <li class="rule-forbidden"><i class="fas fa-times" aria-hidden="true"></i><span><strong>Trichérie académique</strong> : vendre ou acheter des copies, des réponses d'examens, des devoirs.</span></li>
+              <li class="rule-forbidden"><i class="fas fa-times" aria-hidden="true"></i><span><strong>Collecte automatisée</strong> de données (scraping, crawling) sans autorisation écrite.</span></li>
+            </ul>
+
+            <div class="alert-box-danger"><strong>Sanction immédiate</strong> — Toute atteinte grave (contenu sexuel sur mineur, menace de mort, incitation au suicide) entraîne une <strong>suspension immédiate</strong> et un <strong>signalement aux autorités compétentes</strong>.</div>
+          </div>
+        </details>
+
+        <details class="accordion" id="section-contenu">
+          <summary>6. Contenu utilisateur</summary>
+          <div class="accordion-body">
+            <h3>6.1 Propriété</h3>
+            <p>Vous restez <strong>seul propriétaire</strong> de tout contenu que vous publiez : photos, posts, commentaires, cours, vidéos, messages privés.</p>
+            <p>ESTRA LINK <strong>ne revendique aucun droit de propriété</strong> sur vos créations.</p>
+            <h3>6.2 Licence accordée à ESTRA LINK</h3>
+            <p>En publiant du contenu, vous nous accordez une licence <strong>non-exclusive, mondiale et gratuite</strong> pour :</p>
+            <ul>
+              <li>Afficher votre contenu aux autres utilisateurs selon vos paramètres de confidentialité</li>
+              <li>Permettre le partage (repost, like, commentaire) par d'autres utilisateurs</li>
+              <li>Conserver une copie de sauvegarde temporaire (max 30 jours)</li>
+              <li>Modérer, filtrer ou retirer le contenu si non conforme aux présentes CGU</li>
+            </ul>
+            <p>Cette licence prend fin dès que vous supprimez le contenu concerné.</p>
+            <h3>6.3 Responsabilité du contenu</h3>
+            <p>Vous êtes <strong>seul responsable</strong> du contenu que vous publiez. Vous garantissez :</p>
+            <ul>
+              <li>En détenir les droits (ou avoir l'autorisation de les partager)</li>
+              <li>Qu'il ne porte pas atteinte aux droits de tiers (droit d'auteur, vie privée, image)</li>
+              <li>Qu'il respecte les présentes CGU et la législation en vigueur</li>
+            </ul>
+            <h3>6.4 Retrait de contenu</h3>
+            <p>ESTRA LINK peut retirer sans préavis tout contenu qui :</p>
+            <ul>
+              <li>Enfreint les présentes CGU</li>
+              <li>Est signalé de bonne foi par plusieurs utilisateurs</li>
+              <li>Est identifié comme illicite par une autorité compétente</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="accordion" id="section-pi">
+          <summary>7. Propriété intellectuelle</summary>
+          <div class="accordion-body">
+            <h3>7.1 Éléments protégés</h3>
+            <p>La plateforme ESTRA LINK, son logo, son interface, ses fonctionnalités, son code source et l'ensemble de ses éléments graphiques sont la <strong>propriété exclusive</strong> de l'Éditeur. Ils sont protégés par le droit d'auteur et les traités internationaux.</p>
+            <h3>7.2 Ce qui est autorisé</h3>
+            <ul>
+              <li>Utiliser la plateforme conformément à sa destination</li>
+              <li>Partager des captures d'écran à des fins personnelles ou éducatives</li>
+              <li>Mentionner ESTRA LINK dans des articles, avec lien vers la source</li>
+            </ul>
+            <h3>7.3 Ce qui est interdit</h3>
+            <ul>
+              <li>Copier, modifier, distribuer ou revendre tout ou partie de la plateforme</li>
+              <li>Utiliser la marque « ESTRA LINK » sans autorisation écrite</li>
+              <li>Décompiler, désassembler ou faire de l'ingénierie inverse sur le code</li>
+              <li>Créer un service concurrent en copiant nos fonctionnalités</li>
+            </ul>
+            <h3>7.4 Signaler une violation</h3>
+            <p>Si vous pensez qu'un contenu porte atteinte à vos droits d'auteur, contactez <a href="mailto:contact@estra-link.com">contact@estra-link.com</a> avec les preuves nécessaires. Une procédure de retrait rapide est prévue.</p>
+          </div>
+        </details>
+
+        <details class="accordion" id="section-cours">
+          <summary>8. Cours et contenus éducatifs</summary>
+          <div class="accordion-body">
+            <h3>8.1 Accès aux cours</h3>
+            <p>Les cours accessibles sur ESTRA LINK sont de deux types :</p>
+            <ul>
+              <li><strong>Cours internes</strong> : développés par ESTRA LINK, propriété de l'Éditeur</li>
+              <li><strong>Cours partenaires</strong> : proposés par des enseignants ou établissements partenaires</li>
+            </ul>
+            <h3>8.2 Conditions d'utilisation des cours</h3>
+            <ul>
+              <li>Accès <strong>personnel et non transférable</strong> (pas de partage de compte)</li>
+              <li>Interdiction de télécharger ou redistribuer les supports protégés</li>
+              <li>Les quiz et exercices sont notés automatiquement, sauf mention contraire</li>
+              <li>Les certificats sont nominatifs et infalsifiables</li>
+            </ul>
+            <h3>8.3 Progression et résultats</h3>
+            <p>Votre progression (cours suivis, résultats, certificats) est <strong>conservée</strong> tant que votre compte est actif. Elle est supprimée avec le compte.</p>
+            <h3>8.4 Qualité des cours</h3>
+            <p>ESTRA LINK s'efforce de proposer des cours de qualité, mais ne peut garantir :</p>
+            <ul>
+              <li>L'exhaustivité de tout programme</li>
+              <li>L'obtention de résultats spécifiques (examens, diplômes)</li>
+              <li>La reconnaissance officielle par une autorité académique</li>
+            </ul>
+            <div class="alert-box"><strong>À noter</strong> — Les cours ESTRA LINK sont complémentaires. Ils ne remplacent pas une scolarité officielle.</div>
+          </div>
+        </details>
+
+        <details class="accordion" id="section-messages">
+          <summary>9. Messagerie et communications</summary>
+          <div class="accordion-body">
+            <h3>9.1 Messagerie privée</h3>
+            <p>ESTRA LINK propose une messagerie privée entre utilisateurs. Cette messagerie est :</p>
+            <ul>
+              <li><strong>Chiffrée côté serveur</strong></li>
+              <li><strong>Non lue</strong> par nos équipes, sauf signalement pour contenu illicite</li>
+              <li>Soumise au <strong>secret des correspondances</strong> prévu par la loi</li>
+            </ul>
+            <h3>9.2 Règles spécifiques</h3>
+            <ul>
+              <li>La messagerie entre un adulte et un mineur non binôme est <strong>désactivée</strong></li>
+              <li>Aucune sollicitation commerciale via messages privés</li>
+              <li>Aucun partage d'informations personnelles sensibles (adresse, numéro bancaire)</li>
+              <li>Les menaces, harcèlement et contenus illicites entraînent la suspension</li>
+            </ul>
+            <h3>9.3 Signalement</h3>
+            <p>Tout message peut être signalé. En cas de signalement grave, ESTRA LINK se réserve le droit de :</p>
+            <ul>
+              <li>Consulter le contenu signalé (uniquement ce contenu)</li>
+              <li>Suspendre le compte concerné</li>
+              <li>Signaler aux autorités si nécessaire</li>
+            </ul>
+            <h3>9.4 Notifications</h3>
+            <p>Vous pouvez configurer vos préférences de notification (email, push, SMS) dans les <a href="settings.html">paramètres</a>.</p>
+          </div>
+        </details>
+
+        <details class="accordion" id="section-binomes">
+          <summary>10. Binômes et suggestions</summary>
+          <div class="accordion-body">
+            <h3>10.1 Fonctionnement</h3>
+            <p>ESTRA LINK propose des suggestions de binômes basées sur :</p>
+            <ul>
+              <li>Vos centres d'intérêt déclarés</li>
+              <li>Votre filière et niveau scolaire</li>
+              <li>Vos relations en commun</li>
+            </ul>
+            <h3>10.2 Ce que nous ne faisons pas</h3>
+            <ul>
+              <li>Aucune utilisation de données sensibles (ethnie, religion, santé, opinion)</li>
+              <li>Aucun ciblage publicitaire</li>
+              <li>Aucune suggestion entre adulte et mineur non validée par un cadre éducatif</li>
+            </ul>
+            <h3>10.3 Désactivation</h3>
+            <p>Vous pouvez désactiver les suggestions de binômes à tout moment depuis les <a href="settings.html#privacy">paramètres de confidentialité</a>.</p>
+            <h3>10.4 Responsabilité</h3>
+            <p>Les binômes suggérés sont des <strong>recommandations algorithmiques</strong>. ESTRA LINK ne garantit pas la qualité des échanges. Vous restez responsable de vos interactions.</p>
+          </div>
+        </details>
+
+        <details class="accordion" id="section-signalement">
+          <summary>11. Signalement et modération</summary>
+          <div class="accordion-body">
+            <h3>11.1 Comment signaler</h3>
+            <p>Chaque publication, commentaire, message et profil dispose d'un bouton <strong>« Signaler »</strong>. Vous pouvez également écrire à <a href="mailto:contact@estra-link.com">contact@estra-link.com</a>.</p>
+            <h3>11.2 Motifs de signalement</h3>
+            <ul>
+              <li>Harcèlement ou intimidation</li>
+              <li>Contenu sexuel ou violent</li>
+              <li>Discours de haine</li>
+              <li>Désinformation</li>
+              <li>Spam ou arnaque</li>
+              <li>Usurpation d'identité</li>
+              <li>Atteinte au droit d'auteur</li>
+            </ul>
+            <h3>11.3 Traitement</h3>
+            <p>Notre équipe de modération traite les signalements dans un délai de <strong>48 à 72 heures</strong>. Les cas graves (contenu pédocriminel, menace imminente) sont traités <strong>en priorité absolue</strong>.</p>
+            <h3>11.4 Confidentialité</h3>
+            <p>L'identité du signaleur est <strong>strictement confidentielle</strong>. L'utilisateur signalé ne saura jamais qui l'a signalé.</p>
+            <h3>11.5 Recours</h3>
+            <p>Si vous estimez qu'une décision de modération est injustifiée, vous pouvez faire un recours à <a href="mailto:contact@estra-link.com">contact@estra-link.com</a>. Une réponse vous sera apportée sous 7 jours.</p>
+          </div>
+        </details>
+
+        <details class="accordion" id="section-sanctions">
+          <summary>12. Sanctions et suspension</summary>
+          <div class="accordion-body">
+            <h3>12.1 Échelle des sanctions</h3>
+            <p>Selon la gravité et la répétition des manquements, ESTRA LINK peut appliquer :</p>
+            <ol>
+              <li><strong>Avertissement</strong> : notification pédagogique</li>
+              <li><strong>Retrait de contenu</strong> : suppression du contenu non conforme</li>
+              <li><strong>Suspension temporaire</strong> : de 24h à 30 jours</li>
+              <li><strong>Suspension définitive</strong> : fermeture du compte</li>
+              <li><strong>Signalement aux autorités</strong> : pour les cas graves</li>
+            </ol>
+            <h3>12.2 Cas de suspension immédiate</h3>
+            <div class="alert-box-danger">Les comportements suivants entraînent une <strong>suspension immédiate sans avertissement</strong> :
+              <ul style="margin-top:6px">
+                <li>Contenu sexuel impliquant un mineur</li>
+                <li>Menace de mort ou incitation au suicide</li>
+                <li>Harcèlement sexuel</li>
+                <li>Usurpation d'identité d'un enseignant ou d'un établissement</li>
+                <li>Diffusion de virus ou tentative de piratage</li>
+              </ul>
+            </div>
+            <h3>12.3 Recours</h3>
+            <p>Vous pouvez contester une sanction à <a href="mailto:contact@estra-link.com">contact@estra-link.com</a> dans un délai de <strong>30 jours</strong> suivant la notification. Une réponse motivée vous sera apportée sous 7 jours ouvrés.</p>
+          </div>
+        </details>
+
+        <details class="accordion" id="section-mineurs">
+          <summary>13. Protection des mineurs</summary>
+          <div class="accordion-body">
+            <div class="alert-box-danger"><strong>Priorité absolue</strong> — La protection des mineurs est un engagement fondamental d'ESTRA LINK.</div>
+            <h3>13.1 Inscription des mineurs</h3>
+            <ul>
+              <li><strong>Moins de 15 ans</strong> : inscription avec accord parental obligatoire</li>
+              <li><strong>15-17 ans</strong> : inscription autorisée, parent informé par SMS</li>
+              <li><strong>18 ans et plus</strong> : inscription autonome</li>
+            </ul>
+            <h3>13.2 Mesures de protection</h3>
+            <ul>
+              <li>Profil <strong>privé par défaut</strong> pour tous les mineurs</li>
+              <li><strong>Messagerie restreinte</strong> : pas d'échange privé entre un adulte et un mineur non binôme</li>
+              <li><strong>Aucune publicité ciblée</strong> pour les mineurs</li>
+              <li>Filtrage automatique des contenus inappropriés</li>
+              <li>Notifications aux parents en cas de signalement</li>
+            </ul>
+            <h3>13.3 Droit de retrait parental</h3>
+            <p>Un parent ou tuteur peut à tout moment :</p>
+            <ul>
+              <li>Demander la suppression du compte de son enfant</li>
+              <li>Accéder aux données de son enfant</li>
+              <li>Modifier les paramètres de confidentialité</li>
+            </ul>
+            <p>Contact : <a href="mailto:dpo@estra-link.com">dpo@estra-link.com</a></p>
+            <h3>13.4 Signalement</h3>
+            <p>Tout contenu suspect impliquant un mineur doit être signalé <strong>immédiatement</strong>. Notre équipe traite ces signalements en priorité absolue et collabore avec les autorités compétentes.</p>
+          </div>
+        </details>
+
+        <details class="accordion" id="section-responsabilite">
+          <summary>14. Responsabilité et garanties</summary>
+          <div class="accordion-body">
+            <h3>14.1 Disponibilité du service</h3>
+            <p>ESTRA LINK s'efforce d'assurer une disponibilité de <strong>99 % par mois</strong>, hors :</p>
+            <ul>
+              <li>Maintenances planifiées (annoncées 48h à l'avance)</li>
+              <li>Maintenances d'urgence</li>
+              <li>Pannes d'hébergeur, de réseau ou de force majeure</li>
+              <li>Attaques informatiques (DDoS, intrusion)</li>
+            </ul>
+            <h3>14.2 Limites de responsabilité</h3>
+            <p>ESTRA LINK ne peut être tenu responsable :</p>
+            <ul>
+              <li>Du contenu publié par les utilisateurs</li>
+              <li>Des interactions entre utilisateurs (en ligne ou hors ligne)</li>
+              <li>De l'exactitude des informations partagées par les utilisateurs</li>
+              <li>Des dommages indirects (perte de données, perte de chance, préjudice moral)</li>
+              <li>De l'utilisation frauduleuse de votre compte en cas de négligence de votre part</li>
+            </ul>
+            <h3>14.3 Force majeure</h3>
+            <p>ESTRA LINK ne peut être tenu responsable en cas d'événement de force majeure : catastrophe naturelle, guerre, cyberattaque majeure, décision gouvernementale, panne généralisée d'Internet.</p>
+            <h3>14.4 Garanties</h3>
+            <p>La plateforme est fournie « <strong>en l'état</strong> ». ESTRA LINK ne garantit pas :</p>
+            <ul>
+              <li>L'absence totale de bugs ou d'erreurs</li>
+              <li>La compatibilité avec tous les appareils</li>
+              <li>Des résultats académiques spécifiques</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="accordion" id="section-donnees">
+          <summary>15. Données personnelles</summary>
+          <div class="accordion-body">
+            <p>La collecte et le traitement de vos données personnelles sont décrits en détail dans notre <a href="privacy.html">Politique de confidentialité</a>.</p>
+            <h3>15.1 Points clés</h3>
+            <ul>
+              <li>Vos données ne sont <strong>jamais vendues</strong> à des tiers</li>
+              <li>Vous pouvez <strong>exporter</strong> ou <strong>supprimer</strong> vos données à tout moment</li>
+              <li>Les cookies non-essentiels sont soumis à votre consentement</li>
+              <li>Le DPO est joignable à <a href="mailto:dpo@estra-link.com">dpo@estra-link.com</a></li>
+            </ul>
+            <h3>15.2 Gestion depuis les paramètres</h3>
+            <p>Les actions concrètes (consentements, export, suppression de compte) sont disponibles dans les <a href="settings.html#privacy">paramètres de confidentialité</a>.</p>
+          </div>
+        </details>
+
+        <details class="accordion" id="section-resiliation">
+          <summary>16. Résiliation et suppression de compte</summary>
+          <div class="accordion-body">
+            <h3>16.1 Résiliation à votre initiative</h3>
+            <p>Vous pouvez supprimer votre compte à tout moment, sans justification, depuis les <a href="settings.html#privacy">paramètres de confidentialité</a> ou par email à <a href="mailto:dpo@estra-link.com">dpo@estra-link.com</a>.</p>
+            <p><strong>Effets de la suppression :</strong></p>
+            <ul>
+              <li>Suppression définitive de votre profil et de vos données personnelles</li>
+              <li>Suppression de vos publications, messages, cours suivis</li>
+              <li>Impossibilité de récupérer votre compte</li>
+              <li>Délai technique : <strong>30 jours</strong> pour la suppression complète (sauvegardes)</li>
+            </ul>
+            <h3>16.2 Résiliation à l'initiative d'ESTRA LINK</h3>
+            <p>ESTRA LINK peut suspendre ou supprimer un compte en cas de :</p>
+            <ul>
+              <li>Violation grave des présentes CGU</li>
+              <li>Comportement frauduleux ou abusif</li>
+              <li>Inactivité prolongée (3 ans sans connexion)</li>
+              <li>Réquisition légale</li>
+            </ul>
+            <h3>16.3 Effets de la résiliation</h3>
+            <ul>
+              <li>Les licences d'utilisation accordées à ESTRA LINK prennent fin</li>
+              <li>Les données sont supprimées selon les durées légales</li>
+              <li>Les certificats obtenus restent accessibles sur demande pendant 1 an</li>
+            </ul>
+            <h3>16.4 Droit de rétractation</h3>
+            <p>Conformément à la loi, vous disposez d'un droit de rétractation de <strong>14 jours</strong> après la création de votre compte, sans justification ni frais. Passé ce délai, la résiliation reste possible mais sans remboursement des éventuels abonnements souscrits.</p>
+          </div>
+        </details>
+
+        <details class="accordion" id="section-modifications">
+          <summary>17. Modification des conditions</summary>
+          <div class="accordion-body">
+            <p>ESTRA LINK peut modifier les présentes CGU pour refléter :</p>
+            <ul>
+              <li>Des évolutions légales ou réglementaires</li>
+              <li>Des changements techniques ou fonctionnels</li>
+              <li>Des améliorations de la protection des utilisateurs</li>
+            </ul>
+            <h3>17.1 Procédure de modification</h3>
+            <ul>
+              <li><strong>Modifications mineures</strong> : mise à jour de la date, sans notification</li>
+              <li><strong>Modifications substantielles</strong> :
+                <ul>
+                  <li>Notification par email et/ou SMS</li>
+                  <li>Bannière visible dans l'application</li>
+                  <li>Délai de <strong>30 jours</strong> avant entrée en vigueur</li>
+                  <li>Possibilité de refuser et de supprimer votre compte sans frais</li>
+                </ul>
+              </li>
+            </ul>
+            <h3>17.2 Acceptation tacite</h3>
+            <p>Si vous continuez à utiliser ESTRA LINK après l'entrée en vigueur des nouvelles CGU, vous êtes réputé les avoir acceptées.</p>
+            <p>La version en vigueur est toujours accessible à l'adresse <em>estra-link.com/terms</em>.</p>
+          </div>
+        </details>
+
+        <details class="accordion" id="section-droit">
+          <summary>18. Droit applicable et juridiction</summary>
+          <div class="accordion-body">
+            <h3>18.1 Droit applicable</h3>
+            <p>Les présentes CGU sont régies par le <strong>droit congolais (RDC)</strong>, notamment :</p>
+            <ul>
+              <li>Loi n° 20/017 du 25 novembre 2020 relative aux télécommunications et aux TIC</li>
+              <li>Code civil congolais</li>
+              <li>Lois relatives à la protection des données personnelles</li>
+            </ul>
+            <h3>18.2 Règlement amiable</h3>
+            <p>En cas de litige, les parties s'engagent à rechercher une <strong>solution amiable</strong> avant toute action judiciaire. Contact : <a href="mailto:contact@estra-link.com">contact@estra-link.com</a>.</p>
+            <h3>18.3 Juridiction compétente</h3>
+            <p>À défaut de règlement amiable, tout litige sera soumis aux <strong>tribunaux compétents de Kinshasa</strong>, République Démocratique du Congo.</p>
+            <h3>18.4 Nullité partielle</h3>
+            <p>Si une clause des présentes CGU est déclarée nulle ou inapplicable, les autres clauses restent en vigueur.</p>
+            <h3>18.5 Contact</h3>
+            <p>Pour toute question relative aux présentes CGU : <a href="mailto:contact@estra-link.com">contact@estra-link.com</a></p>
+            <p class="last-update" style="margin-top:14px"><em>Dernière mise à jour : <time datetime="2026-01-01">1er janvier 2026</time></em></p>
+          </div>
+        </details>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="page-footer">
+        <div class="footer-links">
+          <a href="about.html">À propos</a> ·
+          <a href="help.html">Aide</a> ·
+          <a href="terms.html">Conditions</a> ·
+          <a href="privacy.html">Confidentialité</a>
+        </div>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+          <a href="#" class="social-link" aria-label="X (Twitter)"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+          <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+          <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+          <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+        </div>
+        <p>© 2026 ESTRA LINK — Tous droits réservés</p>
+      </footer>
+
+    </div>
+  </main>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   SYSTÈME DE NOTIFICATION
+══════════════════════════════════════════════════════════ */
+const notifBanner = document.getElementById('notificationBanner');
+const notifIcon   = document.getElementById('notificationIcon');
+const notifText   = document.getElementById('notificationText');
+const notifAction = document.getElementById('notificationAction');
+let notifTimer = null, isPersistentNotif = false;
+
+const SVG_ICONS = {
+  success: '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>',
+  error:   '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>',
+  info:    '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
+  warning: '<svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>'
+};
+
+function showNotification(msg, type, opts) {
+  opts = opts || {};
+  type = type || 'info';
+  isPersistentNotif = opts.persistent === true;
+  notifText.textContent = '';
+  let cls = 'notification-banner show ';
+  if (type === 'success') cls += 'success';
+  else if (type === 'error') cls += 'error';
+  else if (type === 'warning') cls += 'warning';
+  else cls += 'info';
+  if (isPersistentNotif) cls += ' persistent';
+  notifBanner.className = cls;
+  notifBanner.setAttribute('data-hide-close', opts.hideClose === true ? 'true' : 'false');
+  if (notifAction) {
+    if (opts.action && opts.action.label && typeof opts.action.onClick === 'function') {
+      notifAction.hidden = false;
+      notifAction.textContent = opts.action.label;
+      const clone = notifAction.cloneNode(true);
+      notifAction.parentNode.replaceChild(clone, notifAction);
+      clone.addEventListener('click', opts.action.onClick);
+    } else {
+      notifAction.hidden = true;
+    }
+  }
+  requestAnimationFrame(() => {
+    notifIcon.innerHTML = SVG_ICONS[type] || SVG_ICONS.info;
+    notifText.textContent = msg;
+  });
+  if (notifTimer) clearTimeout(notifTimer);
+  if (!isPersistentNotif) notifTimer = setTimeout(() => notifBanner.classList.remove('show'), opts.duration || 3800);
+}
+
+function hideNotification() {
+  notifBanner.classList.remove('show');
+  if (notifTimer) clearTimeout(notifTimer);
+  isPersistentNotif = false;
+  notifBanner.setAttribute('data-hide-close', 'false');
+  if (notifAction) notifAction.hidden = true;
+}
+
+/* ══════════════════════════════════════════════════════════
+   DÉTECTION HORS-LIGNE
+══════════════════════════════════════════════════════════ */
+function enableOfflineDetection(opts) {
+  opts = opts || {};
+  const offlineMsg = opts.offlineMessage || 'Pas de connexion Internet. Vérifiez votre réseau.';
+  const onlineMsg  = opts.onlineMessage  || 'Connexion rétablie';
+  const canDismiss = opts.canDismiss === true;
+  function onOffline() {
+    showNotification(offlineMsg, 'warning', {
+      persistent: true,
+      hideClose: !canDismiss,
+      action: typeof opts.onRetry === 'function'
+        ? { label: 'Réessayer', onClick: () => {
+            if (navigator.onLine) hideNotification();
+            else if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
+            opts.onRetry();
+          }}
+        : null
+    });
+  }
+  function onOnline() { showNotification(onlineMsg, 'success', { duration: 2200 }); }
+  window.addEventListener('offline', onOffline);
+  window.addEventListener('online', onOnline);
+  if (!navigator.onLine) onOffline();
+}
+
+/* ══════════════════════════════════════════════════════════
+   BASCULE VISITEUR ↔ CONNECTÉ
+══════════════════════════════════════════════════════════ */
+function toggleSessionViews() {
+  const session = localStorage.getItem('estra_session') || sessionStorage.getItem('estra_session');
+  let isValid = false;
+  let profile = {};
+
+  if (session) {
+    try {
+      const d = JSON.parse(session);
+      if (d.expiresAt && d.expiresAt > Date.now()) isValid = true;
+    } catch (e) { /* ignore */ }
+  }
+  try { profile = JSON.parse(localStorage.getItem('estra_profile') || '{}'); }
+  catch (e) { profile = {}; }
+
+  const vg = document.getElementById('viewGuest');
+  const va = document.getElementById('viewAuth');
+  const bl = document.getElementById('backLink');
+  const un = document.getElementById('termsUserName');
+
+  if (isValid) {
+    vg.hidden = true;
+    va.hidden = false;
+    bl.href = 'home.html';
+    if (profile.prenom && un) un.textContent = profile.prenom;
+  } else {
+    vg.hidden = false;
+    va.hidden = true;
+    bl.href = 'login.html';
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   GESTION HASH + ANCRES INTERNES
+══════════════════════════════════════════════════════════ */
+function openAccordionForHash(hash) {
+  if (!hash) return;
+  const target = document.querySelector(hash);
+  if (target && target.tagName === 'DETAILS') {
+    target.open = true;
+    setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+  }
+}
+
+/* Ouvrir l'accordéon quand on clique sur un lien interne #section-* */
+document.querySelectorAll('a[href^="#section-"]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const hash = link.getAttribute('href');
+    const target = document.querySelector(hash);
+    if (target && target.tagName === 'DETAILS') {
+      setTimeout(() => { target.open = true; }, 50);
+    }
+  });
+});
+
+/* Réagir aux changements de hash (retour navigateur, partage d'URL) */
+window.addEventListener('hashchange', () => {
+  openAccordionForHash(location.hash);
+});
+
+/* ══════════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════════ */
+window.addEventListener('load', () => {
+  enableOfflineDetection({ canDismiss: true });
+  toggleSessionViews();
+
+  /* Ouvrir l'accordéon ciblé si hash présent */
+  if (location.hash) openAccordionForHash(location.hash);
+});
+</script>
+</body>
+</html>
